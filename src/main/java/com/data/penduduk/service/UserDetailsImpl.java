@@ -1,11 +1,13 @@
 package com.data.penduduk.service;
 
+import com.data.penduduk.model.Rt;
 import com.data.penduduk.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 public class UserDetailsImpl implements UserDetails {
@@ -22,14 +24,17 @@ public class UserDetailsImpl implements UserDetails {
 
     private String role;
 
+    private List<Rt> rt;
+
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String email, String password, String username, String role) {
+    public UserDetailsImpl(Long id, String email, String password, String username, String role, List<Rt> rt) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.username = username;
         this.role = role;
+        this.rt = rt;
     }
 
     public static UserDetailsImpl build(User user) {
@@ -38,7 +43,8 @@ public class UserDetailsImpl implements UserDetails {
                 user.getEmail(),
                 user.getPassword(),
                 user.getUsername(),
-                user.getRole()
+                user.getRole(),
+                user.getRt()
         );
     }
 
@@ -53,6 +59,10 @@ public class UserDetailsImpl implements UserDetails {
 
     public String getRole() {
         return role;
+    }
+
+    public List<Rt> getRt() {
+        return rt;
     }
 
     @Override

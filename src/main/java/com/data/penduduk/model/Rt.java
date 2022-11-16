@@ -3,11 +3,11 @@ package com.data.penduduk.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "rt")
+public class Rt {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,12 +24,9 @@ public class User {
     @Column(name = "role")
     private String role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<Rt> rt;
-
-
-    public User() {
-    }
+    @JsonIgnore
+    @ManyToOne
+    private User user;
 
     public Long getId() {
         return id;
@@ -71,12 +68,11 @@ public class User {
         this.role = role;
     }
 
-    public List<Rt> getRt() {
-        return rt;
+    public User getUser() {
+        return user;
     }
 
-    public void setRt(List<Rt> rt) {
-        this.rt = rt;
+    public void setUser(User user) {
+        this.user = user;
     }
 }
-

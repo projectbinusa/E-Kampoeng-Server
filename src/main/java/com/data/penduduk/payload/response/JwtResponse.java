@@ -1,5 +1,9 @@
 package com.data.penduduk.payload.response;
 
+import com.data.penduduk.model.Rt;
+
+import java.util.List;
+
 public class JwtResponse {
     private String token;
     private String type = "Bearer";
@@ -10,13 +14,16 @@ public class JwtResponse {
 
     private String role;
 
-    public JwtResponse(String accessToken, Long id, String email, String username, String role) {
+    private List<Rt> rt;
+
+    public JwtResponse(String accessToken, Long id, String email, String username, String role, List<Rt> rt) {
         this.token = accessToken;
         this.type = type;
         this.id = id;
         this.email = email;
         this.username = username;
         this.role = role;
+        this.rt = rt;
     }
 
     public String getToken() {
@@ -65,5 +72,13 @@ public class JwtResponse {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public List<Rt> getRt() {
+        return rt;
+    }
+
+    public void setRt(List<Rt> rt) {
+        this.rt = rt;
     }
 }
