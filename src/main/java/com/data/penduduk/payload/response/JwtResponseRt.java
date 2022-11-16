@@ -1,11 +1,6 @@
 package com.data.penduduk.payload.response;
 
-import com.data.penduduk.model.Rt;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.util.List;
-
-public class JwtResponse {
+public class JwtResponseRt {
     private String token;
     private String type = "Bearer";
     private Long id;
@@ -15,17 +10,13 @@ public class JwtResponse {
 
     private String role;
 
-    @JsonIgnore
-    private List<Rt> rt;
-
-    public JwtResponse(String accessToken, Long id, String email, String username, String role, List<Rt> rt) {
+    public JwtResponseRt(String accessToken, Long id, String email, String username, String role) {
         this.token = accessToken;
         this.type = type;
         this.id = id;
         this.email = email;
         this.username = username;
         this.role = role;
-        this.rt = rt;
     }
 
     public String getToken() {
@@ -74,13 +65,5 @@ public class JwtResponse {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public List<Rt> getRt() {
-        return rt;
-    }
-
-    public void setRt(List<Rt> rt) {
-        this.rt = rt;
     }
 }

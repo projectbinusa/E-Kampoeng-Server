@@ -3,6 +3,7 @@ package com.data.penduduk.security;
 import com.data.penduduk.security.jwt.AuthEntryPointJwt;
 import com.data.penduduk.security.jwt.AuthTokenFilter;
 import com.data.penduduk.service.UserDetailsServiceImpl;
+import com.data.penduduk.service.UserDetailsServiceImplRt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +27,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     UserDetailsServiceImpl userDetailsService;
 
     @Autowired
+    UserDetailsServiceImplRt userDetailsServiceImplRt;
+
+    @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
 
     @Bean
@@ -36,6 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        authenticationManagerBuilder.userDetailsService(userDetailsServiceImplRt).passwordEncoder(passwordEncoder());
     }
 
     @Bean
