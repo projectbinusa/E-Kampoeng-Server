@@ -3,6 +3,7 @@ package com.data.penduduk.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "rt")
@@ -27,6 +28,9 @@ public class Rt {
     @JsonIgnore
     @ManyToOne
     private User user;
+
+    @OneToMany(mappedBy = "rt", cascade = CascadeType.REMOVE)
+    private List<Kk> kk;
 
     public Long getId() {
         return id;
@@ -74,5 +78,13 @@ public class Rt {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Kk> getKk() {
+        return kk;
+    }
+
+    public void setKk(List<Kk> kk) {
+        this.kk = kk;
     }
 }

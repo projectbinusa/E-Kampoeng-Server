@@ -2,11 +2,9 @@ package com.data.penduduk.service;
 
 import com.data.penduduk.model.Rt;
 import com.data.penduduk.model.User;
-import com.data.penduduk.payload.response.MessageResponse;
 import com.data.penduduk.repository.RtRepository;
 import com.data.penduduk.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -58,4 +56,6 @@ public class UserService {
     public List<User> getAllRw() {
         return userRepository.findAll();
     }
+
+
 }

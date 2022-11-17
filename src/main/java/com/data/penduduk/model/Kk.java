@@ -1,6 +1,10 @@
 package com.data.penduduk.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "kk")
@@ -10,21 +14,31 @@ public class Kk {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "nama")
+    private String nama;
 
-    @Column(name = "password")
-    private String password;
+    @Column(name = "tempat_lahir")
+    private String tempat_lahir;
 
-    @Column(name = "username")
-    private String username;
+    @Column(name = "tgl_lahir")
+    private Date tgl_lahir;
 
-    @Column(name = "role")
-    private String role;
 
-//    public Kk() {
-//    }
+    @Column(name = "gender")
+    private String gender;
 
+    @Column(name = "agama")
+    private String agama;
+
+    @Column(name = "status")
+    private String status;
+
+    @JsonIgnore
+    @ManyToOne
+    private Rt rt;
+
+    @OneToMany(mappedBy = "kk", cascade = CascadeType.REMOVE)
+    private List<Warga> warga;
 
     public Long getId() {
         return id;
@@ -34,35 +48,68 @@ public class Kk {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getNama() {
+        return nama;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setNama(String nama) {
+        this.nama = nama;
     }
 
-    public String getPassword() {
-        return password;
+    public String getTempat_lahir() {
+        return tempat_lahir;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setTempat_lahir(String tempat_lahir) {
+        this.tempat_lahir = tempat_lahir;
     }
 
-    public String getUsername() {
-        return username;
+    public Date getTgl_lahir() {
+        return tgl_lahir;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setTgl_lahir(Date tgl_lahir) {
+        this.tgl_lahir = tgl_lahir;
     }
 
-    public String getRole() {
-        return role;
+
+    public String getGender() {
+        return gender;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getAgama() {
+        return agama;
+    }
+
+    public void setAgama(String agama) {
+        this.agama = agama;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Rt getRt() {
+        return rt;
+    }
+
+    public void setRt(Rt rt) {
+        this.rt = rt;
+    }
+
+    public List<Warga> getWarga() {
+        return warga;
+    }
+
+    public void setWarga(List<Warga> warga) {
+        this.warga = warga;
     }
 }

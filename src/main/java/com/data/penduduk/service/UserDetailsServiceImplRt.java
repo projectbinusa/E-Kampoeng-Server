@@ -1,7 +1,6 @@
 package com.data.penduduk.service;
 
 import com.data.penduduk.model.Rt;
-import com.data.penduduk.model.User;
 import com.data.penduduk.repository.RtRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

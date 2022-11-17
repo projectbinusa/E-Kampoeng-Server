@@ -14,6 +14,9 @@ public class LaporanWarga {
     @Column(name = "nama_pelapor")
     private String nama_pelapor;
 
+    @Column(name = "judul_laporan")
+    private String judul_laporan;
+
     @Column(name = "laporan")
     private String laporan;
 
@@ -34,6 +37,14 @@ public class LaporanWarga {
 
     public void setNama_pelapor(String nama_pelapor) {
         this.nama_pelapor = nama_pelapor;
+    }
+
+    public String getJudul_laporan() {
+        return judul_laporan;
+    }
+
+    public void setJudul_laporan(String judul_laporan) {
+        this.judul_laporan = judul_laporan;
     }
 
     public String getLaporan() {

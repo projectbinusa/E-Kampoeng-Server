@@ -1,6 +1,9 @@
 package com.data.penduduk.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Table(name = "warga")
@@ -10,20 +13,28 @@ public class Warga {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "nama")
+    private String nama;
 
-    @Column(name = "password")
-    private String password;
+    @Column(name = "tempat_lahir")
+    private String tempat_lahir;
 
-    @Column(name = "username")
-    private String username;
+    @Column(name = "tgl_lahir")
+    private Date tgl_lahir;
 
-    @Column(name = "role")
-    private String role;
+    @Column(name = "gender")
+    private String gender;
 
-//    public Warga() {
-//    }
+    @Column(name = "agama")
+    private String agama;
+
+    @Column(name = "status")
+    private String status;
+
+
+    @JsonIgnore
+    @ManyToOne
+    private Kk kk;
 
 
     public Long getId() {
@@ -34,35 +45,60 @@ public class Warga {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getNama() {
+        return nama;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setNama(String nama) {
+        this.nama = nama;
     }
 
-    public String getPassword() {
-        return password;
+    public String getTempat_lahir() {
+        return tempat_lahir;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setTempat_lahir(String tempat_lahir) {
+        this.tempat_lahir = tempat_lahir;
     }
 
-    public String getUsername() {
-        return username;
+    public Date getTgl_lahir() {
+        return tgl_lahir;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setTgl_lahir(Date tgl_lahir) {
+        this.tgl_lahir = tgl_lahir;
     }
 
-    public String getRole() {
-        return role;
+
+    public String getGender() {
+        return gender;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getAgama() {
+        return agama;
+    }
+
+    public void setAgama(String agama) {
+        this.agama = agama;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Kk getKk() {
+        return kk;
+    }
+
+    public void setKk(Kk kk) {
+        this.kk = kk;
     }
 }
