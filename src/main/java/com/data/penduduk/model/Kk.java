@@ -3,7 +3,7 @@ package com.data.penduduk.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.lang.String;
 import java.util.List;
 
 @Entity
@@ -21,7 +21,7 @@ public class Kk {
     private String tempat_lahir;
 
     @Column(name = "tgl_lahir")
-    private Date tgl_lahir;
+    private String tgl_lahir;
 
 
     @Column(name = "gender")
@@ -64,11 +64,11 @@ public class Kk {
         this.tempat_lahir = tempat_lahir;
     }
 
-    public Date getTgl_lahir() {
+    public String getTgl_lahir() {
         return tgl_lahir;
     }
 
-    public void setTgl_lahir(Date tgl_lahir) {
+    public void setTgl_lahir(String tgl_lahir) {
         this.tgl_lahir = tgl_lahir;
     }
 

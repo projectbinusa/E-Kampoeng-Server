@@ -7,7 +7,7 @@ import com.data.penduduk.repository.RtRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
+import java.lang.String;
 import java.util.List;
 
 @Service
@@ -40,7 +40,7 @@ public class KkService {
     }
 
 
-    public Kk editKk(Long id, String nama, String tempat_lahir, Date tgl_lahir, String gender, String agama, String status) {
+    public Kk editKk(Long id, String nama, String tempat_lahir, String tgl_lahir, String gender, String agama, String status) {
         Kk kk = kkRepository.findById(id).orElse(null);
         kk.setNama(nama);
         kk.setTempat_lahir(tempat_lahir);

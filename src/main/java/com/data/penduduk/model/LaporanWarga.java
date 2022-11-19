@@ -1,7 +1,7 @@
 package com.data.penduduk.model;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.lang.String;
 
 @Entity
 @Table(name = "laporan_warga")
@@ -21,7 +21,7 @@ public class LaporanWarga {
     private String laporan;
 
     @Column(name = "tgl_laporan")
-    private Date tgl_laporan;
+    private String tgl_laporan;
 
     public Long getId() {
         return id;
@@ -55,11 +55,11 @@ public class LaporanWarga {
         this.laporan = laporan;
     }
 
-    public Date getTgl_laporan() {
+    public String getTgl_laporan() {
         return tgl_laporan;
     }
 
-    public void setTgl_laporan(Date tgl_laporan) {
+    public void setTgl_laporan(String tgl_laporan) {
         this.tgl_laporan = tgl_laporan;
     }
 }
