@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.String;
+import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -38,7 +39,7 @@ public class WargaService {
         return wargaRepository.save(warga);
     }
 
-    public Warga editWarga(Long id, String nama, String tempat_lahir, String tgl_lahir, String gender, String agama, String status) {
+    public Warga editWarga(Long id, String nama, String tempat_lahir, Date tgl_lahir, String gender, String agama, String status) {
         Warga warga = wargaRepository.findById(id).orElse(null);
         warga.setNama(nama);
         warga.setTempat_lahir(tempat_lahir);
