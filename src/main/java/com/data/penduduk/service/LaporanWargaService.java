@@ -5,6 +5,7 @@ import com.data.penduduk.repository.LaporanWargaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -25,7 +26,7 @@ public class LaporanWargaService {
         return laporanWargaRepository.save(laporanWarga);
     }
 
-    public LaporanWarga editLaporan(Long id, String nama_pelapor, String judul_laporan, String laporan, String tgl_laporan) {
+    public LaporanWarga editLaporan(Long id, String nama_pelapor, String judul_laporan, String laporan, Date tgl_laporan) {
         LaporanWarga laporanWarga = laporanWargaRepository.findById(id).orElse(null);
         laporanWarga.setNama_pelapor(nama_pelapor);
         laporanWarga.setJudul_laporan(judul_laporan);

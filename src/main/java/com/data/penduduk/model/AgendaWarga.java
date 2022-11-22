@@ -2,6 +2,7 @@ package com.data.penduduk.model;
 
 import javax.persistence.*;
 import java.lang.String;
+import java.sql.Date;
 
 @Entity
 @Table(name = "agenda_warga")
@@ -18,7 +19,7 @@ public class AgendaWarga {
     private String deskripsi;
 
     @Column(name = "tgl_dilaksanakan")
-    private String tgl_dilaksanakan;
+    private Date tgl_dilaksanakan;
 
     public Long getId() {
         return id;
@@ -44,11 +45,11 @@ public class AgendaWarga {
         this.deskripsi = deskripsi;
     }
 
-    public String getTgl_dilaksanakan() {
+    public Date getTgl_dilaksanakan() {
         return tgl_dilaksanakan;
     }
 
-    public void setTgl_dilaksanakan(String tgl_dilaksanakan) {
+    public void setTgl_dilaksanakan(Date tgl_dilaksanakan) {
         this.tgl_dilaksanakan = tgl_dilaksanakan;
     }
 }
