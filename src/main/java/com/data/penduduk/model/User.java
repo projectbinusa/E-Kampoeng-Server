@@ -1,5 +1,7 @@
 package com.data.penduduk.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -19,9 +21,13 @@ public class User {
     @Column(name = "username")
     private String username;
 
+    @Column(name = "nomor_rw")
+    private String nomor_rw;
+
     @Column(name = "role")
     private String role;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Rt> rt;
 
@@ -59,6 +65,14 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getNomor_rw() {
+        return nomor_rw;
+    }
+
+    public void setNomor_rw(String nomor_rw) {
+        this.nomor_rw = nomor_rw;
     }
 
     public String getRole() {

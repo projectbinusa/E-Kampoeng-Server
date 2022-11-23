@@ -26,16 +26,9 @@ public class UserService {
         // Create new user's account
         String role = user.getRole();
         if (role == null) {
-            user.setRole("warga");
-        } else {
-            switch (user.getRole()) {
-                case "rw":
-                    user.setRole("rw");
-                    break;
-                default:
-                    user.setRole("warga");
-            }
+            user.setRole("rw");
         }
+
         user.setPassword(encoder.encode(user.getPassword()));
         User users = userRepository.save(user);
         return userRepository.save(users);
