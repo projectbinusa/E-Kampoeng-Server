@@ -22,6 +22,9 @@ public class Rt {
     @Column(name = "username")
     private String username;
 
+    @Column(name = "nomor_rt")
+    private String nomor_rt;
+
     @Column(name = "role")
     private String role;
 
@@ -62,6 +65,14 @@ public class Rt {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getNomor_rt() {
+        return nomor_rt;
+    }
+
+    public void setNomor_rt(String nomor_rt) {
+        this.nomor_rt = nomor_rt;
     }
 
     public String getRole() {
