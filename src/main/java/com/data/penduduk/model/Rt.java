@@ -32,6 +32,10 @@ public class Rt {
     @ManyToOne
     private User user;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "rt", cascade = CascadeType.REMOVE)
+    private List<LayananWarga> layananWargas;
+
     @OneToMany(mappedBy = "rt", cascade = CascadeType.REMOVE)
     private List<Kk> kk;
 
