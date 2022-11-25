@@ -13,14 +13,35 @@ public class LayananWarga {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "nama")
     private String nama;
 
-    @Column(name = "tgl_buat")
-    private Date tgl_buat;
+    @Column(name = "tempat_lahir")
+    private String tempat_lahir;
 
-    @Column(name = "tgl_diperlukan")
-    private  Date tgl_diperlukan;
+    @Column(name = "tgl_lahir")
+    private  Date tgl_lahir;
+
+    @Column(name = "gender")
+    private String gender;
+
+    @Column(name = "pekerjaan")
+    private String pekerjaan;
+
+    @Column(name = "agama")
+    private String agama;
+
+    @Column(name = "status")
+    private String status;
+
+    @Column(name = "kewarganegaraan")
+    private String kewarganegaraan;
+
+    @Column(name = "alamat")
+    private String alamat;
 
     @Column(name = "keperluan")
     private String keperluan;
@@ -45,20 +66,76 @@ public class LayananWarga {
         this.nama = nama;
     }
 
-    public Date getTgl_buat() {
-        return tgl_buat;
+    public String getEmail() {
+        return email;
     }
 
-    public void setTgl_buat(Date tgl_buat) {
-        this.tgl_buat = tgl_buat;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public Date getTgl_diperlukan() {
-        return tgl_diperlukan;
+    public String getTempat_lahir() {
+        return tempat_lahir;
     }
 
-    public void setTgl_diperlukan(Date tgl_diperlukan) {
-        this.tgl_diperlukan = tgl_diperlukan;
+    public void setTempat_lahir(String tempat_lahir) {
+        this.tempat_lahir = tempat_lahir;
+    }
+
+    public Date getTgl_lahir() {
+        return tgl_lahir;
+    }
+
+    public void setTgl_lahir(Date tgl_lahir) {
+        this.tgl_lahir = tgl_lahir;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getPekerjaan() {
+        return pekerjaan;
+    }
+
+    public void setPekerjaan(String pekerjaan) {
+        this.pekerjaan = pekerjaan;
+    }
+
+    public String getAgama() {
+        return agama;
+    }
+
+    public void setAgama(String agama) {
+        this.agama = agama;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getKewarganegaraan() {
+        return kewarganegaraan;
+    }
+
+    public void setKewarganegaraan(String kewarganegaraan) {
+        this.kewarganegaraan = kewarganegaraan;
+    }
+
+    public String getAlamat() {
+        return alamat;
+    }
+
+    public void setAlamat(String alamat) {
+        this.alamat = alamat;
     }
 
     public String getKeperluan() {

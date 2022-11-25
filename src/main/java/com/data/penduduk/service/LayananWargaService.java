@@ -18,9 +18,23 @@ public class LayananWargaService {
     @Autowired
     RtRepository rtRepository;
 
-    public LayananWarga craeteLayananWarga(LayananWarga layananWarga, Long id) {
+    public List<LayananWarga> getAll() {
+        return layananWargaRepository.findAll();
+    }
+
+    public LayananWarga createLayananWarga(LayananWarga layananWarga, Long id) {
         Rt rt = rtRepository.findById(id).orElse(null);
         layananWarga.setRt(rt);
-        return layananWargaRepository.save(layananWarga);}
+        return layananWargaRepository.save(layananWarga);
+    }
+
+    public List<LayananWarga> getLayananWarga(Long id) {
+        Rt rt = rtRepository.findById(id).orElse(null);
+        return layananWargaRepository.findLayananByRt(rt);
+    }
+
+    public void deleteLayananWarga(Long id) {
+        rtRepository.deleteById(id);
+    }
 
 }

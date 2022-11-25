@@ -36,6 +36,7 @@ public class Rt {
     @OneToMany(mappedBy = "rt", cascade = CascadeType.REMOVE)
     private List<LayananWarga> layananWargas;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "rt", cascade = CascadeType.REMOVE)
     private List<Kk> kk;
 
@@ -101,5 +102,13 @@ public class Rt {
 
     public void setKk(List<Kk> kk) {
         this.kk = kk;
+    }
+
+    public List<LayananWarga> getLayananWargas() {
+        return layananWargas;
+    }
+
+    public void setLayananWargas(List<LayananWarga> layananWargas) {
+        this.layananWargas = layananWargas;
     }
 }

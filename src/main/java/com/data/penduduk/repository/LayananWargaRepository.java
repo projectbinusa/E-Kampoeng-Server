@@ -1,8 +1,11 @@
 package com.data.penduduk.repository;
 
 import com.data.penduduk.model.LayananWarga;
+import com.data.penduduk.model.Rt;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface LayananWargaRepository extends JpaRepository<LayananWarga, Long> {
+import java.util.List;
 
+public interface LayananWargaRepository extends JpaRepository<LayananWarga, Long> {
+    List<LayananWarga> findLayananByRt(Rt rt);
 }
