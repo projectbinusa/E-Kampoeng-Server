@@ -28,7 +28,7 @@ public class LayananWargaService {
         return layananWargaRepository.save(layananWarga);
     }
 
-    public List<LayananWarga> getLayananWarga(Long id) {
+    public List<LayananWarga> getLayananByRt(Long id) {
         Rt rt = rtRepository.findById(id).orElse(null);
         return layananWargaRepository.findLayananByRt(rt);
     }

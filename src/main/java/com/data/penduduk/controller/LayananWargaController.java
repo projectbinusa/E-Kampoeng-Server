@@ -24,7 +24,7 @@ public class LayananWargaController {
 
     @GetMapping("/rt-{id}/layanan-warga")
     public ResponseEntity<?> getLayananByRt(@PathVariable("id") Long id) {
-        List<LayananWarga> layananWargas = layananWargaService.getLayananWarga(id);
+        List<LayananWarga> layananWargas = layananWargaService.getLayananByRt(id);
         return new ResponseEntity<>(layananWargas, HttpStatus.OK);
     }
 
