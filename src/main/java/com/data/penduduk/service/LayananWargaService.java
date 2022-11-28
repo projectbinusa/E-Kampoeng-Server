@@ -22,6 +22,9 @@ public class LayananWargaService {
         return layananWargaRepository.findAll();
     }
 
+    public LayananWarga getById(Long id) {
+        return layananWargaRepository.findById(id).orElse(null);
+    }
     public LayananWarga createLayananWarga(LayananWarga layananWarga, Long id) {
         Rt rt = rtRepository.findById(id).orElse(null);
         layananWarga.setRt(rt);

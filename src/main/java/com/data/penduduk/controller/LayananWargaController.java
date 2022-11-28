@@ -22,6 +22,12 @@ public class LayananWargaController {
         return new ResponseEntity<>(layananWargas, HttpStatus.OK);
     }
 
+    @GetMapping("/layanan-warga-{id}")
+    public ResponseEntity<?> getById(@PathVariable("id") Long id) {
+        LayananWarga layananWarga = layananWargaService.getById(id);
+        return new ResponseEntity<>(layananWarga, HttpStatus.OK);
+    }
+
     @GetMapping("/rt-{id}/layanan-warga")
     public ResponseEntity<?> getLayananByRt(@PathVariable("id") Long id) {
         List<LayananWarga> layananWargas = layananWargaService.getLayananByRt(id);
