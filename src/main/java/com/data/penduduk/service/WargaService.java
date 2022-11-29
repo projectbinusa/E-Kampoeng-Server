@@ -20,8 +20,12 @@ public class WargaService {
     @Autowired
     KkRepository kkRepository;
 
-    public List<Warga> getAllWarga() {
-        return wargaRepository.findAll();
+    public List<Warga> getAllWarga(String nama) {
+        if (nama != null) {
+            return wargaRepository.searchByNama(nama);
+        } else {
+            return wargaRepository.findAll();
+        }
     }
 
     public List<Warga> getWargaByKk(Long id) {

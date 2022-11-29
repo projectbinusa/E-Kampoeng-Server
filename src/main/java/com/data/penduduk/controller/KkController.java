@@ -3,6 +3,7 @@ package com.data.penduduk.controller;
 import com.data.penduduk.model.Kk;
 import com.data.penduduk.service.KkService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,14 +19,14 @@ public class KkController {
     KkService kkService;
 
     @GetMapping("/kk")
-    public ResponseEntity<?> getAllKk() {
-        List<Kk> kk = kkService.getAllKk();
+    public ResponseEntity<?> getAllKk(@Param("nama") String nama) {
+        List<Kk> kk = kkService.getAllKk(nama);
         return new ResponseEntity<>(kk, HttpStatus.OK);
     }
 
     @GetMapping("/rt-{id}/kk")
-    public ResponseEntity<?> getKkByRtId(@PathVariable("id") Long id) {
-        List<Kk> kk = kkService.getKkByRt(id);
+    public ResponseEntity<?> getKkByRtId(@PathVariable("id") Long id, @Param("nama") String nama) {
+        List<Kk> kk = kkService.getKkByRt(id, nama);
         return new ResponseEntity<>(kk, HttpStatus.OK);
     }
 

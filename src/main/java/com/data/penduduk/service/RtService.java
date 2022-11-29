@@ -19,13 +19,21 @@ public class RtService {
     UserRepository userRepository;
 
 
-    public List<Rt> getAllRt() {
-        return rtRepository.findAll();
+    public List<Rt> getAllRt(String username) {
+        if (username != null) {
+            return rtRepository.searchByUsername(username);
+        } else {
+            return rtRepository.findAll();
+        }
     }
 
-    public List<Rt> getRtByUser(Long id) {
+    public List<Rt> getRtByUser(Long id, String username) {
         User user = userRepository.findById(id).orElse(null);
-        return rtRepository.findRtByUser(user);
+        if (username != null) {
+            return rtRepository.searchByUsername(username);
+        } else {
+            return rtRepository.findRtByUser(user);
+        }
     }
 
     public Rt getRtById(Long id) {

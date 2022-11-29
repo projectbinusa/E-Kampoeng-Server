@@ -20,13 +20,21 @@ public class KkService {
     @Autowired
     RtRepository rtRepository;
 
-    public List<Kk> getAllKk() {
-        return kkRepository.findAll();
+    public List<Kk> getAllKk(String nama) {
+        if (nama != null) {
+            return kkRepository.searchByNama(nama);
+        } else {
+            return kkRepository.findAll();
+        }
     }
 
-    public List<Kk> getKkByRt(Long id) {
+    public List<Kk> getKkByRt(Long id, String nama) {
         Rt rt = rtRepository.findById(id).orElse(null);
-        return kkRepository.findKkByRt(rt);
+        if (nama != null) {
+            return kkRepository.searchByNama(nama);
+        } else {
+            return kkRepository.findKkByRt(rt);
+        }
     }
 
     public Kk getKkById(Long id) {

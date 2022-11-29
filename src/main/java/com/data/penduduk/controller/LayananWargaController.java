@@ -34,7 +34,7 @@ public class LayananWargaController {
         return new ResponseEntity<>(layananWargas, HttpStatus.OK);
     }
 
-    @RequestMapping("/add-layanan-warga/rt-{id}")
+    @PostMapping("/add-layanan-warga/rt-{id}")
     public ResponseEntity<?> addLayananWarga(@PathVariable("id") Long id, @RequestBody LayananWarga layananWarga) {
         LayananWarga layananWarga1 = layananWargaService.createLayananWarga(layananWarga, id);
         return new ResponseEntity<>(layananWarga1, HttpStatus.OK);
