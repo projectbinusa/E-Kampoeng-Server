@@ -10,6 +10,9 @@ public class UndanganWarga {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "perihal")
+    private String perihal;
+
     @Column(name = "hari")
     private String hari;
 
@@ -35,6 +38,14 @@ public class UndanganWarga {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getPerihal() {
+        return perihal;
+    }
+
+    public void setPerihal(String perihal) {
+        this.perihal = perihal;
     }
 
     public String getHari() {

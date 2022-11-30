@@ -46,7 +46,6 @@ public class LayananWarga {
     @Column(name = "keperluan")
     private String keperluan;
 
-    @JsonIgnore
     @ManyToOne
     private Rt rt;
 
