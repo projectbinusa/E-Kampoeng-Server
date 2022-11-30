@@ -36,7 +36,6 @@ public class Rt {
     @OneToMany(mappedBy = "rt", cascade = CascadeType.REMOVE)
     private List<LayananWarga> layananWargas;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "rt", cascade = CascadeType.REMOVE)
     private List<Kk> kk;
 
