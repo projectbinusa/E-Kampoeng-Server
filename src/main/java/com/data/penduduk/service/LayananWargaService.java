@@ -37,7 +37,6 @@ public class LayananWargaService {
     }
 
     public void deleteLayananWarga(Long id) {
-        rtRepository.deleteById(id);
+        layananWargaRepository.deleteById(id);
     }
-
 }
