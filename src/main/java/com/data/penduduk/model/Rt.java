@@ -39,6 +39,10 @@ public class Rt {
     @OneToMany(mappedBy = "rt", cascade = CascadeType.REMOVE)
     private List<Kk> kk;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "rt", cascade = CascadeType.REMOVE)
+    private List<Warga> warga;
+
     public Long getId() {
         return id;
     }
@@ -109,5 +113,13 @@ public class Rt {
 
     public void setLayananWargas(List<LayananWarga> layananWargas) {
         this.layananWargas = layananWargas;
+    }
+
+    public List<Warga> getWarga() {
+        return warga;
+    }
+
+    public void setWarga(List<Warga> warga) {
+        this.warga = warga;
     }
 }

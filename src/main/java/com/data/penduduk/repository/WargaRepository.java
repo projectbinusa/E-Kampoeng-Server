@@ -11,6 +11,8 @@ import java.util.List;
 public interface WargaRepository extends JpaRepository<Warga, Long> {
     List<Warga> findWargaByKk(Kk kk);
 
+    List<Warga> findWargaByRt(Rt rt);
+
     @Query("SELECT p FROM Warga p WHERE CONCAT(p.nama) LIKE %?1%")
     List<Warga> searchByNama(String nama);
 }

@@ -38,6 +38,7 @@ public class Kk {
     @ManyToOne
     private Rt rt;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "kk", cascade = CascadeType.REMOVE)
     private List<Warga> warga;
 

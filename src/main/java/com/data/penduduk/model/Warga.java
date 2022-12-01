@@ -32,10 +32,11 @@ public class Warga {
     @Column(name = "status")
     private String status;
 
-
-    @JsonIgnore
     @ManyToOne
     private Kk kk;
+
+    @ManyToOne
+    private Rt rt;
 
 
     public Long getId() {
@@ -101,5 +102,13 @@ public class Warga {
 
     public void setKk(Kk kk) {
         this.kk = kk;
+    }
+
+    public Rt getRt() {
+        return rt;
+    }
+
+    public void setRt(Rt rt) {
+        this.rt = rt;
     }
 }

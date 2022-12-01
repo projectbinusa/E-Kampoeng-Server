@@ -1,8 +1,10 @@
 package com.data.penduduk.service;
 
 import com.data.penduduk.model.Kk;
+import com.data.penduduk.model.Rt;
 import com.data.penduduk.model.Warga;
 import com.data.penduduk.repository.KkRepository;
+import com.data.penduduk.repository.RtRepository;
 import com.data.penduduk.repository.WargaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,9 @@ public class WargaService {
     @Autowired
     KkRepository kkRepository;
 
+    @Autowired
+    RtRepository rtRepository;
+
     public List<Warga> getAllWarga(String nama) {
         if (nama != null) {
             return wargaRepository.searchByNama(nama);
@@ -31,6 +36,11 @@ public class WargaService {
     public List<Warga> getWargaByKk(Long id) {
         Kk kk = kkRepository.findById(id).orElse(null);
         return wargaRepository.findWargaByKk(kk);
+    }
+
+    public List<Warga> getWargaByRt(Long id) {
+        Rt rt = rtRepository.findById(id).orElse(null);
+        return wargaRepository.findWargaByRt(rt);
     }
 
     public Warga getWargaById(Long id) {

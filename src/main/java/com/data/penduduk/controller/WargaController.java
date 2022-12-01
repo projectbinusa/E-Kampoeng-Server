@@ -30,6 +30,12 @@ public class WargaController {
         return new ResponseEntity<>(warga, HttpStatus.OK);
     }
 
+    @GetMapping("/warga/rt-{id}")
+    public ResponseEntity<?> getWargaByRt(@PathVariable("id") Long id) {
+        List<Warga> warga = wargaService.getWargaByRt(id);
+        return new ResponseEntity<>(warga, HttpStatus.OK);
+    }
+
     @GetMapping("/warga-{id}")
     public ResponseEntity<?> getById(@PathVariable("id") Long id) {
         Warga warga = wargaService.getWargaById(id);
