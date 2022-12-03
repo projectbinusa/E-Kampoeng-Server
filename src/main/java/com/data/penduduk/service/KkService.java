@@ -49,11 +49,13 @@ public class KkService {
     }
 
 
-    public Kk editKk(Long id, String nama, String tempat_lahir, Date tgl_lahir, String gender, String agama, String status) {
+    public Kk editKk(Long id, String nama, String tempat_lahir, String tgl_lahir, String no_kk, String nik, String gender, String agama, String status) {
         Kk kk = kkRepository.findById(id).orElse(null);
         kk.setNama(nama);
         kk.setTempat_lahir(tempat_lahir);
         kk.setTgl_lahir(tgl_lahir);
+        kk.setNo_kk(no_kk);
+        kk.setNik(nik);
         kk.setGender(gender);
         kk.setAgama(agama);
         kk.setStatus(status);

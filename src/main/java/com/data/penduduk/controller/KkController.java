@@ -44,7 +44,7 @@ public class KkController {
 
     @PutMapping("/kk-{id}")
     public ResponseEntity<?> updateKk(@PathVariable("id") Long id, @RequestBody Kk kk) {
-        Kk kk1 = kkService.editKk(id, kk.getNama(), kk.getTempat_lahir(), kk.getTgl_lahir(), kk.getGender(), kk.getAgama(), kk.getStatus());
+        Kk kk1 = kkService.editKk(id, kk.getNama(), kk.getTempat_lahir(), kk.getTgl_lahir(), kk.getNo_kk(), kk.getNik(), kk.getGender(), kk.getAgama(), kk.getStatus());
         return new ResponseEntity<>(kk1, HttpStatus.OK);
     }
 

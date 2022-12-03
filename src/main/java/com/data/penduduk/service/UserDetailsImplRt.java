@@ -12,8 +12,6 @@ public class UserDetailsImplRt implements UserDetails {
     private static final long serialVersionUID = 1L;
     private Long id;
 
-    private String email;
-
     @JsonIgnore
     private String password;
 
@@ -23,9 +21,8 @@ public class UserDetailsImplRt implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImplRt(Long id, String email, String password, String username, String role) {
+    public UserDetailsImplRt(Long id, String password, String username, String role) {
         this.id = id;
-        this.email = email;
         this.password = password;
         this.username = username;
         this.role = role;
@@ -34,7 +31,6 @@ public class UserDetailsImplRt implements UserDetails {
     public static UserDetailsImplRt build(Rt rt) {
         return new UserDetailsImplRt(
                 rt.getId(),
-                rt.getEmail(),
                 rt.getPassword(),
                 rt.getUsername(),
                 rt.getRole()
@@ -62,10 +58,6 @@ public class UserDetailsImplRt implements UserDetails {
     @Override
     public String getUsername() {
         return username;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     @Override

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.lang.String;
-import java.sql.Date;
+import java.lang.String;
 
 @Entity
 @Table(name = "warga")
@@ -21,7 +21,13 @@ public class Warga {
     private String tempat_lahir;
 
     @Column(name = "tgl_lahir")
-    private Date tgl_lahir;
+    private String tgl_lahir;
+
+    @Column(name = "no_kk")
+    private String no_kk;
+
+    @Column(name = "nik")
+    private String nik;
 
     @Column(name = "gender")
     private String gender;
@@ -34,9 +40,6 @@ public class Warga {
 
     @ManyToOne
     private Kk kk;
-
-    @ManyToOne
-    private Rt rt;
 
 
     public Long getId() {
@@ -63,14 +66,29 @@ public class Warga {
         this.tempat_lahir = tempat_lahir;
     }
 
-    public Date getTgl_lahir() {
+    public String getTgl_lahir() {
         return tgl_lahir;
     }
 
-    public void setTgl_lahir(Date tgl_lahir) {
+    public void setTgl_lahir(String tgl_lahir) {
         this.tgl_lahir = tgl_lahir;
     }
 
+    public String getNo_kk() {
+        return no_kk;
+    }
+
+    public void setNo_kk(String no_kk) {
+        this.no_kk = no_kk;
+    }
+
+    public String getNik() {
+        return nik;
+    }
+
+    public void setNik(String nik) {
+        this.nik = nik;
+    }
 
     public String getGender() {
         return gender;
@@ -102,13 +120,5 @@ public class Warga {
 
     public void setKk(Kk kk) {
         this.kk = kk;
-    }
-
-    public Rt getRt() {
-        return rt;
-    }
-
-    public void setRt(Rt rt) {
-        this.rt = rt;
     }
 }

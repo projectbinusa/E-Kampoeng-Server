@@ -33,12 +33,6 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    RtRepository rtRepository;
-
-    @Autowired
     UserService userService;
 
     @Autowired
@@ -50,14 +44,13 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
-                userDetails.getEmail(),
                 userDetails.getUsername(),
                 userDetails.getRole(),
                 userDetails.getRt()
@@ -67,14 +60,13 @@ public class AuthController {
     @PostMapping("/login-rt")
     public ResponseEntity<?> authenticatRt(@RequestBody LoginRequestRt loginRequestRt) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequestRt.getEmail(), loginRequestRt.getPassword()));
+                new UsernamePasswordAuthenticationToken(loginRequestRt.getUsername(), loginRequestRt.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwtRt = jwtUtilsRt.generateJwtTokenRt(authentication);
 
         UserDetailsImplRt userDetailsRt = (UserDetailsImplRt) authentication.getPrincipal();
         return ResponseEntity.ok(new JwtResponseRt(jwtRt,
                 userDetailsRt.getId(),
-                userDetailsRt.getEmail(),
                 userDetailsRt.getUsername(),
                 userDetailsRt.getRole()
         ));
@@ -83,18 +75,11 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
         // validasi ketika email telah digunakan
-        if (userRepository.existsByEmail(user.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Email telah digunakan!"));
-        }
-
-        // validasi ketika username telah digunakan
-        if (userRepository.existsByUsername(user.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Username telah digunakan!"));
-        }
+//        if (userRepository.existsByEmail(user.getEmail())) {
+//            return ResponseEntity
+//                    .badRequest()
+//                    .body(new MessageResponse("Email telah digunakan!"));
+//        }
 
         User users = userService.register(user);
         return ResponseEntity.ok(users);
@@ -103,18 +88,11 @@ public class AuthController {
     @PostMapping("/rw-{id}/add-rt")
     public ResponseEntity<?> registerRt(@PathVariable("id") Long id, @RequestBody Rt rt) {
         // validasi ketika email telah digunakan
-        if (rtRepository.existsByEmail(rt.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Email telah digunakan!"));
-        }
-
-        // validasi ketika username telah digunakan
-        if (rtRepository.existsByUsername(rt.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Username telah digunakan!"));
-        }
+//        if (rtRepository.existsByEmail(rt.getEmail())) {
+//            return ResponseEntity
+//                    .badRequest()
+//                    .body(new MessageResponse("Email telah digunakan!"));
+//        }
 
         Rt rtt = userService.registerRt(rt, id);
         return ResponseEntity.ok(rtt);
@@ -122,8 +100,8 @@ public class AuthController {
 
     @GetMapping("/rw")
     public ResponseEntity<?> getAllRw() {
-            List<User> sekolah = userService.getAllRw();
-            return new ResponseEntity<>(sekolah, HttpStatus.OK);
+            List<User> users = userService.getAllRw();
+            return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
 }

@@ -30,12 +30,6 @@ public class WargaController {
         return new ResponseEntity<>(warga, HttpStatus.OK);
     }
 
-    @GetMapping("/warga/rt-{id}")
-    public ResponseEntity<?> getWargaByRt(@PathVariable("id") Long id) {
-        List<Warga> warga = wargaService.getWargaByRt(id);
-        return new ResponseEntity<>(warga, HttpStatus.OK);
-    }
-
     @GetMapping("/warga-{id}")
     public ResponseEntity<?> getById(@PathVariable("id") Long id) {
         Warga warga = wargaService.getWargaById(id);
@@ -50,7 +44,7 @@ public class WargaController {
 
     @PutMapping("/warga-{id}")
     public ResponseEntity<?> updateWarga(@PathVariable("id") Long id, @RequestBody Warga warga) {
-        Warga warga1 = wargaService.editWarga(id, warga.getNama(), warga.getTempat_lahir(), warga.getTgl_lahir(), warga.getGender(), warga.getAgama(), warga.getStatus());
+        Warga warga1 = wargaService.editWarga(id, warga.getNama(), warga.getTempat_lahir(), warga.getTgl_lahir(), warga.getNo_kk(), warga.getNik(), warga.getGender(), warga.getAgama(), warga.getStatus());
         return new ResponseEntity<>(warga1, HttpStatus.OK);
     }
 

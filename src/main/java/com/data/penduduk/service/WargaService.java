@@ -22,9 +22,6 @@ public class WargaService {
     @Autowired
     KkRepository kkRepository;
 
-    @Autowired
-    RtRepository rtRepository;
-
     public List<Warga> getAllWarga(String nama) {
         if (nama != null) {
             return wargaRepository.searchByNama(nama);
@@ -38,10 +35,6 @@ public class WargaService {
         return wargaRepository.findWargaByKk(kk);
     }
 
-    public List<Warga> getWargaByRt(Long id) {
-        Rt rt = rtRepository.findById(id).orElse(null);
-        return wargaRepository.findWargaByRt(rt);
-    }
 
     public Warga getWargaById(Long id) {
         return wargaRepository.findById(id).orElse(null);
@@ -53,11 +46,13 @@ public class WargaService {
         return wargaRepository.save(warga);
     }
 
-    public Warga editWarga(Long id, String nama, String tempat_lahir, Date tgl_lahir, String gender, String agama, String status) {
+    public Warga editWarga(Long id, String nama, String tempat_lahir, String tgl_lahir, String no_kk, String nik, String gender, String agama, String status) {
         Warga warga = wargaRepository.findById(id).orElse(null);
         warga.setNama(nama);
         warga.setTempat_lahir(tempat_lahir);
         warga.setTgl_lahir(tgl_lahir);
+        warga.setNo_kk(no_kk);
+        warga.setNik(nik);
         warga.setGender(gender);
         warga.setAgama(agama);
         warga.setStatus(status);

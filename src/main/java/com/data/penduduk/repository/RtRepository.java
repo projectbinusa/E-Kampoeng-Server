@@ -9,8 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RtRepository extends JpaRepository<Rt, Long> {
-    Optional<Rt> findByEmail(String email);
-    Boolean existsByEmail(String email);
+    Optional<Rt> findByUsername(String username);
     Boolean existsByUsername(String username);
 
     List<Rt> findRtByUser(User user);
