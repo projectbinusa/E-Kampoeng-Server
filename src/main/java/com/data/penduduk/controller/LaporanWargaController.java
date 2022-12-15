@@ -36,7 +36,13 @@ public class LaporanWargaController {
 
     @PutMapping("/laporan-warga-{id}")
     public ResponseEntity<?> updateLaporan(@PathVariable("id") Long id, @RequestBody LaporanWarga laporanWarga) {
-        LaporanWarga laporanWarga1 = laporanWargaService.editLaporan(id, laporanWarga.getNama_pelapor(), laporanWarga.getJudul_laporan(), laporanWarga.getLaporan(), laporanWarga.getTgl_laporan());
+        LaporanWarga laporanWarga1 = laporanWargaService.editLaporan(id,
+                laporanWarga.getNama_pelapor(),
+                laporanWarga.getJudul_laporan(),
+                laporanWarga.getLaporan(),
+                laporanWarga.getTanggapan(),
+                laporanWarga.getTgl_tanggapan(),
+                laporanWarga.getTgl_laporan());
         return new ResponseEntity<>(laporanWarga1, HttpStatus.OK);
     }
 

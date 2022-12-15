@@ -34,6 +34,20 @@ public class UndanganWargaController {
         return new ResponseEntity<>(undanganWarga1, HttpStatus.CREATED);
     }
 
+    @PutMapping("/edit-undangan-{id}")
+    public ResponseEntity<?> updateUndangan(@PathVariable("id")Long id, @RequestBody UndanganWarga undanganWarga) {
+        UndanganWarga undanganWarga1 = undanganWargaService.editUndangan(
+                id,
+                undanganWarga.getPerihal(),
+                undanganWarga.getHari(),
+                undanganWarga.getTanggal(),
+                undanganWarga.getWaktu(),
+                undanganWarga.getTempat(),
+                undanganWarga.getAcara(),
+                undanganWarga.getDitujukan());
+        return new ResponseEntity<>(undanganWarga1, HttpStatus.OK);
+    }
+
     @DeleteMapping("/undangan-{id}")
     public ResponseEntity<?> deleteUndangan(@PathVariable("id") Long id) {
         undanganWargaService.deleteUndangan(id);

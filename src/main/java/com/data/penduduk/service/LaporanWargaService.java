@@ -26,12 +26,14 @@ public class LaporanWargaService {
         return laporanWargaRepository.save(laporanWarga);
     }
 
-    public LaporanWarga editLaporan(Long id, String nama_pelapor, String judul_laporan, String laporan, Date tgl_laporan) {
+    public LaporanWarga editLaporan(Long id, String nama_pelapor, String judul_laporan, String laporan,String tanggapan, Date tgl_tanggapan, Date tgl_laporan) {
         LaporanWarga laporanWarga = laporanWargaRepository.findById(id).orElse(null);
         laporanWarga.setNama_pelapor(nama_pelapor);
         laporanWarga.setJudul_laporan(judul_laporan);
         laporanWarga.setLaporan(laporan);
         laporanWarga.setTgl_laporan(tgl_laporan);
+        laporanWarga.setTanggapan(tanggapan);
+        laporanWarga.setTgl_tanggapan(tgl_tanggapan);
         return laporanWargaRepository.save(laporanWarga);
     }
 

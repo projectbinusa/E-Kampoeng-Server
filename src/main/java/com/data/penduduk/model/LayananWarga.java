@@ -13,8 +13,6 @@ public class LayananWarga {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "email")
-    private String email;
 
     @Column(name = "nama")
     private String nama;
@@ -63,14 +61,6 @@ public class LayananWarga {
 
     public void setNama(String nama) {
         this.nama = nama;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getTempat_lahir() {

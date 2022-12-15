@@ -23,6 +23,36 @@ public class LaporanWarga {
     @Column(name = "tgl_laporan")
     private Date tgl_laporan;
 
+    @Column(name = "tanggapan")
+    private String tanggapan;
+
+    @Column(name = "tgl_tanggapan")
+    private Date tgl_tanggapan;
+
+    public Date getTgl_laporan() {
+        return tgl_laporan;
+    }
+
+    public void setTgl_laporan(Date tgl_laporan) {
+        this.tgl_laporan = tgl_laporan;
+    }
+
+    public Date getTgl_tanggapan() {
+        return tgl_tanggapan;
+    }
+
+    public void setTgl_tanggapan(Date tgl_tanggapan) {
+        this.tgl_tanggapan = tgl_tanggapan;
+    }
+
+    public String getTanggapan() {
+        return tanggapan;
+    }
+
+    public void setTanggapan(String tanggapan) {
+        this.tanggapan = tanggapan;
+    }
+
     public Long getId() {
         return id;
     }
@@ -55,11 +85,4 @@ public class LaporanWarga {
         this.laporan = laporan;
     }
 
-    public Date getTgl_laporan() {
-        return tgl_laporan;
-    }
-
-    public void setTgl_laporan(Date tgl_laporan) {
-        this.tgl_laporan = tgl_laporan;
-    }
 }
