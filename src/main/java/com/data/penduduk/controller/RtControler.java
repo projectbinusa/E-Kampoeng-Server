@@ -1,4 +1,4 @@
-package com.data.penduduk.controler;
+package com.data.penduduk.controller;
 
 import com.data.penduduk.model.RtModel;
 import com.data.penduduk.response.CustomResponse;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/rt")
+@RequestMapping("/api/rt")
 @CrossOrigin(origins = "http://localhost:3000")
 public class RtControler {
 

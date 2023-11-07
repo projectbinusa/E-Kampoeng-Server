@@ -1,4 +1,4 @@
-package com.data.penduduk.controler;
+package com.data.penduduk.controller;
 
 import com.data.penduduk.model.ESoeratModel;
 import com.data.penduduk.model.KkModel;
@@ -7,11 +7,10 @@ import com.data.penduduk.response.ResponseHelper;
 import com.data.penduduk.service.KkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
-@RequestMapping("/kk")
+@RequestMapping("/api/kk")
 @CrossOrigin(origins = "http://localhost:3000")
 public class KkControler {
 

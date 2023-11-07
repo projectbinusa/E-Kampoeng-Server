@@ -14,9 +14,6 @@ public class KkModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nama_rt")
-    private String nama_rt;
-
     @Column(name = "warga_id")
     private Integer warga_id;
 
@@ -33,14 +30,6 @@ public class KkModel {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getNama_rt() {
-        return nama_rt;
-    }
-
-    public void setNama_rt(String nama_rt) {
-        this.nama_rt = nama_rt;
     }
 
     public Integer getWarga_id() {

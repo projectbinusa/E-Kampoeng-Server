@@ -1,4 +1,4 @@
-package com.data.penduduk.controler;
+package com.data.penduduk.controller;
 
 import com.data.penduduk.model.ESoeratModel;
 import com.data.penduduk.response.CustomResponse;
@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/soerat")
+@RequestMapping("/api/soerat")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ESoeratControler {
 
     @Autowired
