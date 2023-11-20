@@ -10,6 +10,7 @@ public class DataPendudukApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DataPendudukApplication.class, args);
+		System.out.println("selesai");
 	}
 
 }

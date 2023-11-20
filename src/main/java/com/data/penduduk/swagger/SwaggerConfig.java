@@ -28,14 +28,15 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("com.data.penduduk.controller"))
                 .paths(PathSelectors.any())
                 .build()
-                .apiInfo(apiInfo());
-//                .securitySchemes(Arrays.asList(apiKey()))
-//                .securityContexts(Arrays.asList(securityContext()));
+                .apiInfo(apiInfo())
+                .securitySchemes(Arrays.asList(apiKey()))
+                .securityContexts(Arrays.asList(securityContext()));
     }
+
     private ApiInfo apiInfo() {
         return new ApiInfo(
                 "API Documentation",
-                "api doc",
+                "API Documentation",
                 "1.0.0",
                 "",
                 "",
@@ -43,18 +44,24 @@ public class SwaggerConfig {
                 "-"
         );
     }
-//    private ApiKey apiKey() {
-//        return new ApiKey("JWT", "auth-tgh", "header");
-//    }
-//
-//    private SecurityContext securityContext(){
-//        return SecurityContext.builder().securityReferences(defaultAuth()).build();
-//    }
-//
-//    private List<SecurityReference> defaultAuth(){
-//        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-//        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-//        authorizationScopes[0] = authorizationScope;
-//        return Arrays.asList(new SecurityReference("JWT", authorizationScopes));
-//    }
+
+    private ApiKey apiKey() {
+        return new ApiKey("JWT", "Authorization", "header");
+    }
+
+    private SecurityContext securityContext() {
+        return SecurityContext.builder()
+                .securityReferences(defaultAuth())
+                .forPaths(PathSelectors.any())
+                .build();
+    }
+
+    private List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope = new AuthorizationScope(
+                "global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return Arrays.asList(new SecurityReference("apiKey",
+                authorizationScopes));
+    }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class KkImpl implements KkService{
+public class    KkImpl implements KkService{
 
     @Autowired
     private KkRepository kkRepository;
