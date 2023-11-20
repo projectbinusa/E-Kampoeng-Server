@@ -14,8 +14,9 @@ public class KkModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "warga_id")
-    private Integer warga_id;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "warga_id", referencedColumnName = "id")
+    private Warga warga;
 
     @CreationTimestamp
     @Column(name = "create_at ")
@@ -32,12 +33,12 @@ public class KkModel {
         this.id = id;
     }
 
-    public Integer getWarga_id() {
-        return warga_id;
+    public Warga getWarga() {
+        return warga;
     }
 
-    public void setWarga_id(Integer warga_id) {
-        this.warga_id = warga_id;
+    public void setWarga(Warga warga) {
+        this.warga = warga;
     }
 
     public Date getCreate_at() {

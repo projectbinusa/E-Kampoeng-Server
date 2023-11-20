@@ -24,6 +24,9 @@ public class UserModel {
     @Column(name = "role")
     private RoleEnum role;
 
+    @Column(name = "image")
+    private String image;
+
     public Long getId() {
         return id;
     }
@@ -63,4 +66,8 @@ public class UserModel {
     public void setRole(RoleEnum role) {
         this.role = role;
     }
+
+    public String getImage() { return image; }
+
+    public void setImage(String image) { this.image = image; }
 }

@@ -25,7 +25,7 @@ public class    KkImpl implements KkService{
     @Override
     public KkModel edit(KkModel kkModel, Long id) {
         KkModel update = kkRepository.findById(id).orElseThrow(() ->new NotFoundException("Id Not Found"));
-        update.setWarga_id(kkModel.getWarga_id());
+        update.setWarga(kkModel.getWarga());
         return kkRepository.save(update);
     }
 

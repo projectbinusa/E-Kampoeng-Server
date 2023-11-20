@@ -62,7 +62,12 @@ public class Warga {
 
     private String sumber_air;
 
+    private Long wil_rt_id;
+
     private Date create_at;
+
+    @OneToOne(mappedBy = "warga", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private KkModel kkModel;
 
     @ManyToMany
     @JoinTable(
@@ -246,5 +251,21 @@ public class Warga {
 
     public void setOrganisasis(Set<Organisasi> organisasis) {
         this.organisasis = organisasis;
+    }
+
+    public KkModel getKkModel() {
+        return kkModel;
+    }
+
+    public void setKkModel(KkModel kkModel) {
+        this.kkModel = kkModel;
+    }
+
+    public Long getWil_rt_id() {
+        return wil_rt_id;
+    }
+
+    public void setWil_rt_id(Long wil_rt_id) {
+        this.wil_rt_id = wil_rt_id;
     }
 }

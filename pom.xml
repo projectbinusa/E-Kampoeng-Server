@@ -113,13 +113,18 @@
 			<artifactId>jjwt-impl</artifactId>
 			<version>0.11.2</version>
 		</dependency>
-
+		<!-- Dependensi Spring Security Config -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>5.4.1</version>
+		</dependency>
+		<!-- Mungkin ada dependensi lain yang diperlukan -->
 <!--		<dependency>-->
 <!--			<groupId>org.junit.jupiter</groupId>-->
 <!--			<artifactId>junit-jupiter-engine</artifactId>-->
 <!--			<version>5.1.0</version>-->
 <!--		</dependency>-->
 	</dependencies>
-
 
 </project>

@@ -5,12 +5,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 
 //@Configuration
-@SpringBootApplication(exclude = {UserDetailsServiceAutoConfiguration.class})
+@SpringBootApplication
 public class DataPendudukApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DataPendudukApplication.class, args);
-		System.out.println("selesai");
+		System.out.println("Run Successfully");
 	}
 
 }
