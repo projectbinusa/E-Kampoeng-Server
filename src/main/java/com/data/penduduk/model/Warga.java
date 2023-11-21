@@ -62,12 +62,20 @@ public class Warga {
 
     private String sumber_air;
 
-    private Long wil_rt_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "wil_rt_id")
+    private WilRtModel wilRtModel;
+
+//    private Long wil_rt_id;
 
     private Date create_at;
 
     @OneToOne(mappedBy = "warga", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
     private KkModel kkModel;
+
+    @OneToOne(mappedBy = "warga", cascade = CascadeType.ALL)
+    private RtModel rtModel;
 
     @ManyToMany
     @JoinTable(
@@ -261,11 +269,19 @@ public class Warga {
         this.kkModel = kkModel;
     }
 
-    public Long getWil_rt_id() {
-        return wil_rt_id;
+    public WilRtModel getWilRtModel() {
+        return wilRtModel;
     }
 
-    public void setWil_rt_id(Long wil_rt_id) {
-        this.wil_rt_id = wil_rt_id;
+    public void setWilRtModel(WilRtModel wilRtModel) {
+        this.wilRtModel = wilRtModel;
+    }
+
+    public RtModel getRtModel() {
+        return rtModel;
+    }
+
+    public void setRtModel(RtModel rtModel) {
+        this.rtModel = rtModel;
     }
 }

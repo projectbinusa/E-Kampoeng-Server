@@ -16,12 +16,19 @@ public class RtModel {
     @Column(name = "nama_rt")
     private String nama_rt;
 
-    @Column(name = "warga_id")
-    private Integer warga_id;
+//    @Column(name = "warga_id")
+//    private Integer warga_id;
 
     @CreationTimestamp
     @Column(name = "create_at ")
     private Date create_at;
+
+    @OneToOne(mappedBy = "rtModel", cascade = CascadeType.ALL)
+    private WilRtModel wilRtModel;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "warga_id")
+    private Warga warga;
 
     public RtModel() {
     }
@@ -42,13 +49,13 @@ public class RtModel {
         this.nama_rt = nama_rt;
     }
 
-    public Integer getWarga_id() {
-        return warga_id;
-    }
-
-    public void setWarga_id(Integer warga_id) {
-        this.warga_id = warga_id;
-    }
+//    public Integer getWarga_id() {
+//        return warga_id;
+//    }
+//
+//    public void setWarga_id(Integer warga_id) {
+//        this.warga_id = warga_id;
+//    }
 
     public Date getCreate_at() {
         return create_at;
@@ -56,5 +63,21 @@ public class RtModel {
 
     public void setCreate_at(Date create_at) {
         this.create_at = create_at;
+    }
+
+    public WilRtModel getWilRtModel() {
+        return wilRtModel;
+    }
+
+    public void setWilRtModel(WilRtModel wilRtModel) {
+        this.wilRtModel = wilRtModel;
+    }
+
+    public Warga getWarga() {
+        return warga;
+    }
+
+    public void setWarga(Warga warga) {
+        this.warga = warga;
     }
 }

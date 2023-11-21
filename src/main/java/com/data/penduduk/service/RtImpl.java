@@ -50,7 +50,7 @@ public class RtImpl implements RtService{
     public RtModel edit(RtModel rtModel, Long id) {
         RtModel update = rtRepository.findById(id).orElseThrow(() ->new NotFoundException("Id Not Found"));
         update.setNama_rt(rtModel.getNama_rt());
-        update.setWarga_id(rtModel.getWarga_id());
+        update.setWarga(rtModel.getWarga());
         return rtRepository.save(update);
     }
 

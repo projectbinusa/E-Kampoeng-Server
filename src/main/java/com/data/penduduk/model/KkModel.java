@@ -1,5 +1,6 @@
 package com.data.penduduk.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jdk.jfr.Timestamp;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -14,7 +15,13 @@ public class KkModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+//    @OneToOne(mappedBy = "kk", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @PrimaryKeyJoinColumn
+//    private Warga warga;
+
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
     @JoinColumn(name = "warga_id", referencedColumnName = "id")
     private Warga warga;
 

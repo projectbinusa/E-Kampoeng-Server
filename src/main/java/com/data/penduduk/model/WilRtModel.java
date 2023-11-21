@@ -9,8 +9,15 @@ public class WilRtModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private Long rt_id;
+//    @Column
+//    private Long rt_id;
+
+//    @OneToOne(mappedBy = "wilRtModel", cascade = CascadeType.ALL)
+//    private RtModel rtModel;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rt_id")
+    private RtModel rtModel;
 
     public Long getId() {
         return id;
@@ -20,11 +27,11 @@ public class WilRtModel {
         this.id = id;
     }
 
-    public Long getRt_id() {
-        return rt_id;
+    public RtModel getRtModel() {
+        return rtModel;
     }
 
-    public void setRt_id(Long rt_id) {
-        this.rt_id = rt_id;
+    public void setRtModel(RtModel rtModel) {
+        this.rtModel = rtModel;
     }
 }
