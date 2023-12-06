@@ -3,28 +3,38 @@ package com.e_kampoeng.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "organisasi")
 public class OrganisasiModel {
 
-    //    MAKE TABLE STATUS
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String jenis_surat;
+    @Column
+    private String nama_organisasi;
 
+    @Column
     private Date create_at;
 
-//    @JsonIgnore
-//    @ManyToMany(mappedBy = "organisasis")
-//    private Set<WargaModel> wargas = new HashSet<>();
+    @OneToMany(mappedBy = "organisasi", cascade = CascadeType.ALL)
+    private List<OrganisasiWargaModel> wargas = new ArrayList<>();
 
-    //    getter setter
+    public OrganisasiModel() {
+    }
+
+    public OrganisasiModel(Long id, String nama_organisasi, Date create_at, List<OrganisasiWargaModel> wargas) {
+        this.id = id;
+        this.nama_organisasi = nama_organisasi;
+        this.create_at = create_at;
+        this.wargas = wargas;
+    }
+
     public Long getId() {
         return id;
     }
@@ -33,12 +43,12 @@ public class OrganisasiModel {
         this.id = id;
     }
 
-    public String getJenis_surat() {
-        return jenis_surat;
+    public String getNama_organisasi() {
+        return nama_organisasi;
     }
 
-    public void setJenis_surat(String jenis_surat) {
-        this.jenis_surat = jenis_surat;
+    public void setNama_organisasi(String nama_organisasi) {
+        this.nama_organisasi = nama_organisasi;
     }
 
     public Date getCreate_at() {
@@ -49,11 +59,11 @@ public class OrganisasiModel {
         this.create_at = create_at;
     }
 
-//    public Set<WargaModel> getWargas() {
-//        return wargas;
-//    }
-//
-//    public void setWargas(Set<WargaModel> wargas) {
-//        this.wargas = wargas;
-//    }
+    public List<OrganisasiWargaModel> getWargas() {
+        return wargas;
+    }
+
+    public void setWargas(List<OrganisasiWargaModel> wargas) {
+        this.wargas = wargas;
+    }
 }

@@ -1,9 +1,12 @@
 package com.e_kampoeng.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "warga")
@@ -13,7 +16,7 @@ public class WargaModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private long id;
+    private Long id;
 
     @Column
     private String nama;
@@ -51,13 +54,53 @@ public class WargaModel {
     @Column
     private String sumber_air;
 
+    @ManyToOne
+    @JoinColumn(name = "wilayah_rt_id")
+    private WilayahRTModel wilayah_rt;
+
+    @JsonIgnore
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "id")
+    private RTModel rt;
+
+    @OneToMany(mappedBy = "warga", cascade = CascadeType.ALL)
+    private List<OrganisasiWargaModel> wargas = new ArrayList<>();
 
     //    getter setter
-    public long getId() {
+
+    public WargaModel() {
+    }
+
+    public WargaModel(Long id, String nama, String tempat_lahir, Date tanggal_lahir, String jenis_kelamin, String agama, Integer nik, String no_kk, String status_dalam_keluarga, String status_kependudukan, String pendidikan, String pekerjaan, String status_perkawinan, String golongan_darah, String jenis_asuransi, String jenis_kb, String kesesuaian_tempat, String sumber_air, WilayahRTModel wilayah_rt, RTModel rt, List<OrganisasiWargaModel> wargas) {
+        this.id = id;
+        this.nama = nama;
+        this.tempat_lahir = tempat_lahir;
+        this.tanggal_lahir = tanggal_lahir;
+        this.jenis_kelamin = jenis_kelamin;
+        this.agama = agama;
+        this.nik = nik;
+        this.no_kk = no_kk;
+        this.status_dalam_keluarga = status_dalam_keluarga;
+        this.status_kependudukan = status_kependudukan;
+        this.pendidikan = pendidikan;
+        this.pekerjaan = pekerjaan;
+        this.status_perkawinan = status_perkawinan;
+        this.golongan_darah = golongan_darah;
+        this.jenis_asuransi = jenis_asuransi;
+        this.jenis_kb = jenis_kb;
+        this.kesesuaian_tempat = kesesuaian_tempat;
+        this.sumber_air = sumber_air;
+        this.wilayah_rt = wilayah_rt;
+        this.rt = rt;
+        this.wargas = wargas;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -195,5 +238,29 @@ public class WargaModel {
 
     public void setSumber_air(String sumber_air) {
         this.sumber_air = sumber_air;
+    }
+
+    public RTModel getRt() {
+        return rt;
+    }
+
+    public void setRt(RTModel rt) {
+        this.rt = rt;
+    }
+
+    public WilayahRTModel getWilayah_rt() {
+        return wilayah_rt;
+    }
+
+    public void setWilayah_rt(WilayahRTModel wilayah_rt) {
+        this.wilayah_rt = wilayah_rt;
+    }
+
+    public List<OrganisasiWargaModel> getWargas() {
+        return wargas;
+    }
+
+    public void setWargas(List<OrganisasiWargaModel> wargas) {
+        this.wargas = wargas;
     }
 }

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface DataGuruDao extends CrudRepository<RWModel, Integer> {
+public interface RWDao extends CrudRepository<RWModel, Integer> {
 
     RWModel findById(long id);
 }

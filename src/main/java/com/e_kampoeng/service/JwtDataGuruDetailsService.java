@@ -1,6 +1,6 @@
 package com.e_kampoeng.service;
 
-import com.e_kampoeng.dao.DataGuruDao;
+import com.e_kampoeng.dao.RWDao;
 import com.e_kampoeng.dto.DataGuruDTO;
 import com.e_kampoeng.model.RWModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ public class JwtDataGuruDetailsService {
 
     //    ACTION
     @Autowired
-    private DataGuruDao dataGuruDao;
+    private RWDao dataGuruDao;
     private long id;
 
     //    Constructor
