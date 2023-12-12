@@ -89,7 +89,7 @@ public class JwtAuthenticationController {
             logger.error("Unable to update. data with id {} not found.", id);
             return new ResponseEntity<>(new CustomErrorType("Unable to update. data with id " + id + " not found."), HttpStatus.NOT_FOUND);
         }
-        currentData.orElseThrow().setProfile(user.getProfile());
+        currentData.orElseThrow().setImage(user.getImage());
         userDetailsService.update(currentData.get().getId());
         return new ResponseEntity<>(currentData, HttpStatus.OK);
     }

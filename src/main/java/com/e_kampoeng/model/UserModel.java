@@ -27,7 +27,7 @@ public class UserModel {
     private String password;
 
     @Column
-    private String profile;
+    private String image;
 
 
     //    getter setter
@@ -68,11 +68,11 @@ public class UserModel {
         this.role = role;
     }
 
-    public String getProfile() {
-        return profile;
+    public String getImage() {
+        return image;
     }
 
-    public void setProfile(String profile) {
-        this.profile = profile;
+    public void setImage(String image) {
+        this.image = image;
     }
 }

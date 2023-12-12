@@ -1,79 +1,65 @@
 package com.e_kampoeng.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "rw")
 public class RWModel {
 
 
+    //    MAKE TABLE GURU
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @CreationTimestamp
-    @Column(name = "create_at ")
-    private Date create_at;
+    private long id;
 
-//    @OneToOne
-//    @PrimaryKeyJoinColumn(name = "warga_id")
-//    private WargaModel warga;
+    @Column
+    private String nama;
+    @Column
+    private String tempat;
+    @Column
+    private String tanggal;
+    @Column
+    private String alamat;
 
-    @JsonIgnore
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "id")
-    private WilayahRWModel wilayahRW;
-
-    @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "warga_id", referencedColumnName = "id")
-    private WargaModel warga;
-
-    public RWModel() {
-    }
-
-    public RWModel(Long id, Date create_at, WargaModel warga, WilayahRWModel wilayahRW) {
-        this.id = id;
-        this.create_at = create_at;
-        this.warga = warga;
-        this.wilayahRW = wilayahRW;
-    }
-
-    public Long getId() {
+    //    getter setter
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Date getCreate_at() {
-        return create_at;
+    public String getNama() {
+        return nama;
     }
 
-    public void setCreate_at(Date create_at) {
-        this.create_at = create_at;
+    public void setNama(String nama) {
+        this.nama = nama;
     }
 
-    public WargaModel getWarga() {
-        return warga;
+    public String getTempat() {
+        return tempat;
     }
 
-    public void setWarga(WargaModel warga) {
-        this.warga = warga;
+    public void setTempat(String tempat) {
+        this.tempat = tempat;
     }
 
-    public WilayahRWModel getWilayahRW() {
-        return wilayahRW;
+    public String getTanggal() {
+        return tanggal;
     }
 
-    public void setWilayahRW(WilayahRWModel wilayahRW) {
-        this.wilayahRW = wilayahRW;
+    public void setTanggal(String tanggal) {
+        this.tanggal = tanggal;
+    }
+
+    public String getAlamat() {
+        return alamat;
+    }
+
+    public void setAlamat(String alamat) {
+        this.alamat = alamat;
     }
 }

@@ -6,7 +6,7 @@ public class UserDTO {
     private String username;
     private String password;
     private String role;
-    private String profile;
+    private String image;
 
     //    GETTER SETTER
 
@@ -38,11 +38,11 @@ public class UserDTO {
         this.role = role;
     }
 
-    public String getProfile() {
-        return profile;
+    public String getImage() {
+        return image;
     }
 
-    public void setProfile(String profile) {
-        this.profile = profile;
+    public void setImage(String image) {
+        this.image = image;
     }
 }
