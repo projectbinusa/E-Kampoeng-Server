@@ -51,6 +51,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 		newUser.setUsername(user.getUsername());
 		newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
 		newUser.setRole(user.getRole());
+		newUser.setProfile(user.getProfile());
 		var password = user.getPassword().trim();
 		// digit + lowercase char + uppercase char + punctuation + symbol
 		var isPasswordValid = !password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$"
