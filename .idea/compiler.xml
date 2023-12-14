@@ -8,12 +8,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="AppServer" />
         <module name="e-kampoeng-server" />
+        <module name="E-Kampoeng-Server" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="AppServer" options="-parameters" />
+      <module name="E-Kampoeng-Server" options="-parameters" />
       <module name="e-kampoeng-server" options="-parameters" />
     </option>
   </component>
