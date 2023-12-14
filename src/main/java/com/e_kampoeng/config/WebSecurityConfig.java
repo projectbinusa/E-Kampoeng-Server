@@ -46,16 +46,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    private static final String[] AUTH_WHITELIST = {
+            "/api/wilayah-rt",
+            "/api/wilayah-rt/{id}",
+            "/api/wilayah-rw",
+            "/api/wilayah-rw/{id}",
+            "/login/**",
+            "/register/**"
+    };
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/data/add", "/data/update/{id}","/data/delete/{id}").hasRole("ADMIN")
                 .antMatchers("/data/", "/data/{id}").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/login", "/register").permitAll().
+                .antMatchers(AUTH_WHITELIST).permitAll().
                 anyRequest()
                 .authenticated().and().
-
                 exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
