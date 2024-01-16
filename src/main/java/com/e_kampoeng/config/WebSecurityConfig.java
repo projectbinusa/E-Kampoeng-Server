@@ -58,8 +58,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/api/wilayah-rt/{id}",
             "/api/wilayah-rw",
             "/api/wilayah-rw/{id}",
-            "/login/**",
-            "/register/**"
+            "/api/login/**",
+            "/api/register/**"
     };
 
     @Override
