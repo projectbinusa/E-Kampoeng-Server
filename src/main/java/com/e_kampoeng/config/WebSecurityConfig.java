@@ -58,6 +58,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/api/wilayah-rt/{id}",
             "/api/wilayah-rw",
             "/api/wilayah-rw/{id}",
+            "/api/e_soerat/**",
+            "/api/e_soerat",
+            "/api/e_soerat/{id}",
             "/api/login/**",
             "/api/register/**"
     };
