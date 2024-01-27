@@ -64,7 +64,7 @@ public class WargaService {
     }
 
     //    for update
-    public WargaModel update(Long id) {
+    public WargaModel update(long id) {
         WargaModel wargaModel = dataWargaDao.findById(id);
         return dataWargaDao.save(wargaModel);
     }

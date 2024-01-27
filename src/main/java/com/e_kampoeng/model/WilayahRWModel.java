@@ -13,7 +13,7 @@ public class WilayahRWModel {
     private Long id;
 
     @Column(name = "nomor_rw")
-    private Long nomor_rw;
+    private Integer nomor_rw;
 
     @Column(name = "nama_dusun")
     private String nama_dusun;
@@ -29,11 +29,11 @@ public class WilayahRWModel {
         this.id = id;
     }
 
-    public Long getNomor_rw() {
+    public Integer getNomor_rw() {
         return nomor_rw;
     }
 
-    public void setNomor_rw(Long nomor_rw) {
+    public void setNomor_rw(Integer nomor_rw) {
         this.nomor_rw = nomor_rw;
     }
 

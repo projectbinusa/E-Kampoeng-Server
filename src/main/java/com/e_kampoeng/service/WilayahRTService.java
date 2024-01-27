@@ -1,22 +1,18 @@
 package com.e_kampoeng.service;
 
 import com.e_kampoeng.model.WilayahRTModel;
-import com.e_kampoeng.model.WilayahRWModel;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
 import java.util.Map;
 
 public interface WilayahRTService {
-    WilayahRTModel add(WilayahRTModel wilayahRTModel);
+    WilayahRTModel addWilayahRt(WilayahRTModel wilayahRTModel);
 
-    Page<WilayahRTModel> getAll(Long page, Long pageSize, String sort, String sortDirection);
+    WilayahRTModel putWilayahRt(Long id, WilayahRTModel wilayahRTModel);
 
-    WilayahRTModel getById(Long id);
+    WilayahRTModel getByIdWilayahRt(Long id);
 
-    List<WilayahRTModel> preview();
+    Map<String, Boolean> deleteWilayahRt(Long id);
 
-    WilayahRTModel putData(Long id, WilayahRTModel wilayahRTModel);
-
-    Map<String, Boolean> delete(Long id);
+    Page<WilayahRTModel> getAllWilayahRt(Long page, Long limit, String sort, String search);
 }

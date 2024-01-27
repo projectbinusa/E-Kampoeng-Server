@@ -26,7 +26,7 @@ public class WilayahRWImpl implements WilayahRWService {
         WilayahRWModel wilayahRWModel1 = new WilayahRWModel();
         wilayahRWModel1.setNomor_rw(wilayahRWModel.getNomor_rw());
         wilayahRWModel1.setNama_dusun(wilayahRWModel.getNama_dusun());
-        return wilayahRWRepository.save(wilayahRWModel);
+        return wilayahRWRepository.save(wilayahRWModel1);
     }
 
     @Override

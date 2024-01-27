@@ -1,7 +1,5 @@
 package com.e_kampoeng.model;
 
-import com.e_kampoeng.dto.Warga;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -20,24 +18,15 @@ public class RTModel {
     private Date create_at;
 
     @OneToOne
-    @PrimaryKeyJoinColumn(name = "warga_id")
+    @PrimaryKeyJoinColumn(name = "id_warga")
     private WargaModel warga;
 
-    @JsonIgnore
     @OneToOne
-    @MapsId
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "id_wilayah_rt")
     private WilayahRTModel wilayahRT;
 
 
     public RTModel() {
-    }
-
-    public RTModel(Long id, Date create_at, WargaModel warga, WilayahRTModel wilayahRT) {
-        this.id = id;
-        this.create_at = create_at;
-        this.warga = warga;
-        this.wilayahRT = wilayahRT;
     }
 
     public Long getId() {
