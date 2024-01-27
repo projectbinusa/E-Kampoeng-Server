@@ -23,20 +23,6 @@ public class ESoeratServiceImpl implements ESoeratService {
     @Autowired
     ESoeratRepository eSoeratRepository;
 
-//    @Override
-//    public Page<ESoeratModel> getAllSoerat(String query , Long page) {
-//        Pageable pageable = PageRequest.of(Math.toIntExact(page),5);
-//        return eSoeratRepository.findBySoerat(query,pageable);
-//    }
-
-//    @Override
-//    public ESoeratModel addSoerat(ESoeratModel eSoeratModel) {
-//        ESoeratModel soerat = new ESoeratModel();
-//        soerat.setJenis_surat(soerat.getJenis_surat());
-//        soerat.setJenis_bantuan(soerat.getJenis_bantuan());
-//        return eSoeratRepository.save(soerat);
-//    }
-
     @Override
     public ESoeratModel addSoerat(ESoeratModel eSoeratModel) {
         ESoeratModel soerat = new ESoeratModel();
@@ -53,27 +39,22 @@ public class ESoeratServiceImpl implements ESoeratService {
         return eSoeratRepository.save(eSoeratModel1);
     }
 
+
 //    @Override
-//    public Page<ESoeratModel> getAllSoerat(String query ,Long page) {
-//        Pageable pageable = PageRequest.of(Math.toIntExact(page),5);
-//        return eSoeratRepository.findById(query,pageable);
+//    public Page<ESoeratModel> getAllSoerat(Long page, Long limit, String search, String sort) {
+//        Sort.Direction direction = Sort.Direction.ASC;
+//        if (sort.startsWith("-")) {
+//            sort = sort.substring(1);
+//            direction = Sort.Direction.DESC;
+//        }
+//
+//        Pageable pageable = PageRequest.of(Math.toIntExact(page - 1), Math.toIntExact(limit), direction, sort);
+//        if (search != null && !search.isEmpty()) {
+//            return eSoeratRepository.findAllByKeyword(search, pageable);
+//        } else {
+//            return eSoeratRepository.findAll(pageable);
+//        }
 //    }
-
-    @Override
-    public Page<ESoeratModel> getAllSoerat(Long page, Long limit, String search, String sort) {
-        Sort.Direction direction = Sort.Direction.ASC;
-        if (sort.startsWith("-")) {
-            sort = sort.substring(1);
-            direction = Sort.Direction.DESC;
-        }
-
-        Pageable pageable = PageRequest.of(Math.toIntExact(page - 1), Math.toIntExact(limit), direction, sort);
-        if (search != null && !search.isEmpty()) {
-            return eSoeratRepository.findAllByKeyword(search, pageable);
-        } else {
-            return eSoeratRepository.findAll(pageable);
-        }
-    }
     @Override
     public ESoeratModel getIdSoerat(Long id) {
         var soerat = eSoeratRepository.findById(id).get();
@@ -96,9 +77,9 @@ public class ESoeratServiceImpl implements ESoeratService {
         }
     }
 
-    @Override
-    public List<ESoeratModel> allSoerat() {
-        return eSoeratRepository.findAll();
-    }
+//    @Override
+//    public List<ESoeratModel> allSoerat() {
+//        return eSoeratRepository.findAll();
+//    }
 
 }
