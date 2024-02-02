@@ -2,11 +2,13 @@ package com.e_kampoeng.controller;
 
 import com.e_kampoeng.exception.CommonResponse;
 import com.e_kampoeng.exception.ResponseHelper;
+import com.e_kampoeng.impl.WilRWImpl;
 import com.e_kampoeng.model.WilayahRWModel;
 import com.e_kampoeng.response.PaginationResponse;
-import com.e_kampoeng.service.WilayahRWService;
 import com.e_kampoeng.util.Pagination;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -16,32 +18,35 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-//@RequestMapping("/api")
-public class WilayahRWControler {
+@RequestMapping("/api/wilayah-rw")
+@CrossOrigin(origins = "http://localhost:3000")
+public class WilayahRWController {
+
+    public static final Logger logger = LoggerFactory.getLogger(WilayahRWController.class);
 
     @Autowired
-    WilayahRWService wilayahRWService;
+    WilRWImpl wilRW;
 
     @Autowired
     ModelMapper modelMapper;
 
-    @PostMapping(path="/api/wilayah-rw")
+    @PostMapping()
     public CommonResponse<WilayahRWModel> Post(@RequestBody WilayahRWModel wilayahRWModel) {
-        return ResponseHelper.ok(wilayahRWService.addWilayahRW(modelMapper.map(wilayahRWModel, WilayahRWModel.class)));
+        return ResponseHelper.ok(wilRW.addWilayahRW(modelMapper.map(wilayahRWModel, WilayahRWModel.class)));
     }
 
-    @PutMapping(path = "/api/wilayah-rw/{id}")
+    @PutMapping(path = "/{id}")
     public CommonResponse<WilayahRWModel> Put(@PathVariable("id") Long id, @RequestBody WilayahRWModel wilayahRWModel) {
-        return ResponseHelper.ok(wilayahRWService.putDataWilayahRW(id, modelMapper.map(wilayahRWModel, WilayahRWModel.class)));
+        return ResponseHelper.ok(wilRW.putDataWilayahRW(id, modelMapper.map(wilayahRWModel, WilayahRWModel.class)));
     }
 
-    @GetMapping(path = "/api/wilayah-rw/{id}")
+    @GetMapping(path = "/{id}")
     public CommonResponse<WilayahRWModel> getById(@PathVariable("id") Long id) {
-        return ResponseHelper.ok(wilayahRWService.getByIdWilayahRW(id));
+        return ResponseHelper.ok(wilRW.getByIdWilayahRW(id));
     }
 
 
-    @GetMapping(path = "/api/wilayah-rw")
+    @GetMapping()
     public PaginationResponse<List<WilayahRWModel>> getAllWilayahRW(
             @RequestParam(defaultValue = Pagination.page, required = false) Long page,
             @RequestParam(defaultValue = Pagination.limit, required = false) Long limit,
@@ -52,9 +57,9 @@ public class WilayahRWControler {
         Page<WilayahRWModel> wilayahRWModels;
 
         if (search != null && !search.isEmpty()) {
-            wilayahRWModels = wilayahRWService.getAllWilayahRW(page, limit, search, sort);
+            wilayahRWModels = wilRW.getAllWilayahRW(page, limit, search, sort);
         } else {
-            wilayahRWModels = wilayahRWService.getAllWilayahRW(page, limit, null, sort);
+            wilayahRWModels = wilRW.getAllWilayahRW(page, limit, null, sort);
         }
 
         List<WilayahRWModel> channels = wilayahRWModels.getContent();
@@ -68,8 +73,8 @@ public class WilayahRWControler {
         return ResponseHelper.okWithPagination(channels, pagination);
     }
 
-    @DeleteMapping(path = "/api/wilayah-rw/{id}")
+    @DeleteMapping(path = "/{id}")
     public CommonResponse<?> delete(@PathVariable("id") Long id) {
-        return ResponseHelper.ok(wilayahRWService.deleteWilayahRW(id));
+        return ResponseHelper.ok(wilRW.deleteWilayahRW(id));
     }
 }

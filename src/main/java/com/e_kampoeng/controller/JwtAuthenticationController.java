@@ -2,7 +2,7 @@ package com.e_kampoeng.controller;
 
 
 import com.e_kampoeng.config.JwtTokenUtil;
-import com.e_kampoeng.dao.UserDao;
+import com.e_kampoeng.repository.UserDao;
 import com.e_kampoeng.exception.CommonResponse;
 import com.e_kampoeng.exception.ResponseHelper;
 import com.e_kampoeng.model.*;
@@ -79,33 +79,33 @@ public class JwtAuthenticationController {
     }
 
     //    Update profile
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> updateData(@PathVariable("id") long id, @RequestBody UserDTO user) throws SQLException, ClassNotFoundException {
-        logger.info("Updating data with id {}", id);
-
-        Optional<UserModel> currentData = userDetailsService.findById(id);
-
-        if (currentData == null) {
-            logger.error("Unable to update. data with id {} not found.", id);
-            return new ResponseEntity<>(new CustomErrorType("Unable to update. data with id " + id + " not found."), HttpStatus.NOT_FOUND);
-        }
-        currentData.orElseThrow().setImage(user.getImage());
-        userDetailsService.update(currentData.get().getId());
-        return new ResponseEntity<>(currentData, HttpStatus.OK);
-    }
+//    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
+//    public ResponseEntity<?> updateData(@PathVariable("id") long id, @RequestBody UserDTO user) throws SQLException, ClassNotFoundException {
+//        logger.info("Updating data with id {}", id);
+//
+//        Optional<UserModel> currentData = userDetailsService.findById(id);
+//
+//        if (currentData == null) {
+//            logger.error("Unable to update. data with id {} not found.", id);
+//            return new ResponseEntity<>(new CustomErrorType("Unable to update. data with id " + id + " not found."), HttpStatus.NOT_FOUND);
+//        }
+//        currentData.orElseThrow().setImage(user.getImage());
+//        userDetailsService.update(currentData.get().getId());
+//        return new ResponseEntity<>(currentData, HttpStatus.OK);
+//    }
 
     //    Get profile & user
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> getData(@PathVariable("id") long id) throws SQLException, ClassNotFoundException {
-        logger.info("Fetching data a with id {}", id);
-
-        Optional<UserModel> user = userDetailsService.findById(id);
-
-        if (user == null) {
-            logger.error("data with id {} not found.", id);
-            return new ResponseEntity<>(new CustomErrorType("data with id " + id + " not found"), HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }
+//    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+//    public ResponseEntity<?> getData(@PathVariable("id") long id) throws SQLException, ClassNotFoundException {
+//        logger.info("Fetching data a with id {}", id);
+//
+//        Optional<UserModel> user = userDetailsService.findById(id);
+//
+//        if (user == null) {
+//            logger.error("data with id {} not found.", id);
+//            return new ResponseEntity<>(new CustomErrorType("data with id " + id + " not found"), HttpStatus.NOT_FOUND);
+//        }
+//
+//        return new ResponseEntity<>(user, HttpStatus.OK);
+//    }
 }

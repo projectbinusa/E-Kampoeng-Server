@@ -21,6 +21,5 @@ public interface ESoeratService {
     ESoeratModel editSoerat(Long id,ESoeratModel eSoeratModel);
 
     Map<String ,Boolean> deleteSoerat(Long id);
-
 //    List<ESoeratModel> allSoerat();
 }
