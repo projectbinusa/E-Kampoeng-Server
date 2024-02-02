@@ -25,7 +25,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:3000")
 public class JwtAuthenticationController {
 

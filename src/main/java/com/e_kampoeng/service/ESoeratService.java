@@ -1,6 +1,9 @@
 package com.e_kampoeng.service;
 
 import com.e_kampoeng.model.ESoeratModel;
+import com.e_kampoeng.model.WilayahRWModel;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Map;
@@ -18,6 +21,5 @@ public interface ESoeratService {
     ESoeratModel editSoerat(Long id,ESoeratModel eSoeratModel);
 
     Map<String ,Boolean> deleteSoerat(Long id);
-
-    List<ESoeratModel> allSoerat();
+//    List<ESoeratModel> allSoerat();
 }
