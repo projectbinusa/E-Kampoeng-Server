@@ -1,7 +1,6 @@
 package com.e_kampoeng.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,7 +13,6 @@ public class WargaModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
 
     @Column
@@ -61,25 +59,15 @@ public class WargaModel {
     @JoinColumn(name = "wilayah_rw_id")
     private WilayahRWModel wilayah_rw;
 
-    @JsonIgnore
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "id")
-    private RTModel rt;
-
     @OneToMany(mappedBy = "warga", cascade = CascadeType.ALL)
-    private List<OrganisasiWargaModel> wargas = new ArrayList<>();
-
-    @OneToOne(mappedBy = "warga", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    private KKModel kkModel;
+    private List<WargaOrganisasiModel> wargas = new ArrayList<>();
 
     //    getter setter
 
     public WargaModel() {
     }
 
-    public WargaModel(Long id, String nama, String tempat_lahir, Date tanggal_lahir, String jenis_kelamin, String agama, Integer nik, String no_kk, String status_dalam_keluarga, String status_kependudukan, String pendidikan, String pekerjaan, String status_perkawinan, String golongan_darah, String jenis_asuransi, String jenis_kb, String kesesuaian_tempat, String sumber_air, WilayahRTModel wilayah_rt, WilayahRWModel wilayah_rw, RTModel rt, List<OrganisasiWargaModel> wargas, KKModel kkModel) {
+    public WargaModel(Long id, String nama, String tempat_lahir, Date tanggal_lahir, String jenis_kelamin, String agama, Integer nik, String no_kk, String status_dalam_keluarga, String status_kependudukan, String pendidikan, String pekerjaan, String status_perkawinan, String golongan_darah, String jenis_asuransi, String jenis_kb, String kesesuaian_tempat, String sumber_air, WilayahRTModel wilayah_rt, WilayahRWModel wilayah_rw, List<WargaOrganisasiModel> wargas) {
         this.id = id;
         this.nama = nama;
         this.tempat_lahir = tempat_lahir;
@@ -100,9 +88,7 @@ public class WargaModel {
         this.sumber_air = sumber_air;
         this.wilayah_rt = wilayah_rt;
         this.wilayah_rw = wilayah_rw;
-        this.rt = rt;
         this.wargas = wargas;
-        this.kkModel = kkModel;
     }
 
     public Long getId() {
@@ -249,14 +235,6 @@ public class WargaModel {
         this.sumber_air = sumber_air;
     }
 
-    public RTModel getRt() {
-        return rt;
-    }
-
-    public void setRt(RTModel rt) {
-        this.rt = rt;
-    }
-
     public WilayahRTModel getWilayah_rt() {
         return wilayah_rt;
     }
@@ -265,11 +243,11 @@ public class WargaModel {
         this.wilayah_rt = wilayah_rt;
     }
 
-    public List<OrganisasiWargaModel> getWargas() {
+    public List<WargaOrganisasiModel> getWargas() {
         return wargas;
     }
 
-    public void setWargas(List<OrganisasiWargaModel> wargas) {
+    public void setWargas(List<WargaOrganisasiModel> wargas) {
         this.wargas = wargas;
     }
 
@@ -280,13 +258,5 @@ public class WargaModel {
 
     public void setWilayah_rw(WilayahRWModel wilayah_rw) {
         this.wilayah_rw = wilayah_rw;
-    }
-
-    public KKModel getKkModel() {
-        return kkModel;
-    }
-
-    public void setKkModel(KKModel kkModel) {
-        this.kkModel = kkModel;
     }
 }

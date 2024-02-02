@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "warga_organisasi")
-public class OrganisasiWargaModel {
+public class WargaOrganisasiModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,10 +18,10 @@ public class OrganisasiWargaModel {
     @JoinColumn(name = "id_organisasi")
     private OrganisasiModel organisasi;
 
-    public OrganisasiWargaModel() {
+    public WargaOrganisasiModel() {
     }
 
-    public OrganisasiWargaModel(Long id, WargaModel warga, OrganisasiModel organisasi) {
+    public WargaOrganisasiModel(Long id, WargaModel warga, OrganisasiModel organisasi) {
         this.id = id;
         this.warga = warga;
         this.organisasi = organisasi;

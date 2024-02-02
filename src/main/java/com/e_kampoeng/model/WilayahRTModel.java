@@ -13,6 +13,14 @@ public class WilayahRTModel {
     @Column(name = "nomor_rt")
     private Long nomor_rt;
 
+    @ManyToOne
+    @JoinColumn(name = "wil_rw_id")
+    private WilayahRWModel wilRW;
+
+    @ManyToOne
+    @JoinColumn(name = "rt_id")
+    private RTModel rt;
+
     public WilayahRTModel() {
     }
 
@@ -30,5 +38,21 @@ public class WilayahRTModel {
 
     public void setNomor_rt(Long nomor_rt) {
         this.nomor_rt = nomor_rt;
+    }
+
+    public WilayahRWModel getWilRW() {
+        return wilRW;
+    }
+
+    public void setWilRW(WilayahRWModel wilRW) {
+        this.wilRW = wilRW;
+    }
+
+    public RTModel getRt() {
+        return rt;
+    }
+
+    public void setRt(RTModel rt) {
+        this.rt = rt;
     }
 }

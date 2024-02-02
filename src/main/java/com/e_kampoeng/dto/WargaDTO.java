@@ -1,11 +1,8 @@
 package com.e_kampoeng.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import javax.persistence.Column;
 import java.util.Date;
 
-public class Warga {
+public class  WargaDTO {
 
     private String nama;
     private String tempat_lahir;

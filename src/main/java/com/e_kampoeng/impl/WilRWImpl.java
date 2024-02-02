@@ -1,8 +1,9 @@
-package com.e_kampoeng.service;
+package com.e_kampoeng.impl;
 
-import com.e_kampoeng.dao.WilayahRWRepository;
+import com.e_kampoeng.repository.WilayahRWRepository;
 import com.e_kampoeng.exception.NotFoundException;
 import com.e_kampoeng.model.WilayahRWModel;
+import com.e_kampoeng.service.WilayahRWService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class WilayahRWImpl implements WilayahRWService {
+public class WilRWImpl implements WilayahRWService {
 
     @Autowired
     WilayahRWRepository wilayahRWRepository;

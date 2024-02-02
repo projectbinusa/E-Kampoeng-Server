@@ -1,11 +1,8 @@
 package com.e_kampoeng.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 
 @Entity
@@ -23,12 +20,12 @@ public class OrganisasiModel {
     private Date create_at;
 
     @OneToMany(mappedBy = "organisasi", cascade = CascadeType.ALL)
-    private List<OrganisasiWargaModel> wargas = new ArrayList<>();
+    private List<WargaOrganisasiModel> wargas = new ArrayList<>();
 
     public OrganisasiModel() {
     }
 
-    public OrganisasiModel(Long id, String nama_organisasi, Date create_at, List<OrganisasiWargaModel> wargas) {
+    public OrganisasiModel(Long id, String nama_organisasi, Date create_at, List<WargaOrganisasiModel> wargas) {
         this.id = id;
         this.nama_organisasi = nama_organisasi;
         this.create_at = create_at;
@@ -59,11 +56,11 @@ public class OrganisasiModel {
         this.create_at = create_at;
     }
 
-    public List<OrganisasiWargaModel> getWargas() {
+    public List<WargaOrganisasiModel> getWargas() {
         return wargas;
     }
 
-    public void setWargas(List<OrganisasiWargaModel> wargas) {
+    public void setWargas(List<WargaOrganisasiModel> wargas) {
         this.wargas = wargas;
     }
 }
