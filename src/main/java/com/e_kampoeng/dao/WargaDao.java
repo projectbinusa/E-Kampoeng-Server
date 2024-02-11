@@ -1,12 +1,11 @@
 package com.e_kampoeng.dao;
 
 import com.e_kampoeng.model.WargaModel;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-
 @Repository
-public interface WargaDao extends CrudRepository<WargaModel, Integer> {
+public interface WargaDao extends JpaRepository<WargaModel, Long> {
 
     WargaModel findById(long id);
 }

@@ -9,7 +9,6 @@ import com.e_kampoeng.util.Pagination;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,31 +18,32 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-public class WilayahRTController {
+@CrossOrigin(origins = "http://localhost:3000")
+public class WilayahRTControler {
 
     @Autowired
-     WilayahRTService wilayahRTService;
+    private WilayahRTService wilayahRTService;
 
     @Autowired
     ModelMapper modelMapper;
 
-    @PostMapping(path="/wilayah-rt", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public CommonResponse<WilayahRTModel> Post(@RequestBody WilayahRTModel wilayahRTModel) {
-        return ResponseHelper.ok(wilayahRTService.add(modelMapper.map(wilayahRTModel, WilayahRTModel.class)));
+    @PostMapping(path="/wilayah-rt")
+    public CommonResponse<WilayahRTModel> Post(@RequestBody WilayahRTModel rtModel) {
+        return ResponseHelper.ok(wilayahRTService.addWilayahRt(modelMapper.map(rtModel, WilayahRTModel.class)));
     }
 
-    @PutMapping(path = "/wilayah-rt/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public CommonResponse<WilayahRTModel> Put(@PathVariable("id") Long id, @RequestBody WilayahRTModel wilayahRTModel) {
-        return ResponseHelper.ok(wilayahRTService.putData(id, modelMapper.map(wilayahRTModel, WilayahRTModel.class)));
+    @PutMapping(path = "/wilayah-rt/{id}")
+    public CommonResponse<WilayahRTModel> Put(@PathVariable("id") Long id, @RequestBody WilayahRTModel rtModel) {
+        return ResponseHelper.ok(wilayahRTService.putWilayahRt(id, modelMapper.map(rtModel, WilayahRTModel.class)));
     }
 
-    @GetMapping(path = "/wilayah-rt/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/wilayah-rt/{id}")
     public CommonResponse<WilayahRTModel> getById(@PathVariable("id") Long id) {
-        return ResponseHelper.ok(wilayahRTService.getById(id));
+        return ResponseHelper.ok(wilayahRTService.getByIdWilayahRt(id));
     }
 
 
-    @GetMapping(path = "/wilayah-rt", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/wilayah-rt")
     public PaginationResponse<List<WilayahRTModel>> getAll(
             @RequestParam(defaultValue = Pagination.page, required = false) Long page,
             @RequestParam(defaultValue = Pagination.limit, required = false) Long limit,
@@ -51,17 +51,17 @@ public class WilayahRTController {
             @RequestParam(required = false) String search
     ) {
 
-        Page<WilayahRTModel> wilayahRTModels;
+        Page<WilayahRTModel> rtModels;
 
         if (search != null && !search.isEmpty()) {
-            wilayahRTModels = wilayahRTService.getAll(page, limit, search, sort);
+            rtModels = wilayahRTService.getAllWilayahRt(page, limit, search, sort);
         } else {
-            wilayahRTModels = wilayahRTService.getAll(page, limit, null, sort);
+            rtModels = wilayahRTService.getAllWilayahRt(page, limit, null, sort);
         }
 
-        List<WilayahRTModel> channels = wilayahRTModels.getContent();
-        long totalItems = wilayahRTModels.getTotalElements();
-        int totalPages = wilayahRTModels.getTotalPages();
+        List<WilayahRTModel> channels = rtModels.getContent();
+        long totalItems = rtModels.getTotalElements();
+        int totalPages = rtModels.getTotalPages();
 
         Map<String, Long> pagination = new HashMap<>();
         pagination.put("total", totalItems);
@@ -70,8 +70,8 @@ public class WilayahRTController {
         return ResponseHelper.okWithPagination(channels, pagination);
     }
 
-    @DeleteMapping(path = "/wilayah-rt/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(path = "/wilayah-rt/{id}")
     public CommonResponse<?> delete(@PathVariable("id") Long id) {
-        return ResponseHelper.ok(wilayahRTService.delete(id));
+        return ResponseHelper.ok(wilayahRTService.deleteWilayahRt(id));
     }
 }

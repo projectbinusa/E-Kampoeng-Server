@@ -1,7 +1,6 @@
 package com.e_kampoeng.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,12 +8,11 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "warga")
+@Table(name ="warga")
 public class WargaModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
 
     @Column
@@ -61,18 +59,18 @@ public class WargaModel {
     @JoinColumn(name = "wilayah_rw_id")
     private WilayahRWModel wilayah_rw;
 
-    @JsonIgnore
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "id")
-    private RTModel rt;
+//    @JsonIgnore
+//    @OneToOne
+//    @MapsId
+//    @JoinColumn(name = "id_rt")
+//    private RTModel rt;
 
     @OneToMany(mappedBy = "warga", cascade = CascadeType.ALL)
     private List<OrganisasiWargaModel> wargas = new ArrayList<>();
 
-    @OneToOne(mappedBy = "warga", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    private KKModel kkModel;
+//    @OneToOne(mappedBy = "warga", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @PrimaryKeyJoinColumn
+//    private KKModel kkModel;
 
     //    getter setter
 
@@ -100,9 +98,9 @@ public class WargaModel {
         this.sumber_air = sumber_air;
         this.wilayah_rt = wilayah_rt;
         this.wilayah_rw = wilayah_rw;
-        this.rt = rt;
+//        this.rt = rt;
         this.wargas = wargas;
-        this.kkModel = kkModel;
+//        this.kkModel = kkModel;
     }
 
     public Long getId() {
@@ -249,13 +247,13 @@ public class WargaModel {
         this.sumber_air = sumber_air;
     }
 
-    public RTModel getRt() {
-        return rt;
-    }
-
-    public void setRt(RTModel rt) {
-        this.rt = rt;
-    }
+//    public RTModel getRt() {
+//        return rt;
+//    }
+//
+//    public void setRt(RTModel rt) {
+//        this.rt = rt;
+//    }
 
     public WilayahRTModel getWilayah_rt() {
         return wilayah_rt;
@@ -282,11 +280,11 @@ public class WargaModel {
         this.wilayah_rw = wilayah_rw;
     }
 
-    public KKModel getKkModel() {
-        return kkModel;
-    }
-
-    public void setKkModel(KKModel kkModel) {
-        this.kkModel = kkModel;
-    }
+//    public KKModel getKkModel() {
+//        return kkModel;
+//    }
+//
+//    public void setKkModel(KKModel kkModel) {
+//        this.kkModel = kkModel;
+//    }
 }
