@@ -37,7 +37,7 @@ public class WargaController {
     }
 
     // ---------------------------------Get All data siswa-------------------------------------------
-    @RequestMapping(value = "/get", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
     public CommonResponse<List<WargaModel>> listAll() throws SQLException, ClassNotFoundException {
 
         List<WargaModel> dataWargas = dataWarga.findAll();
