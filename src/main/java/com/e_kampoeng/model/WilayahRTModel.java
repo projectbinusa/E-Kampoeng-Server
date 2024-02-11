@@ -11,12 +11,12 @@ public class WilayahRTModel {
     private Long id;
 
     @Column(name = "nomor_rt")
-    private String nomor_rt;
+    private Integer nomor_rt;
 
     public WilayahRTModel() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -24,11 +24,11 @@ public class WilayahRTModel {
         this.id = id;
     }
 
-    public String getNomor_rt() {
+    public Integer getNomor_rt() {
         return nomor_rt;
     }
 
-    public void setNomor_rt(String nomor_rt) {
+    public void setNomor_rt(Integer nomor_rt) {
         this.nomor_rt = nomor_rt;
     }
 }

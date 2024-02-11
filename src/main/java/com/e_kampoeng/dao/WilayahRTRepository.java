@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface WilayahRTRepository extends JpaRepository<WilayahRTModel, Long> {
-    WilayahRTModel findById(long id);
+//    WilayahRTModel findById(Long id);
     @Query(value = "SELECT * FROM wilayah_rt WHERE nomor_rt LIKE CONCAT('%',:keyword, '%')", nativeQuery = true)
     Page<WilayahRTModel> findAllByKeyword(@Param("keyword") String keyword, Pageable pageable);
 }

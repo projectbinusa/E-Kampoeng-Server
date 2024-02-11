@@ -3,15 +3,12 @@ package com.e_kampoeng.controller;
 import com.e_kampoeng.exception.CommonResponse;
 import com.e_kampoeng.exception.ResponseHelper;
 import com.e_kampoeng.model.ESoeratModel;
-import com.e_kampoeng.model.WilayahRTModel;
-import com.e_kampoeng.model.WilayahRWModel;
 import com.e_kampoeng.response.PaginationResponse;
 import com.e_kampoeng.service.ESoeratService;
 import com.e_kampoeng.util.Pagination;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;

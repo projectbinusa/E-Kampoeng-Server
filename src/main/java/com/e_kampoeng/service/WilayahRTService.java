@@ -14,5 +14,5 @@ public interface WilayahRTService {
 
     Map<String, Boolean> deleteWilayahRt(Long id);
 
-    Page<WilayahRTModel> getAllWilayahRt(Long page, Long limit, String sort, String search);
+    Page<WilayahRTModel> getAllWilayahRt(Long page, Long pageSize, String sort, String sortDirectioh);
 }

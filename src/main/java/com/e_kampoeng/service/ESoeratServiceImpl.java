@@ -3,8 +3,6 @@ package com.e_kampoeng.service;
 import com.e_kampoeng.dao.ESoeratRepository;
 import com.e_kampoeng.exception.NotFoundException;
 import com.e_kampoeng.model.ESoeratModel;
-import com.e_kampoeng.model.WilayahRTModel;
-import com.e_kampoeng.model.WilayahRWModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

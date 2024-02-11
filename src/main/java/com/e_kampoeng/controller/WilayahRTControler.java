@@ -1,6 +1,5 @@
 package com.e_kampoeng.controller;
 
-import com.e_kampoeng.dto.RTDto;
 import com.e_kampoeng.exception.CommonResponse;
 import com.e_kampoeng.exception.ResponseHelper;
 import com.e_kampoeng.model.WilayahRTModel;
@@ -23,18 +22,18 @@ import java.util.Map;
 public class WilayahRTControler {
 
     @Autowired
-    WilayahRTService wilayahRTService;
+    private WilayahRTService wilayahRTService;
 
     @Autowired
     ModelMapper modelMapper;
 
     @PostMapping(path="/wilayah-rt")
-    public CommonResponse<WilayahRTModel> Post(@RequestBody RTDto rtModel) {
+    public CommonResponse<WilayahRTModel> Post(@RequestBody WilayahRTModel rtModel) {
         return ResponseHelper.ok(wilayahRTService.addWilayahRt(modelMapper.map(rtModel, WilayahRTModel.class)));
     }
 
     @PutMapping(path = "/wilayah-rt/{id}")
-    public CommonResponse<WilayahRTModel> Put(@PathVariable("id") Long id, @RequestBody RTDto rtModel) {
+    public CommonResponse<WilayahRTModel> Put(@PathVariable("id") Long id, @RequestBody WilayahRTModel rtModel) {
         return ResponseHelper.ok(wilayahRTService.putWilayahRt(id, modelMapper.map(rtModel, WilayahRTModel.class)));
     }
 

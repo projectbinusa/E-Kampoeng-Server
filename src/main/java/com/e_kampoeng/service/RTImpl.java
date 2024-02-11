@@ -32,7 +32,7 @@ public class RTImpl implements RTService{
         RTModel rtModel1 = new RTModel();
         rtModel1.setCreate_at(rtModel.getCreate_at());
         rtModel1.setWarga(wargaDao.findById(rtModel.getWarga().getId()).orElseThrow(() -> new NotFoundException("id not found")));
-        rtModel1.setWilayahRT(wilayahRTRepository.findById(rtModel.getWilayahRT().getId()));
+        rtModel1.setWilayahRT(wilayahRTRepository.findById(rtModel.getWilayahRT().getId()).orElseThrow(() -> new NotFoundException("id not found")));
         return rtRepository.save(rtModel);
     }
 

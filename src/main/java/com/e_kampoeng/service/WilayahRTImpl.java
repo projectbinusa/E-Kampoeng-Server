@@ -18,7 +18,7 @@ import java.util.Map;
 public class WilayahRTImpl implements WilayahRTService{
 
     @Autowired
-    WilayahRTRepository wilayahRTRepository;
+    private WilayahRTRepository wilayahRTRepository;
 
     @Override
     public WilayahRTModel addWilayahRt(WilayahRTModel wilayahRTModel) {
@@ -52,7 +52,7 @@ public class WilayahRTImpl implements WilayahRTService{
     }
 
     @Override
-    public Page<WilayahRTModel> getAllWilayahRt(Long page, Long limit, String sort, String search) {
+    public Page<WilayahRTModel> getAllWilayahRt(Long page, Long limit, String search, String sort) {
         Sort.Direction direction = Sort.Direction.ASC;
         if (sort.startsWith("-")) {
             sort = sort.substring(1);
