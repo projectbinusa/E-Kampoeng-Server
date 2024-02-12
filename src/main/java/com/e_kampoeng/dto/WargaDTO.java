@@ -2,7 +2,7 @@ package com.e_kampoeng.dto;
 
 import java.util.Date;
 
-public class  WargaDTO {
+public class WargaDTO {
 
     private String nama;
     private String tempat_lahir;

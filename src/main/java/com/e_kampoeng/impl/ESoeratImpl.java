@@ -1,27 +1,34 @@
-package com.e_kampoeng.service;
+package com.e_kampoeng.impl;
 
-import com.e_kampoeng.dao.ESoeratRepository;
+import com.e_kampoeng.repository.ESoeratDao;
 import com.e_kampoeng.exception.NotFoundException;
 import com.e_kampoeng.model.ESoeratModel;
-import com.e_kampoeng.model.WilayahRTModel;
-import com.e_kampoeng.model.WilayahRWModel;
+import com.e_kampoeng.service.ESoeratService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
 @Service
-public class ESoeratServiceImpl implements ESoeratService {
+public class ESoeratImpl implements ESoeratService {
 
     @Autowired
-    ESoeratRepository eSoeratRepository;
+    ESoeratDao eSoeratRepository;
+
+    @Override
+    public Page<ESoeratModel> getAllSoerat(Pageable pageable) {
+        return eSoeratRepository.findAll(pageable);
+    }
+
+    @Override
+    public ESoeratModel getIdSoerat(Long id) {
+        var soerat = eSoeratRepository.findById(id).get();
+        return eSoeratRepository.findById(id).orElseThrow(() -> new NotFoundException("id not found"));
+    }
 
     @Override
     public ESoeratModel addSoerat(ESoeratModel eSoeratModel) {
@@ -39,29 +46,6 @@ public class ESoeratServiceImpl implements ESoeratService {
         return eSoeratRepository.save(eSoeratModel1);
     }
 
-
-//    @Override
-//    public Page<ESoeratModel> getAllSoerat(Long page, Long limit, String search, String sort) {
-//        Sort.Direction direction = Sort.Direction.ASC;
-//        if (sort.startsWith("-")) {
-//            sort = sort.substring(1);
-//            direction = Sort.Direction.DESC;
-//        }
-//
-//        Pageable pageable = PageRequest.of(Math.toIntExact(page - 1), Math.toIntExact(limit), direction, sort);
-//        if (search != null && !search.isEmpty()) {
-//            return eSoeratRepository.findAllByKeyword(search, pageable);
-//        } else {
-//            return eSoeratRepository.findAll(pageable);
-//        }
-//    }
-    @Override
-    public ESoeratModel getIdSoerat(Long id) {
-        var soerat = eSoeratRepository.findById(id).get();
-        return eSoeratRepository.findById(id).orElseThrow(() -> new NotFoundException("id not found"));
-    }
-
-
     @Override
     public Map<String, Boolean> deleteSoerat(Long id) {
         try {
@@ -76,10 +60,5 @@ public class ESoeratServiceImpl implements ESoeratService {
             return tes;
         }
     }
-
-//    @Override
-//    public List<ESoeratModel> allSoerat() {
-//        return eSoeratRepository.findAll();
-//    }
 
 }

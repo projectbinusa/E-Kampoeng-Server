@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface WilayahRWRepository extends JpaRepository<WilayahRWModel, Long> {
+public interface WilayahRWDao extends JpaRepository<WilayahRWModel, Long> {
     @Query(value = "SELECT * FROM wilayah_rw WHERE nomor_rw LIKE CONCAT('%',:keyword, '%') OR nama_dusun LIKE CONCAT('%',:keyword, '%')", nativeQuery = true)
     Page<WilayahRWModel> findAllByKeyword(@Param("keyword") String keyword, Pageable pageable);
 }

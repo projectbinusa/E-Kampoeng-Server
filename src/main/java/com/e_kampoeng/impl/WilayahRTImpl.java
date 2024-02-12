@@ -1,6 +1,6 @@
 package com.e_kampoeng.impl;
 
-import com.e_kampoeng.repository.WilayahRTRepository;
+import com.e_kampoeng.repository.WilayahRTDao;
 import com.e_kampoeng.exception.NotFoundException;
 import com.e_kampoeng.model.WilayahRTModel;
 import com.e_kampoeng.service.WilayahRTService;
@@ -19,7 +19,7 @@ import java.util.Map;
 public class WilayahRTImpl implements WilayahRTService {
 
     @Autowired
-    private WilayahRTRepository wilayahRTRepository;
+    private WilayahRTDao wilayahRTRepository;
 
 
 

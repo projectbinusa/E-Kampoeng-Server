@@ -68,13 +68,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             // -- Swagger UI v3 (OpenAPI)
             "/v3/api-docs/**",
             "/swagger-ui/**",
+            // ----- | private start | ----- //
             "/api/wilayah-rt",
-            "/api/wilayah-rt/{id}",
+            "/api/wilayah-rt/**",
             "/api/wilayah-rw",
-            "/api/wilayah-rw/{id}",
-            "/api/e_soerat/**",
+            "/api/wilayah-rw/**",
+            "/api/rt",
+            "/api/rt/**",
+            "/api/rw",
+            "/api/rw/**",
             "/api/e_soerat",
-            "/api/e_soerat/{id}",
+            "/api/e_soerat/**",
+            "/api/warga",
+            "/api/warga/**",
+            "/api/warga_organisasi",
+            "/api/warga_organisasi/**",
+            "/api/organisasi",
+            "/api/organisasi/**",
+            // ----- | private end | ----- //
             "/api/login/**",
             "/api/register/**"
     };
@@ -93,44 +104,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-    }
-
-    @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.e_kampoeng.controller"))
-                .paths(PathSelectors.any())
-                .build()
-                .apiInfo(apiInfo())
-                .securitySchemes(Arrays.asList(apiKey()))
-                .securityContexts(Arrays.asList(securityContext()));
-    }
-    private ApiInfo apiInfo() {
-        return new ApiInfo(
-                "Api documentation",
-                "api doc",
-                "1.0.0",
-                "",
-                "",
-                "",
-                "");
-    }
-    private ApiKey apiKey() {
-        return new ApiKey("JWT", "Authorization", "header");
-    }
-
-    private SecurityContext securityContext() {
-        return SecurityContext.builder().securityReferences(defaultAuth())
-                .forPaths(PathSelectors.any()).build();
-    }
-
-    private List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope = new AuthorizationScope(
-                "global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        return Arrays.asList(new SecurityReference("apiKey",
-                authorizationScopes));
     }
 }

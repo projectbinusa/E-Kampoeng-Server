@@ -30,24 +30,8 @@ public class WilayahRWController {
     @Autowired
     ModelMapper modelMapper;
 
-    @PostMapping()
-    public CommonResponse<WilayahRWModel> Post(@RequestBody WilayahRWModel wilayahRWModel) {
-        return ResponseHelper.ok(wilRW.addWilayahRW(modelMapper.map(wilayahRWModel, WilayahRWModel.class)));
-    }
-
-    @PutMapping(path = "/{id}")
-    public CommonResponse<WilayahRWModel> Put(@PathVariable("id") Long id, @RequestBody WilayahRWModel wilayahRWModel) {
-        return ResponseHelper.ok(wilRW.putDataWilayahRW(id, modelMapper.map(wilayahRWModel, WilayahRWModel.class)));
-    }
-
-    @GetMapping(path = "/{id}")
-    public CommonResponse<WilayahRWModel> getById(@PathVariable("id") Long id) {
-        return ResponseHelper.ok(wilRW.getByIdWilayahRW(id));
-    }
-
-
-    @GetMapping()
-    public PaginationResponse<List<WilayahRWModel>> getAllWilayahRW(
+    @GetMapping // mengambil semua data Wilayah RW dengan pagination
+    public PaginationResponse<List<WilayahRWModel>> getAllWithPagination(
             @RequestParam(defaultValue = Pagination.page, required = false) Long page,
             @RequestParam(defaultValue = Pagination.limit, required = false) Long limit,
             @RequestParam(defaultValue = Pagination.sort, required = false) String sort,
@@ -73,7 +57,22 @@ public class WilayahRWController {
         return ResponseHelper.okWithPagination(channels, pagination);
     }
 
-    @DeleteMapping(path = "/{id}")
+    @GetMapping(path = "/{id}") // mengambil data Wilayah RW bedasarkan id
+    public CommonResponse<WilayahRWModel> getById(@PathVariable("id") Long id) {
+        return ResponseHelper.ok(wilRW.getByIdWilayahRW(id));
+    }
+
+    @PostMapping // menambahkan data Wilayah RW
+    public CommonResponse<WilayahRWModel> create(@RequestBody WilayahRWModel wilayahRWModel) {
+        return ResponseHelper.ok(wilRW.addWilayahRW(modelMapper.map(wilayahRWModel, WilayahRWModel.class)));
+    }
+
+    @PutMapping(path = "/{id}") // mengupdate data Wilayah RW berdasarkan id
+    public CommonResponse<WilayahRWModel> update(@PathVariable("id") Long id, @RequestBody WilayahRWModel wilayahRWModel) {
+        return ResponseHelper.ok(wilRW.putDataWilayahRW(id, modelMapper.map(wilayahRWModel, WilayahRWModel.class)));
+    }
+
+    @DeleteMapping(path = "/{id}") // menghapus data Wilayah RW berdasarkan id
     public CommonResponse<?> delete(@PathVariable("id") Long id) {
         return ResponseHelper.ok(wilRW.deleteWilayahRW(id));
     }

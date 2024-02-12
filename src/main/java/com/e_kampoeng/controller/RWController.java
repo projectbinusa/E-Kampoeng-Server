@@ -22,28 +22,28 @@ public class RWController {
     @Autowired
     RWImpl rwImpl;
 
-    @GetMapping
-    public CommonResponse<Page<RWModel>> getAll(@RequestParam(name = "page", defaultValue = "0", required = false) int page, @RequestParam(name = "size", defaultValue = "10", required = false) int size) {
+    @GetMapping // mengambil semua data RW dengan pagination
+    public CommonResponse<Page<RWModel>> getAllWithPagination(@RequestParam(name = "page", defaultValue = "0", required = false) int page, @RequestParam(name = "size", defaultValue = "10", required = false) int size) {
         Pageable pageable = PageRequest.of(page, size);
         return ResponseHelper.ok(rwImpl.getAll(pageable));
     }
 
-    @GetMapping("/{id}")
-    public CommonResponse<RWModel> preview(@PathVariable("id") Long id) {
+    @GetMapping("/{id}") // mengambil data RW berdasarkan id
+    public CommonResponse<RWModel> getById(@PathVariable("id") Long id) {
         return ResponseHelper.ok(rwImpl.getById(id));
     }
 
-    @PostMapping
-    public CommonResponse<RWModel> add(@RequestBody RWModel rwModel) {
+    @PostMapping // menambahkan data RW
+    public CommonResponse<RWModel> create(@RequestBody RWModel rwModel) {
         return ResponseHelper.ok(rwImpl.add(rwModel));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}") // mengupdate data RW berdasarkan id
     public  CommonResponse<RWModel> update(@PathVariable("id") Long id, @RequestBody RWModel rwModel) {
         return ResponseHelper.ok(rwImpl.update(id, rwModel));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}") // menghapus data RW berdasarkan id
     public CommonResponse<?> delete(@PathVariable("id") Long id) {
         return ResponseHelper.ok(rwImpl.remove(id));
     }

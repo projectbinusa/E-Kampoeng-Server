@@ -1,6 +1,6 @@
 package com.e_kampoeng.impl;
 
-import com.e_kampoeng.repository.RWDao;
+import com.e_kampoeng.repository.RWRepository;
 import com.e_kampoeng.exception.NotFoundException;
 import com.e_kampoeng.model.RWModel;
 import com.e_kampoeng.service.RWService;
@@ -17,7 +17,7 @@ import java.util.Map;
 public class RWImpl implements RWService {
 
     @Autowired
-    private RWDao rwDao;
+    private RWRepository rwDao;
 
 //    menambahkan data warga yang menjabat sbg rw
     @Override

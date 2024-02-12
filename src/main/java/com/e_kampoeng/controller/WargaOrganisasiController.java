@@ -22,28 +22,28 @@ public class WargaOrganisasiController {
     @Autowired
     private WargaOrganisasiImpl woi;
 
-    @GetMapping
-    public CommonResponse<Page<WargaOrganisasiModel>> getAll(@RequestParam(name = "page", defaultValue = "0", required = false) int page, @RequestParam(name = "size", defaultValue = "10", required = false) int size) {
+    @GetMapping // mengambil semua data Warga Organisasi dengan pagination
+    public CommonResponse<Page<WargaOrganisasiModel>> getAllWithPagination(@RequestParam(name = "page", defaultValue = "0", required = false) int page, @RequestParam(name = "size", defaultValue = "10", required = false) int size) {
         Pageable pageable = PageRequest.of(page, size);
         return ResponseHelper.ok(woi.getAll(pageable));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}") // mengambil data Warga Organisasi berdasarkan id
     public CommonResponse<WargaOrganisasiModel> getById(@PathVariable("id") Long id) {
         return ResponseHelper.ok(woi.getById(id));
     }
 
-    @PostMapping
+    @PostMapping // menambahkan data Warga Organisasi
     public CommonResponse<WargaOrganisasiModel> create(@RequestBody WargaOrganisasiModel wom) {
         return ResponseHelper.ok(woi.create(wom));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}") // mengupdate data Warga Organisasi berdasarkan id
     public CommonResponse<WargaOrganisasiModel> update(@PathVariable("id") Long id, @RequestBody WargaOrganisasiModel wom) {
         return ResponseHelper.ok(woi.update(id, wom));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}") // menghapus data Warga Organisasi berdasarkan id
     public CommonResponse<?> delete(@PathVariable("id") Long id) {
         return ResponseHelper.ok(woi.delete(id));
     }

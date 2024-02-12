@@ -1,6 +1,6 @@
 package com.e_kampoeng.impl;
 
-import com.e_kampoeng.repository.WilayahRWRepository;
+import com.e_kampoeng.repository.WilayahRWDao;
 import com.e_kampoeng.exception.NotFoundException;
 import com.e_kampoeng.model.WilayahRWModel;
 import com.e_kampoeng.service.WilayahRWService;
@@ -19,7 +19,7 @@ import java.util.Map;
 public class WilRWImpl implements WilayahRWService {
 
     @Autowired
-    WilayahRWRepository wilayahRWRepository;
+    WilayahRWDao wilayahRWDao;
 
 
     @Override
@@ -27,7 +27,7 @@ public class WilRWImpl implements WilayahRWService {
         WilayahRWModel wilayahRWModel1 = new WilayahRWModel();
         wilayahRWModel1.setNomor_rw(wilayahRWModel.getNomor_rw());
         wilayahRWModel1.setNama_dusun(wilayahRWModel.getNama_dusun());
-        return wilayahRWRepository.save(wilayahRWModel);
+        return wilayahRWDao.save(wilayahRWModel);
     }
 
     @Override
@@ -40,34 +40,34 @@ public class WilRWImpl implements WilayahRWService {
 
         Pageable pageable = PageRequest.of(Math.toIntExact(page - 1), Math.toIntExact(limit), direction, sort);
             if (search != null && !search.isEmpty()) {
-                return wilayahRWRepository.findAllByKeyword(search, pageable);
+                return wilayahRWDao.findAllByKeyword(search, pageable);
             } else {
-                return wilayahRWRepository.findAll(pageable);
+                return wilayahRWDao.findAll(pageable);
             }
     }
 
     @Override
     public WilayahRWModel getByIdWilayahRW(Long id) {
-        return wilayahRWRepository.findById(id).orElseThrow(() -> new NotFoundException("Id not found"));
+        return wilayahRWDao.findById(id).orElseThrow(() -> new NotFoundException("Id not found"));
     }
 
     @Override
     public List<WilayahRWModel> previewWilayahRW() {
-        return wilayahRWRepository.findAll();
+        return wilayahRWDao.findAll();
     }
 
     @Override
     public WilayahRWModel putDataWilayahRW(Long id, WilayahRWModel wilayahRWModel) {
-        WilayahRWModel update = wilayahRWRepository.findById(id).orElseThrow(() -> new NotFoundException("Id not found"));
+        WilayahRWModel update = wilayahRWDao.findById(id).orElseThrow(() -> new NotFoundException("Id not found"));
         update.setNomor_rw(wilayahRWModel.getNomor_rw());
         update.setNama_dusun(wilayahRWModel.getNama_dusun());
-        return wilayahRWRepository.save(update);
+        return wilayahRWDao.save(update);
     }
 
     @Override
     public Map<String, Boolean> deleteWilayahRW(Long id) {
         try {
-            wilayahRWRepository.deleteById(id);
+            wilayahRWDao.deleteById(id);
             Map<String, Boolean> res = new HashMap<>();
             res.put("Deleted", Boolean.TRUE);
             return res;

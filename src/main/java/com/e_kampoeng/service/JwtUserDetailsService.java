@@ -1,7 +1,7 @@
 package com.e_kampoeng.service;
 
 import com.e_kampoeng.exception.NotFoundException;
-import com.e_kampoeng.repository.UserDao;
+import com.e_kampoeng.repository.UserRepository;
 import com.e_kampoeng.exception.InternalErrorException;
 import com.e_kampoeng.model.UserModel;
 import com.e_kampoeng.dto.UserDTO;
@@ -17,13 +17,12 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
 
 	@Autowired
-	private UserDao userDao;
+	private UserRepository userDao;
 
 	@Autowired
 	private PasswordEncoder bcryptEncoder;
@@ -49,10 +48,8 @@ public class JwtUserDetailsService implements UserDetailsService {
 	public UserModel save(UserDTO user) {
 		UserModel newUser = new UserModel();
 		newUser.setEmail(user.getEmail());
-		newUser.setUsername(user.getUsername());
 		newUser.setImage(user.getImage());
 		newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
-		newUser.setRole(user.getRole());
 		var password = user.getPassword().trim();
 		// digit + lowercase char + uppercase char + punctuation + symbol
 		var isPasswordValid = !password.matches("^(?=.*[a-z]).{8,20}$"
