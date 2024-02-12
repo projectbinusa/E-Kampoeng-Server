@@ -1,6 +1,6 @@
 package com.e_kampoeng.impl;
 
-import com.e_kampoeng.repository.WargaOrganisasiDao;
+import com.e_kampoeng.repository.WargaOrganisasiRepository;
 import com.e_kampoeng.exception.NotFoundException;
 import com.e_kampoeng.model.WargaOrganisasiModel;
 import com.e_kampoeng.service.WargaOrganisasiService;
@@ -16,7 +16,7 @@ import java.util.Map;
 public class WargaOrganisasiImpl implements WargaOrganisasiService {
 
     @Autowired
-    private WargaOrganisasiDao womdao;
+    private WargaOrganisasiRepository womdao;
 
     @Override
     public Page<WargaOrganisasiModel> getAll(Pageable pageable) {

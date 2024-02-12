@@ -1,6 +1,5 @@
 package com.e_kampoeng.service;
 
-import com.e_kampoeng.dto.WargaDTO;
 import com.e_kampoeng.model.WargaModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface RWDao extends JpaRepository<RWModel, Long> {
+public interface RWRepository extends JpaRepository<RWModel, Long> {
 }

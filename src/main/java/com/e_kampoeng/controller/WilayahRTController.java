@@ -5,7 +5,6 @@ import com.e_kampoeng.exception.ResponseHelper;
 import com.e_kampoeng.impl.WilayahRTImpl;
 import com.e_kampoeng.model.WilayahRTModel;
 import com.e_kampoeng.response.PaginationResponse;
-import com.e_kampoeng.service.WilayahRTService;
 import com.e_kampoeng.util.Pagination;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -32,24 +31,8 @@ public class WilayahRTController {
     @Autowired
     ModelMapper modelMapper;
 
-    @PostMapping()
-    public CommonResponse<WilayahRTModel> create(@RequestBody WilayahRTModel wilayahRTModel) {
-        return ResponseHelper.ok(wilayahRT.add(modelMapper.map(wilayahRTModel, WilayahRTModel.class)));
-    }
-
-    @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public CommonResponse<WilayahRTModel> update(@PathVariable("id") Long id, @RequestBody WilayahRTModel wilayahRTModel) {
-        return ResponseHelper.ok(wilayahRT.putData(id, modelMapper.map(wilayahRTModel, WilayahRTModel.class)));
-    }
-
-    @GetMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public CommonResponse<WilayahRTModel> getById(@PathVariable("id") Long id) {
-        return ResponseHelper.ok(wilayahRT.getById(id));
-    }
-
-
-    @GetMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public PaginationResponse<List<WilayahRTModel>> getAll(
+    @GetMapping // mengambil semua data Wilayah RT dengan pagination
+    public PaginationResponse<List<WilayahRTModel>> getAllWithPagination(
             @RequestParam(defaultValue = Pagination.page, required = false) Long page,
             @RequestParam(defaultValue = Pagination.limit, required = false) Long limit,
             @RequestParam(defaultValue = Pagination.sort, required = false) String sort,
@@ -75,8 +58,23 @@ public class WilayahRTController {
         return ResponseHelper.okWithPagination(channels, pagination);
     }
 
-    @DeleteMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public CommonResponse<?> remove(@PathVariable("id") Long id) {
+    @GetMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE) // mengambil data Wilayah RT berdasarkan id
+    public CommonResponse<WilayahRTModel> getById(@PathVariable("id") Long id) {
+        return ResponseHelper.ok(wilayahRT.getById(id));
+    }
+
+    @PostMapping // menambahkan data Wilayah RT
+    public CommonResponse<WilayahRTModel> create(@RequestBody WilayahRTModel wilayahRTModel) {
+        return ResponseHelper.ok(wilayahRT.add(modelMapper.map(wilayahRTModel, WilayahRTModel.class)));
+    }
+
+    @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE) // mengupdate data Wilayah RT berdasarkan id
+    public CommonResponse<WilayahRTModel> update(@PathVariable("id") Long id, @RequestBody WilayahRTModel wilayahRTModel) {
+        return ResponseHelper.ok(wilayahRT.putData(id, modelMapper.map(wilayahRTModel, WilayahRTModel.class)));
+    }
+
+    @DeleteMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE) // menghapus data Wilayah RT berdasarkan id
+    public CommonResponse<?> delete(@PathVariable("id") Long id) {
         return ResponseHelper.ok(wilayahRT.delete(id));
     }
 }

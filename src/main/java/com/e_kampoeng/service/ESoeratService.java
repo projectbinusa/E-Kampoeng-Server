@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ESoeratService {
-//    Page<ESoeratModel> getAllSoerat(String query, Long page);
+    Page<ESoeratModel> getAllSoerat(Pageable pageable);
 
 
 //    Page<ESoeratModel>getAllSoerat(Long page, Long pageSize, String sort, String sortDirection);

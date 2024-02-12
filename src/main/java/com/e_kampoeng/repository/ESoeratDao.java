@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ESoeratRepository extends JpaRepository<ESoeratModel, Long> {
+public interface ESoeratDao extends JpaRepository<ESoeratModel, Long> {
 
     @Query(value = "SELECT * FROM e_soerat WHERE jenis_surat LIKE CONCAT('%',:keyword, '%')", nativeQuery = true)
     Page<ESoeratModel> findAllByKeyword(@Param("keyword") String keyword, Pageable pageable);

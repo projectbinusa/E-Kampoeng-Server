@@ -1,7 +1,6 @@
 package com.e_kampoeng.impl;
 
-import com.e_kampoeng.dto.WargaDTO;
-import com.e_kampoeng.repository.WargaDao;
+import com.e_kampoeng.repository.WargaRepository;
 import com.e_kampoeng.exception.NotFoundException;
 import com.e_kampoeng.model.WargaModel;
 import com.e_kampoeng.service.WargaService;
@@ -17,7 +16,7 @@ import java.util.Map;
 public class WargaImpl implements WargaService {
 
     @Autowired
-    private WargaDao wadao;
+    private WargaRepository wadao;
 
     //    for find all
     @Override

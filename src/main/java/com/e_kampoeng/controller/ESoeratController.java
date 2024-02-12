@@ -2,6 +2,7 @@ package com.e_kampoeng.controller;
 
 import com.e_kampoeng.exception.CommonResponse;
 import com.e_kampoeng.exception.ResponseHelper;
+import com.e_kampoeng.impl.ESoeratImpl;
 import com.e_kampoeng.model.ESoeratModel;
 import com.e_kampoeng.model.WilayahRTModel;
 import com.e_kampoeng.model.WilayahRWModel;
@@ -11,6 +12,7 @@ import com.e_kampoeng.util.Pagination;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -26,60 +28,35 @@ import java.util.Map;
 public class ESoeratController {
 
     @Autowired
-    private ESoeratService eSoeratService;
+    private ESoeratImpl eSoerat;
 
     @Autowired
     ModelMapper modelMapper;
 
-//    @GetMapping(path = "/getAll")
-//    public PaginationResponse<List<ESoeratModel>> getAllSoerat(
-//            @RequestParam(defaultValue = Pagination.page, required = false) Long page,
-//            @RequestParam(defaultValue = Pagination.limit, required = false) Long limit,
-//            @RequestParam(defaultValue = Pagination.sort, required = false) String sort,
-//            @RequestParam(required = false) String search
-//    ) {
-//
-//        Page<ESoeratModel> eSoeratModels;
-//
-//        if (search != null && !search.isEmpty()) {
-//            eSoeratModels = eSoeratService.getAllSoerat(page, limit, search, sort);
-//        } else {
-//            eSoeratModels = eSoeratService.getAllSoerat(page, limit, null, sort);
-//        }
-//
-//        List<ESoeratModel> channels = eSoeratModels.getContent();
-//        long totalItems = eSoeratModels.getTotalElements();
-//        int totalPages = eSoeratModels.getTotalPages();
-//
-//        Map<String, Long> pagination = new HashMap<>();
-//        pagination.put("total", totalItems);
-//        pagination.put("page", page);
-//        pagination.put("total_page", (long) totalPages);
-//        return ResponseHelper.okWithPagination(channels, pagination);
-//    }
-
-    @GetMapping("/{id}") //untuk melihat sesuai id
-    public CommonResponse<ESoeratModel> getIdSoerat(@PathVariable("id")Long id) {
-        return ResponseHelper.ok(eSoeratService.getIdSoerat(id)) ;
+    @GetMapping // mengambil semua data E-Soerat dengan pagination
+    public CommonResponse<Page<ESoeratModel>> getAllWithPagination(@RequestParam(name = "page", defaultValue = "0", required = false) int page, @RequestParam(name = "size", defaultValue = "10", required = false) int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseHelper.ok(eSoerat.getAllSoerat(pageable));
     }
 
-    @PostMapping
-    public CommonResponse<ESoeratModel> addSoerat(ESoeratModel eSoeratModel ){
-        return ResponseHelper.ok(eSoeratService.addSoerat(modelMapper.map(eSoeratModel,ESoeratModel.class)));
+    @GetMapping("/{id}") // mengambil data E-Soerat berdasarkan id
+    public CommonResponse<ESoeratModel> getById(@PathVariable("id")Long id) {
+        return ResponseHelper.ok(eSoerat.getIdSoerat(id)) ;
+    }
+
+    @PostMapping // menambahkan data E-Soerat
+    public CommonResponse<ESoeratModel> create(ESoeratModel eSoeratModel){
+        return ResponseHelper.ok(eSoerat.addSoerat(modelMapper.map(eSoeratModel, ESoeratModel.class)));
     }
 
 
-    @PutMapping("/{id}") // untuk mengedit data sesuai id
-    public CommonResponse<ESoeratModel> editSoerat(@PathVariable("id") Long id, @RequestBody ESoeratModel eSoeratModel) {
-        return ResponseHelper.ok(eSoeratService.editSoerat(id, eSoeratModel));
+    @PutMapping("/{id}") // mengedit data E-Soerat berdasarkan id
+    public CommonResponse<ESoeratModel> update(@PathVariable("id") Long id, @RequestBody ESoeratModel eSoeratModel) {
+        return ResponseHelper.ok(eSoerat.editSoerat(id, eSoeratModel));
     }
 
-    @DeleteMapping("/{id}") // untuk menghapus data sesuai id
-    public CommonResponse <?> deleteSoerat(@PathVariable("id") Long id) {
-        return ResponseHelper.ok(eSoeratService.deleteSoerat(id));}
+    @DeleteMapping("/{id}") // menghapus data E-Soerat berdasarkan id
+    public CommonResponse<?> delete(@PathVariable("id") Long id) {
+        return ResponseHelper.ok(eSoerat.deleteSoerat(id));}
 
-//    @GetMapping("/all-soerat")
-//    public CommonResponse<List<ESoeratModel>> allSoerat() {
-//        return ResponseHelper.ok(eSoeratService.allSoerat());
-//    }
 }

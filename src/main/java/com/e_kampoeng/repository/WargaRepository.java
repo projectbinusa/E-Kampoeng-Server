@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface WargaDao extends JpaRepository<WargaModel, Long> {
+public interface WargaRepository extends JpaRepository<WargaModel, Long> {
 }

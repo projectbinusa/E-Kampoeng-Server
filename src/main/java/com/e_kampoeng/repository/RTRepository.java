@@ -1,9 +1,9 @@
 package com.e_kampoeng.repository;
 
-import com.e_kampoeng.model.WargaOrganisasiModel;
+import com.e_kampoeng.model.RTModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface WargaOrganisasiDao extends JpaRepository<WargaOrganisasiModel, Long> {
+public interface RTRepository extends JpaRepository<RTModel, Long> {
 }
