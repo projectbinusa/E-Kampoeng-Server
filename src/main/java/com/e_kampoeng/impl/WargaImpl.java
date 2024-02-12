@@ -1,5 +1,6 @@
 package com.e_kampoeng.impl;
 
+import com.e_kampoeng.dto.WargaDTO;
 import com.e_kampoeng.repository.WargaRepository;
 import com.e_kampoeng.exception.NotFoundException;
 import com.e_kampoeng.model.WargaModel;
@@ -31,7 +32,7 @@ public class WargaImpl implements WargaService {
     }
 
     @Override
-    public WargaModel create(WargaModel wargaModel) {
+    public WargaModel create(WargaDTO wargaModel) {
         WargaModel wm = new WargaModel();
         wm.setNama(wargaModel.getNama());
         wm.setTanggal_lahir(wargaModel.getTanggal_lahir());
