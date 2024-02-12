@@ -46,14 +46,20 @@ public class JwtUserDetailsService implements UserDetailsService {
 	}
 
 	public UserModel save(UserDTO user) {
+		// Periksa apakah email sudah ada dalam basis data
+		if (userDao.findByEmail(user.getEmail()) != null) {
+			throw new InternalErrorException("Email already exists");
+		}
+
 		UserModel newUser = new UserModel();
 		newUser.setEmail(user.getEmail());
 		newUser.setImage(user.getImage());
+		newUser.setRole(user.getRole());
+		newUser.setUsername(user.getUsername());
 		newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
 		var password = user.getPassword().trim();
 		// digit + lowercase char + uppercase char + punctuation + symbol
-		var isPasswordValid = !password.matches("^(?=.*[a-z]).{8,20}$"
-		);
+		var isPasswordValid = !password.matches("^(?=.*[a-z]).{8,20}$");
 		if(isPasswordValid) throw new InternalErrorException("Standarisasi Password: minimal 8 karakter");
 		return userDao.save(newUser);
 	}
