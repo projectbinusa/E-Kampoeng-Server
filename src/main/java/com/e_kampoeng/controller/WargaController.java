@@ -1,6 +1,7 @@
 package com.e_kampoeng.controller;
 
 
+import com.e_kampoeng.dto.WargaDTO;
 import com.e_kampoeng.repository.WargaRepository;
 import com.e_kampoeng.exception.CommonResponse;
 import com.e_kampoeng.exception.ResponseHelper;
@@ -53,7 +54,7 @@ public class WargaController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json") // menambahkan data Warga
-    public CommonResponse<WargaModel> create(@RequestBody WargaModel warga) throws SQLException, ClassNotFoundException {
+    public CommonResponse<WargaModel> create(@RequestBody WargaDTO warga) throws SQLException, ClassNotFoundException {
         logger.info("Creating Data : {}", warga);
 
         return ResponseHelper.ok(wargaImpl.create(warga));
