@@ -14,9 +14,23 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ApiKey;
+import springfox.documentation.service.AuthorizationScope;
+import springfox.documentation.service.SecurityReference;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
+@EnableSwagger2
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -54,13 +68,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             // -- Swagger UI v3 (OpenAPI)
             "/v3/api-docs/**",
             "/swagger-ui/**",
+            // ----- | private start | ----- //
             "/api/wilayah-rt",
-            "/api/wilayah-rt/{id}",
+            "/api/wilayah-rt/**",
             "/api/wilayah-rw",
-            "/api/wilayah-rw/{id}",
-            "/api/e_soerat/**",
+            "/api/wilayah-rw/**",
+            "/api/rt",
+            "/api/rt/**",
+            "/api/rw",
+            "/api/rw/**",
             "/api/e_soerat",
-            "/api/e_soerat/{id}",
+            "/api/e_soerat/**",
+            "/api/warga",
+            "/api/warga/**",
+            "/api/warga_organisasi",
+            "/api/warga_organisasi/**",
+            "/api/organisasi",
+            "/api/organisasi/**",
+            // ----- | private end | ----- //
             "/api/login/**",
             "/api/register/**"
     };

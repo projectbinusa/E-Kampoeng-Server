@@ -4,6 +4,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "rt")
@@ -17,16 +18,21 @@ public class RTModel {
     @Column(name = "create_at ")
     private Date create_at;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn(name = "id_warga")
+    @OneToMany(mappedBy = "rt", cascade = CascadeType.ALL)
+    private List<WilayahRTModel> wilRT;
+
+    @ManyToOne
+    @JoinColumn(name = "warga_id")
     private WargaModel warga;
 
-    @OneToOne
-    @JoinColumn(name = "id_wilayah_rt")
-    private WilayahRTModel wilayahRT;
-
-
     public RTModel() {
+    }
+
+    public RTModel(Long id, Date create_at, List<WilayahRTModel> wilRT, WargaModel warga) {
+        this.id = id;
+        this.create_at = create_at;
+        this.wilRT = wilRT;
+        this.warga = warga;
     }
 
     public Long getId() {
@@ -45,19 +51,19 @@ public class RTModel {
         this.create_at = create_at;
     }
 
+    public List<WilayahRTModel> getWilRT() {
+        return wilRT;
+    }
+
+    public void setWilRT(List<WilayahRTModel> wilRT) {
+        this.wilRT = wilRT;
+    }
+
     public WargaModel getWarga() {
         return warga;
     }
 
     public void setWarga(WargaModel warga) {
         this.warga = warga;
-    }
-
-    public WilayahRTModel getWilayahRT() {
-        return wilayahRT;
-    }
-
-    public void setWilayahRT(WilayahRTModel wilayahRT) {
-        this.wilayahRT = wilayahRT;
     }
 }

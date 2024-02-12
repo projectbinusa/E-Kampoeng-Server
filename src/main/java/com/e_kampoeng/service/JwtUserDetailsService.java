@@ -1,6 +1,7 @@
 package com.e_kampoeng.service;
 
-import com.e_kampoeng.dao.UserDao;
+import com.e_kampoeng.exception.NotFoundException;
+import com.e_kampoeng.repository.UserRepository;
 import com.e_kampoeng.exception.InternalErrorException;
 import com.e_kampoeng.model.UserModel;
 import com.e_kampoeng.dto.UserDTO;
@@ -16,13 +17,12 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
 
 	@Autowired
-	private UserDao userDao;
+	private UserRepository userDao;
 
 	@Autowired
 	private PasswordEncoder bcryptEncoder;
@@ -48,26 +48,31 @@ public class JwtUserDetailsService implements UserDetailsService {
 	public UserModel save(UserDTO user) {
 		UserModel newUser = new UserModel();
 		newUser.setEmail(user.getEmail());
-		newUser.setUsername(user.getUsername());
 		newUser.setImage(user.getImage());
 		newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
-		newUser.setRole(user.getRole());
 		var password = user.getPassword().trim();
 		// digit + lowercase char + uppercase char + punctuation + symbol
-		var isPasswordValid = !password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$"
+		var isPasswordValid = !password.matches("^(?=.*[a-z]).{8,20}$"
 		);
-		if(isPasswordValid) throw new InternalErrorException("Password yang anda masukkan tidak valid");
+		if(isPasswordValid) throw new InternalErrorException("Standarisasi Password: minimal 8 karakter");
 		return userDao.save(newUser);
 	}
 
 	//    For find by id
-	public Optional<UserModel> findById(Long id) {
-		return Optional.ofNullable(userDao.findById(id));
+	public UserModel findById(Long id) {
+		UserModel user = userDao.findById(id).orElse(null);
+		if (user == null) {
+			throw new NotFoundException("User Id not found");
+		}
+		return user;
 	}
 
 	//    For update
 	public UserModel update(Long id) {
-		UserModel user = userDao.findById(id);
+		UserModel user = userDao.findById(id).orElse(null);
+		if (user == null) {
+			throw new NotFoundException("User Id not found");
+		}
 		return userDao.save(user);
 	}
 }
