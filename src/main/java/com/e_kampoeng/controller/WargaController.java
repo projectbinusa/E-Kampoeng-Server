@@ -1,75 +1,75 @@
 package com.e_kampoeng.controller;
 
-
-import com.e_kampoeng.dto.WargaDTO;
-import com.e_kampoeng.repository.WargaRepository;
-import com.e_kampoeng.exception.CommonResponse;
-import com.e_kampoeng.exception.ResponseHelper;
-import com.e_kampoeng.impl.WargaImpl;
-import com.e_kampoeng.model.WargaModel;
-import com.e_kampoeng.util.CustomErrorType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.e_kampoeng.request.WargaRequestDTO;
+import com.e_kampoeng.response.CustomResponse;
+import com.e_kampoeng.response.WargaResponseDTO;
+import com.e_kampoeng.service.WargaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/warga")
 @CrossOrigin(origins = "http://localhost:3000")
 public class WargaController {
 
-    public static final Logger logger = LoggerFactory.getLogger(WargaController.class);
-
     @Autowired
-    private WargaImpl wargaImpl;
+    private WargaService wargaService;
 
-    @Autowired
-    private WargaRepository wargaDao;
-
-    @GetMapping // mengambil semua data Warga dengan pagination
-    public CommonResponse<Page<WargaModel>> getAllWithPagination(@RequestParam(name = "page", defaultValue = "0", required = false) int page, @RequestParam(name = "size", defaultValue = "10", required = false) int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return ResponseHelper.ok(wargaImpl.getAll(pageable));
+    @GetMapping
+    public ResponseEntity<CustomResponse<List<WargaResponseDTO>>> getAllWarga() {
+        List<WargaResponseDTO> responseDTOs = wargaService.getAllWarga();
+        CustomResponse<List<WargaResponseDTO>> response = new CustomResponse<>();
+        response.setStatus("success");
+        response.setCode(HttpStatus.OK.value());
+        response.setData(responseDTOs);
+        response.setMessage("All Warga retrieved successfully");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET) // mengambil data Warga berdasarkan id
-    public ResponseEntity<?> getById(@PathVariable("id") Long id) {
-        logger.info("Fetching data a with id {}", id);
-
-        WargaModel wargaData = wargaImpl.getById(id);
-
-        if (wargaData == null) {
-            logger.error("data with id {} not found.", id);
-            return new ResponseEntity<>(new CustomErrorType("data with id " + id + " not found"), HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(wargaData, HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<CustomResponse<WargaResponseDTO>> getWargaById(@PathVariable Long id) {
+        WargaResponseDTO responseDTO = wargaService.getWargaById(id);
+        CustomResponse<WargaResponseDTO> response = new CustomResponse<>();
+        response.setStatus("success");
+        response.setCode(HttpStatus.OK.value());
+        response.setData(responseDTO);
+        response.setMessage("Warga retrieved successfully");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json") // menambahkan data Warga
-    public CommonResponse<WargaModel> create(@RequestBody WargaDTO warga) throws SQLException, ClassNotFoundException {
-        logger.info("Creating Data : {}", warga);
-
-        return ResponseHelper.ok(wargaImpl.create(warga));
+    @PostMapping
+    public ResponseEntity<CustomResponse<WargaResponseDTO>> createWarga(@RequestBody WargaRequestDTO requestDTO) {
+        WargaResponseDTO responseDTO = wargaService.createWarga(requestDTO);
+        CustomResponse<WargaResponseDTO> response = new CustomResponse<>();
+        response.setStatus("success");
+        response.setCode(HttpStatus.CREATED.value());
+        response.setData(responseDTO);
+        response.setMessage("Warga created successfully");
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}") // mengupdate data Warga berdasarkan id
-    public CommonResponse<WargaModel> update(Long id, @RequestBody WargaModel wm) {
-        return ResponseHelper.ok(wargaImpl.update(id, wm));
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomResponse<WargaResponseDTO>> updateWarga(@PathVariable Long id, @RequestBody WargaRequestDTO requestDTO) {
+        WargaResponseDTO responseDTO = wargaService.updateWarga(id, requestDTO);
+        CustomResponse<WargaResponseDTO> response = new CustomResponse<>();
+        response.setStatus("success");
+        response.setCode(HttpStatus.OK.value());
+        response.setData(responseDTO);
+        response.setMessage("Warga updated successfully");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE) // menghapus data Warga berdasarkan id
-    public ResponseEntity<?> delete(@PathVariable("id") long id) throws SQLException, ClassNotFoundException {
-        logger.info("Fetching & Deleting data with id {}", id);
-
-        wargaImpl.delete(id);
-        return new ResponseEntity<WargaModel>(HttpStatus.NO_CONTENT);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<CustomResponse<Void>> deleteWarga(@PathVariable Long id) {
+        wargaService.deleteWarga(id);
+        CustomResponse<Void> response = new CustomResponse<>();
+        response.setStatus("success");
+        response.setCode(HttpStatus.NO_CONTENT.value());
+        response.setMessage("Warga deleted successfully");
+        return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
     }
 }

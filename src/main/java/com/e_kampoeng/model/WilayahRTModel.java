@@ -1,6 +1,7 @@
 package com.e_kampoeng.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="wilayah_rt")
@@ -17,12 +18,9 @@ public class WilayahRTModel {
     @JoinColumn(name = "wil_rw_id")
     private WilayahRWModel wilRW;
 
-    @ManyToOne
-    @JoinColumn(name = "rt_id")
-    private RTModel rt;
+    @OneToMany(mappedBy = "wilayah_rt")
+    private List<WargaModel> wargaList;
 
-    public WilayahRTModel() {
-    }
 
     public Long getId() {
         return id;
@@ -48,11 +46,11 @@ public class WilayahRTModel {
         this.wilRW = wilRW;
     }
 
-    public RTModel getRt() {
-        return rt;
+    public List<WargaModel> getWargaList() {
+        return wargaList;
     }
 
-    public void setRt(RTModel rt) {
-        this.rt = rt;
+    public void setWargaList(List<WargaModel> wargaList) {
+        this.wargaList = wargaList;
     }
 }

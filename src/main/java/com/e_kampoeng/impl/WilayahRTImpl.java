@@ -1,77 +1,82 @@
 package com.e_kampoeng.impl;
 
-import com.e_kampoeng.repository.WilayahRTDao;
-import com.e_kampoeng.exception.NotFoundException;
+import com.e_kampoeng.model.WargaModel;
+import com.e_kampoeng.repository.WargaRepository;
+import com.e_kampoeng.request.WilayahRTRequestDTO;
+import com.e_kampoeng.response.WargaByRTResponseDTO;
+import com.e_kampoeng.response.WilayahRTResponseDTO;
 import com.e_kampoeng.model.WilayahRTModel;
+import com.e_kampoeng.model.WilayahRWModel;
+import com.e_kampoeng.repository.WilayahRTRepository;
+import com.e_kampoeng.repository.WilayahRWRepository;
 import com.e_kampoeng.service.WilayahRTService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class WilayahRTImpl implements WilayahRTService {
 
     @Autowired
-    private WilayahRTDao wilayahRTRepository;
+    private WilayahRTRepository wilayahRTRepository;
 
+    @Autowired
+    private WilayahRWRepository wilayahRWRepository;
 
+    @Autowired
+    private WargaRepository wargaRepository;
 
     @Override
-    public WilayahRTModel add(WilayahRTModel wilayahRTModel) {
-        WilayahRTModel wilayahRTModel1 = new WilayahRTModel();
-        wilayahRTModel1.setNomor_rt(wilayahRTModel1.getNomor_rt());
-        return wilayahRTRepository.save(wilayahRTModel);
+    public WilayahRTResponseDTO createWilayahRT(WilayahRTRequestDTO requestDTO) {
+        WilayahRTModel wilayahRTModel = new WilayahRTModel();
+        BeanUtils.copyProperties(requestDTO, wilayahRTModel);
+        WilayahRWModel wilRW = wilayahRWRepository.findById(requestDTO.getWilayah_rw_id())
+                .orElseThrow(() -> new RuntimeException("Wilayah RW not found with id: " + requestDTO.getWilayah_rw_id()));
+        wilayahRTModel.setWilRW(wilRW); // Menetapkan Wilayah RW ke Wilayah RT
+        WilayahRTModel savedModel = wilayahRTRepository.save(wilayahRTModel);
+        WilayahRTResponseDTO responseDTO = new WilayahRTResponseDTO();
+        BeanUtils.copyProperties(savedModel, responseDTO);
+        responseDTO.setWilayah_rw_id(wilRW.getId()); // Set ID Wilayah RW di respons
+        return responseDTO;
     }
 
     @Override
-    public Page<WilayahRTModel> getAll(Long page, Long limit, String search, String sort) {
-        Sort.Direction direction = Sort.Direction.ASC;
-        if (sort.startsWith("-")) {
-            sort = sort.substring(1);
-            direction = Sort.Direction.DESC;
-        }
-
-        Pageable pageable = PageRequest.of(Math.toIntExact(page - 1), Math.toIntExact(limit), direction, sort);
-        if (search != null && !search.isEmpty()) {
-            return wilayahRTRepository.findAllByKeyword(search, pageable);
-        } else {
-            return wilayahRTRepository.findAll(pageable);
-        }
+    public WilayahRTResponseDTO updateWilayahRT(Long id, WilayahRTRequestDTO requestDTO) {
+        WilayahRTModel wilayahRTModel = wilayahRTRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Wilayah RT not found with id: " + id));
+        BeanUtils.copyProperties(requestDTO, wilayahRTModel);
+        WilayahRWModel wilRW = wilayahRWRepository.findById(requestDTO.getWilayah_rw_id())
+                .orElseThrow(() -> new RuntimeException("Wilayah RW not found with id: " + requestDTO.getWilayah_rw_id()));
+        wilayahRTModel.setWilRW(wilRW); // Menetapkan Wilayah RW ke Wilayah RT
+        WilayahRTModel updatedModel = wilayahRTRepository.save(wilayahRTModel);
+        WilayahRTResponseDTO responseDTO = new WilayahRTResponseDTO();
+        BeanUtils.copyProperties(updatedModel, responseDTO);
+        responseDTO.setWilayah_rw_id(wilRW.getId()); // Set ID Wilayah RW di respons
+        return responseDTO;
     }
 
     @Override
-    public WilayahRTModel getById(Long id) {
-        return wilayahRTRepository.findById(id).orElseThrow(() -> new NotFoundException("Id not found"));
+    public void deleteWilayahRT(Long id) {
+        wilayahRTRepository.deleteById(id);
     }
 
     @Override
-    public List<WilayahRTModel> preview() {
-        return wilayahRTRepository.findAll();
+    public List<WargaByRTResponseDTO> getWargaByRT(Long idWilayahRT) {
+        List<WargaModel> wargaModels = wargaRepository.findByWilayahRTId(idWilayahRT);
+        return wargaModels.stream()
+                .map(this::convertModelToDTO)
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public WilayahRTModel putData(Long id, WilayahRTModel wilayahRTModel) {
-        WilayahRTModel update = wilayahRTRepository.findById(id).orElseThrow(() -> new NotFoundException("Id not found"));
-        update.setNomor_rt(wilayahRTModel.getNomor_rt());
-        return wilayahRTRepository.save(update);
+    private WargaByRTResponseDTO convertModelToDTO(WargaModel wargaModel) {
+        WargaByRTResponseDTO responseDTO = new WargaByRTResponseDTO();
+        responseDTO.setId(wargaModel.getId());
+        responseDTO.setNama(wargaModel.getNama());
+        return responseDTO;
     }
 
-    @Override
-    public Map<String, Boolean> delete(Long id) {
-        try {
-            wilayahRTRepository.deleteById(id);
-            Map<String, Boolean> res = new HashMap<>();
-            res.put("Deleted", Boolean.TRUE);
-            return res;
-        } catch (Exception e) {
-            throw new NotFoundException("id not found");
-        }
-    }
 }

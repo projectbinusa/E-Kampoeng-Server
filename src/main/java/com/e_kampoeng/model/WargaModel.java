@@ -55,41 +55,10 @@ public class WargaModel {
     @JoinColumn(name = "wilayah_rt_id")
     private WilayahRTModel wilayah_rt;
 
-    @ManyToOne
-    @JoinColumn(name = "wilayah_rw_id")
-    private WilayahRWModel wilayah_rw;
+    @Column(name = "wilayah_rt_id", insertable = false, updatable = false)
+    private Long wilayahRTId;
 
-    @OneToMany(mappedBy = "warga", cascade = CascadeType.ALL)
-    private List<WargaOrganisasiModel> wargas = new ArrayList<>();
 
-    //    getter setter
-
-    public WargaModel() {
-    }
-
-    public WargaModel(Long id, String nama, String tempat_lahir, Date tanggal_lahir, String jenis_kelamin, String agama, Integer nik, String no_kk, String status_dalam_keluarga, String status_kependudukan, String pendidikan, String pekerjaan, String status_perkawinan, String golongan_darah, String jenis_asuransi, String jenis_kb, String kesesuaian_tempat, String sumber_air, WilayahRTModel wilayah_rt, WilayahRWModel wilayah_rw, List<WargaOrganisasiModel> wargas) {
-        this.id = id;
-        this.nama = nama;
-        this.tempat_lahir = tempat_lahir;
-        this.tanggal_lahir = tanggal_lahir;
-        this.jenis_kelamin = jenis_kelamin;
-        this.agama = agama;
-        this.nik = nik;
-        this.no_kk = no_kk;
-        this.status_dalam_keluarga = status_dalam_keluarga;
-        this.status_kependudukan = status_kependudukan;
-        this.pendidikan = pendidikan;
-        this.pekerjaan = pekerjaan;
-        this.status_perkawinan = status_perkawinan;
-        this.golongan_darah = golongan_darah;
-        this.jenis_asuransi = jenis_asuransi;
-        this.jenis_kb = jenis_kb;
-        this.kesesuaian_tempat = kesesuaian_tempat;
-        this.sumber_air = sumber_air;
-        this.wilayah_rt = wilayah_rt;
-        this.wilayah_rw = wilayah_rw;
-        this.wargas = wargas;
-    }
 
     public Long getId() {
         return id;
@@ -243,20 +212,11 @@ public class WargaModel {
         this.wilayah_rt = wilayah_rt;
     }
 
-    public List<WargaOrganisasiModel> getWargas() {
-        return wargas;
+    public Long getWilayahRTId() {
+        return wilayahRTId;
     }
 
-    public void setWargas(List<WargaOrganisasiModel> wargas) {
-        this.wargas = wargas;
-    }
-
-
-    public WilayahRWModel getWilayah_rw() {
-        return wilayah_rw;
-    }
-
-    public void setWilayah_rw(WilayahRWModel wilayah_rw) {
-        this.wilayah_rw = wilayah_rw;
+    public void setWilayahRTId(Long wilayahRTId) {
+        this.wilayahRTId = wilayahRTId;
     }
 }

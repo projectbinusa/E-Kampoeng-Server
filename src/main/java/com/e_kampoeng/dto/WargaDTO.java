@@ -22,8 +22,6 @@ public class WargaDTO {
     private String kesesuaian_tempat;
     private String sumber_air;
 
-    //    GETTER SETTER
-
     public String getNama() {
         return nama;
     }
