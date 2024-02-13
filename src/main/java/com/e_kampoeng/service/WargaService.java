@@ -1,20 +1,15 @@
 package com.e_kampoeng.service;
 
-import com.e_kampoeng.dto.WargaDTO;
-import com.e_kampoeng.model.WargaModel;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
-import java.util.Map;
+import com.e_kampoeng.request.WargaRequestDTO;
+import com.e_kampoeng.response.WargaByRTResponseDTO;
+import com.e_kampoeng.response.WargaResponseDTO;
+import java.util.List;
 
 public interface WargaService {
-    Page<WargaModel> getAll(Pageable pageable);
+    List<WargaResponseDTO> getAllWarga();
+    WargaResponseDTO getWargaById(Long id);
+    WargaResponseDTO createWarga(WargaRequestDTO requestDTO);
+    WargaResponseDTO updateWarga(Long id, WargaRequestDTO requestDTO);
+    void deleteWarga(Long id);
 
-    WargaModel getById(Long id);
-
-    WargaModel update(Long id, WargaModel wm);
-
-    WargaModel create(WargaDTO warga);
-
-    Map<String, Boolean> delete(Long id);
 }

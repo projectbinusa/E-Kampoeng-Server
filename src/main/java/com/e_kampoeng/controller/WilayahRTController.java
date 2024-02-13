@@ -1,80 +1,65 @@
 package com.e_kampoeng.controller;
 
-import com.e_kampoeng.exception.CommonResponse;
-import com.e_kampoeng.exception.ResponseHelper;
-import com.e_kampoeng.impl.WilayahRTImpl;
-import com.e_kampoeng.model.WilayahRTModel;
-import com.e_kampoeng.response.PaginationResponse;
-import com.e_kampoeng.util.Pagination;
-import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import com.e_kampoeng.request.WilayahRTRequestDTO;
+import com.e_kampoeng.response.CustomResponse;
+import com.e_kampoeng.response.WargaByRTResponseDTO;
+import com.e_kampoeng.response.WargaResponseDTO;
+import com.e_kampoeng.response.WilayahRTResponseDTO;
+import com.e_kampoeng.service.WilayahRTService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 @RestController
 @RequestMapping("/api/wilayah-rt")
 @CrossOrigin(origins = "http://localhost:3000")
 public class WilayahRTController {
 
-    public static final Logger logger = LoggerFactory.getLogger(WilayahRTController.class);
+   @Autowired
+   private WilayahRTService wilayahRTService;
 
-    @Autowired
-    WilayahRTImpl wilayahRT;
+   @PostMapping
+   public ResponseEntity<CustomResponse<WilayahRTResponseDTO>> createWilayahRT(@RequestBody WilayahRTRequestDTO requestDTO) {
+      WilayahRTResponseDTO responseDTO = wilayahRTService.createWilayahRT(requestDTO);
+      CustomResponse<WilayahRTResponseDTO> response = new CustomResponse<>();
+      response.setStatus("success");
+      response.setCode(HttpStatus.CREATED.value());
+      response.setData(responseDTO);
+      response.setMessage("Wilayah RT created successfully");
+      return new ResponseEntity<>(response, HttpStatus.CREATED);
+   }
 
-    @Autowired
-    ModelMapper modelMapper;
+   @PutMapping("/{id}")
+   public ResponseEntity<CustomResponse<WilayahRTResponseDTO>> updateWilayahRT(@PathVariable Long id, @RequestBody WilayahRTRequestDTO requestDTO) {
+      WilayahRTResponseDTO responseDTO = wilayahRTService.updateWilayahRT(id, requestDTO);
+      CustomResponse<WilayahRTResponseDTO> response = new CustomResponse<>();
+      response.setStatus("success");
+      response.setCode(HttpStatus.OK.value());
+      response.setData(responseDTO);
+      response.setMessage("Wilayah RT updated successfully");
+      return new ResponseEntity<>(response, HttpStatus.OK);
+   }
 
-    @GetMapping // mengambil semua data Wilayah RT dengan pagination
-    public PaginationResponse<List<WilayahRTModel>> getAllWithPagination(
-            @RequestParam(defaultValue = Pagination.page, required = false) Long page,
-            @RequestParam(defaultValue = Pagination.limit, required = false) Long limit,
-            @RequestParam(defaultValue = Pagination.sort, required = false) String sort,
-            @RequestParam(required = false) String search
-    ) {
+   @DeleteMapping("/{id}")
+   public ResponseEntity<Void> deleteWilayahRT(@PathVariable Long id) {
+      wilayahRTService.deleteWilayahRT(id);
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+   }
 
-        Page<WilayahRTModel> wilayahRTModels;
+   @GetMapping("/{id}/warga")
+   public ResponseEntity<CustomResponse<List<WargaByRTResponseDTO>>> getWargaByRT(@PathVariable Long id) {
+      List<WargaByRTResponseDTO> responseDTOs = wilayahRTService.getWargaByRT(id);
+      CustomResponse<List<WargaByRTResponseDTO>> response = new CustomResponse<>();
+      response.setStatus("success");
+      response.setCode(HttpStatus.OK.value());
+      response.setData(responseDTOs);
+      response.setMessage("Warga retrieved successfully by WilayahRT id: " + id);
+      return new ResponseEntity<>(response, HttpStatus.OK);
+   }
 
-        if (search != null && !search.isEmpty()) {
-            wilayahRTModels = wilayahRT.getAll(page, limit, search, sort);
-        } else {
-            wilayahRTModels = wilayahRT.getAll(page, limit, null, sort);
-        }
-
-        List<WilayahRTModel> channels = wilayahRTModels.getContent();
-        long totalItems = wilayahRTModels.getTotalElements();
-        int totalPages = wilayahRTModels.getTotalPages();
-
-        Map<String, Long> pagination = new HashMap<>();
-        pagination.put("total", totalItems);
-        pagination.put("page", page);
-        pagination.put("total_page", (long) totalPages);
-        return ResponseHelper.okWithPagination(channels, pagination);
-    }
-
-    @GetMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE) // mengambil data Wilayah RT berdasarkan id
-    public CommonResponse<WilayahRTModel> getById(@PathVariable("id") Long id) {
-        return ResponseHelper.ok(wilayahRT.getById(id));
-    }
-
-    @PostMapping // menambahkan data Wilayah RT
-    public CommonResponse<WilayahRTModel> create(@RequestBody WilayahRTModel wilayahRTModel) {
-        return ResponseHelper.ok(wilayahRT.add(modelMapper.map(wilayahRTModel, WilayahRTModel.class)));
-    }
-
-    @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE) // mengupdate data Wilayah RT berdasarkan id
-    public CommonResponse<WilayahRTModel> update(@PathVariable("id") Long id, @RequestBody WilayahRTModel wilayahRTModel) {
-        return ResponseHelper.ok(wilayahRT.putData(id, modelMapper.map(wilayahRTModel, WilayahRTModel.class)));
-    }
-
-    @DeleteMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE) // menghapus data Wilayah RT berdasarkan id
-    public CommonResponse<?> delete(@PathVariable("id") Long id) {
-        return ResponseHelper.ok(wilayahRT.delete(id));
-    }
 }

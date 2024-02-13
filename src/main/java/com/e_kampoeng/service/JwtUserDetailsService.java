@@ -6,6 +6,7 @@ import com.e_kampoeng.exception.InternalErrorException;
 import com.e_kampoeng.model.UserModel;
 import com.e_kampoeng.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,33 +28,44 @@ public class JwtUserDetailsService implements UserDetailsService {
 	@Autowired
 	private PasswordEncoder bcryptEncoder;
 
+	public JwtUserDetailsService() {
+	}
+
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		UserModel user = userDao.findByEmail(email);
+		if (user == null) {
+			throw new BadCredentialsException("Email atau password salah!");
+		}
+
 		List<SimpleGrantedAuthority> roles = null;
 
 		if (user.getRole().equals("rw")) {
 			roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
 			return new User(email, user.getPassword(), roles);
-
 		}
 		if (user.getRole().equals("warga")) {
 			roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
 			return new User(email, user.getPassword(), roles);
 		}
-		return new User(user.getEmail(), user.getPassword(),
-				new ArrayList<>());
-	}
 
+		return new User(user.getEmail(), user.getPassword(), new ArrayList<>());
+	}
 	public UserModel save(UserDTO user) {
+		// Periksa apakah email sudah ada dalam basis data
+		if (userDao.findByEmail(user.getEmail()) != null) {
+			throw new InternalErrorException("Email already exists");
+		}
+
 		UserModel newUser = new UserModel();
 		newUser.setEmail(user.getEmail());
 		newUser.setImage(user.getImage());
+		newUser.setRole(user.getRole());
+		newUser.setUsername(user.getUsername());
 		newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
 		var password = user.getPassword().trim();
 		// digit + lowercase char + uppercase char + punctuation + symbol
-		var isPasswordValid = !password.matches("^(?=.*[a-z]).{8,20}$"
-		);
+		var isPasswordValid = !password.matches("^(?=.*[a-z]).{8,20}$");
 		if(isPasswordValid) throw new InternalErrorException("Standarisasi Password: minimal 8 karakter");
 		return userDao.save(newUser);
 	}
