@@ -31,6 +31,26 @@ public class WilayahRTImpl implements WilayahRTService {
     private WargaRepository wargaRepository;
 
     @Override
+    public List<WilayahRTModel> getAllWilayahRT() {
+        return wilayahRTRepository.findAll();
+    }
+
+    @Override
+    public WilayahRTModel getWilayahRTById(Long id) {
+        return wilayahRTRepository.findById(id).orElse(null);
+    }
+
+
+    private WilayahRTResponseDTO mapToDto(WilayahRTModel rt) {
+        WilayahRTResponseDTO dto = new WilayahRTResponseDTO();
+        dto.setId(rt.getId());
+        dto.setNomor_rt(rt.getNomor_rt());
+        // Map other attributes as needed
+        return dto;
+    }
+
+
+    @Override
     public WilayahRTResponseDTO createWilayahRT(WilayahRTRequestDTO requestDTO) {
         WilayahRTModel wilayahRTModel = new WilayahRTModel();
         BeanUtils.copyProperties(requestDTO, wilayahRTModel);

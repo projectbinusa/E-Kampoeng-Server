@@ -2,10 +2,8 @@ package com.e_kampoeng.model;
 
 
 
-import javax.persistence.*;
-import java.util.HashSet;
+import javax.persistence.*;;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "wilayah_rw")

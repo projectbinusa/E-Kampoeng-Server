@@ -1,6 +1,7 @@
 package com.e_kampoeng.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -53,6 +54,7 @@ public class WargaModel {
 
     @ManyToOne
     @JoinColumn(name = "wilayah_rt_id")
+    @JsonIgnore
     private WilayahRTModel wilayah_rt;
 
     @Column(name = "wilayah_rt_id", insertable = false, updatable = false)
