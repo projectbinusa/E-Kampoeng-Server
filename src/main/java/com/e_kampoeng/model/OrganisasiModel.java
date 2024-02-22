@@ -16,21 +16,6 @@ public class OrganisasiModel {
     @Column
     private String nama_organisasi;
 
-    @Column
-    private Date create_at;
-
-    @OneToMany(mappedBy = "organisasi", cascade = CascadeType.ALL)
-    private List<WargaOrganisasiModel> wargas = new ArrayList<>();
-
-    public OrganisasiModel() {
-    }
-
-    public OrganisasiModel(Long id, String nama_organisasi, Date create_at, List<WargaOrganisasiModel> wargas) {
-        this.id = id;
-        this.nama_organisasi = nama_organisasi;
-        this.create_at = create_at;
-        this.wargas = wargas;
-    }
 
     public Long getId() {
         return id;
@@ -48,19 +33,4 @@ public class OrganisasiModel {
         this.nama_organisasi = nama_organisasi;
     }
 
-    public Date getCreate_at() {
-        return create_at;
-    }
-
-    public void setCreate_at(Date create_at) {
-        this.create_at = create_at;
-    }
-
-    public List<WargaOrganisasiModel> getWargas() {
-        return wargas;
-    }
-
-    public void setWargas(List<WargaOrganisasiModel> wargas) {
-        this.wargas = wargas;
-    }
 }

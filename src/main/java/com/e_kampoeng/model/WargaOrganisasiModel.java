@@ -18,14 +18,6 @@ public class WargaOrganisasiModel {
     @JoinColumn(name = "id_organisasi")
     private OrganisasiModel organisasi;
 
-    public WargaOrganisasiModel() {
-    }
-
-    public WargaOrganisasiModel(Long id, WargaModel warga, OrganisasiModel organisasi) {
-        this.id = id;
-        this.warga = warga;
-        this.organisasi = organisasi;
-    }
 
     public Long getId() {
         return id;

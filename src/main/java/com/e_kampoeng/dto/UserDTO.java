@@ -6,8 +6,6 @@ public class UserDTO {
     private String username;
     private String password;
     private String role;
-    private String image;
-
     //    GETTER SETTER
 
     public String getEmail() { return email; }
@@ -36,13 +34,5 @@ public class UserDTO {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 }

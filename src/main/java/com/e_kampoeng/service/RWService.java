@@ -9,5 +9,6 @@ public interface RWService {
     List<RWModel> getAllRW();
     Optional<RWModel> getRWById(Long id);
     RWModel assignRW(Long wargaId, Long nomorRW);
+    RWModel updateRW(Long rwId, Long wargaId);
     void deleteRW(Long id);
 }
