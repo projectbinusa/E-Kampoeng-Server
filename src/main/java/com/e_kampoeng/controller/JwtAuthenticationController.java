@@ -18,6 +18,7 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api")
@@ -55,14 +56,11 @@ public class JwtAuthenticationController {
         return ResponseEntity.ok(new JwtResponse(token, user));
     }
 
-
-    //	Register
-    @PostMapping("/register") // untuk user membuat akun atau registrasi
-    public CommonResponse<UserModel> signUp(@RequestBody UserDTO user) throws Exception {
-        return ResponseHelper.ok(userDetailsService.save(user));
+    @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = "multipart/form-data")
+    public CommonResponse<UserModel> signUp(@ModelAttribute UserDTO user,  @RequestPart("file") MultipartFile multipartFile) throws Exception {
+        return ResponseHelper.ok(userDetailsService.save(user, multipartFile));
     }
 
-    //    Authentication user
     private void authenticate(String email, String password) throws Exception {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));

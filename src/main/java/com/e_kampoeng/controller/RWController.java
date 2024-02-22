@@ -2,6 +2,7 @@ package com.e_kampoeng.controller;
 
 import com.e_kampoeng.model.RWModel;
 import com.e_kampoeng.response.CustomResponse;
+import com.e_kampoeng.response.RWResponseDTO;
 import com.e_kampoeng.service.RWService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,6 +59,31 @@ public class RWController {
             response.setData(rwModel);
             response.setMessage("Warga berhasil ditetapkan sebagai RW.");
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (IllegalArgumentException e) {
+            response.setStatus("error");
+            response.setCode(HttpStatus.BAD_REQUEST.value());
+            response.setMessage(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    @PutMapping("/rw/{rwId}")
+    public ResponseEntity<CustomResponse<RWResponseDTO>> updateRW(@PathVariable Long rwId, @RequestParam Long wargaId) {
+        CustomResponse<RWResponseDTO> response = new CustomResponse<>();
+        try {
+            RWModel rwModel = rwService.updateRW(rwId, wargaId);
+
+            // Membuat response DTO dengan hanya menyertakan data yang diperlukan
+            RWResponseDTO responseData = new RWResponseDTO();
+            responseData.setId(rwModel.getId());
+            responseData.setNomorRW(rwModel.getNomorRW());
+            responseData.setWarga(rwModel.getWarga());
+
+            response.setStatus("success");
+            response.setCode(HttpStatus.OK.value());
+            response.setData(responseData);
+            response.setMessage("RW berhasil diperbarui.");
+            return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
             response.setStatus("error");
             response.setCode(HttpStatus.BAD_REQUEST.value());
