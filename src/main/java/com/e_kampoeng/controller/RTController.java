@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/rt")
-@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/e-kampoeng/api/rt")
+@CrossOrigin(origins = "*")
 public class RTController {
 
     @Autowired

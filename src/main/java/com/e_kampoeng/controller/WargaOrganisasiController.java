@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/warga_organisasi")
-@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/e-kampoeng/api/organisasi-warga")
+@CrossOrigin(origins = "*")
 public class WargaOrganisasiController {
   @Autowired
   private WargaOrganisasiService wargaOrganisasiService;

@@ -17,8 +17,8 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/wilayah-rt")
-@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/e-kampoeng/api/wilayah-rt")
+@CrossOrigin(origins = "*")
 public class WilayahRTController {
 
    @Autowired
