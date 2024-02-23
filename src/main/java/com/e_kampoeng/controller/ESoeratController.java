@@ -23,8 +23,8 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("/api/e_soerat")
-@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/e-kampoeng/api/e-soerat")
+@CrossOrigin(origins = "*")
 public class ESoeratController {
 
     @Autowired

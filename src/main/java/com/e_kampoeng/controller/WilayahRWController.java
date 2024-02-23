@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/wilayah-rw")
-@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/e-kampoeng/api/wilayah-rw")
+@CrossOrigin(origins = "*")
 public class WilayahRWController {
 
     @Autowired

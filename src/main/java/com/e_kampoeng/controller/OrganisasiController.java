@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/organisasi")
-@CrossOrigin("http://localhost:3000")
+@RequestMapping("/e-kampoeng/api/organisasi")
+@CrossOrigin(origins = "*")
 public class OrganisasiController {
   @Autowired
   private OrganisasiService organisasiService;
