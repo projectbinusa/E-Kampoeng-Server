@@ -9,6 +9,8 @@ import com.e_kampoeng.repository.WargaRepository;
 import com.e_kampoeng.service.WargaService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,11 +25,8 @@ public class WargaImpl implements WargaService {
     private WilayahRTRepository wilayahRTRepository;
 
     @Override
-    public List<WargaResponseDTO> getAllWarga() {
-        List<WargaModel> wargaModels = wargaRepository.findAll();
-        return wargaModels.stream()
-                .map(this::convertModelToDTO)
-                .collect(Collectors.toList());
+    public Page<WargaModel> getAllWarga(Pageable pageable) {
+        return wargaRepository.findAll(pageable);
     }
 
     @Override
