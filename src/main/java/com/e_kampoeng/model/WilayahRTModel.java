@@ -1,5 +1,6 @@
 package com.e_kampoeng.model;
 
+import com.e_kampoeng.config.DateConfig;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name="wilayah_rt")
-public class WilayahRTModel {
+public class WilayahRTModel extends DateConfig {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

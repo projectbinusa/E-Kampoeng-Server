@@ -2,12 +2,14 @@ package com.e_kampoeng.model;
 
 
 
+import com.e_kampoeng.config.DateConfig;
+
 import javax.persistence.*;;
 import java.util.List;
 
 @Entity
 @Table(name = "wilayah_rw")
-public class WilayahRWModel {
+public class WilayahRWModel extends DateConfig {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
