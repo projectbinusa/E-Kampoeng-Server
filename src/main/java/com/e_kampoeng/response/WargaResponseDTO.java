@@ -21,7 +21,7 @@ public class WargaResponseDTO {
     private Double panjang_lahir;
     private Double berat_lahir;
 
-    private WargaNegaraType warga_negara;
+//    private WargaNegaraType warga_negara;
     private Long no_passport;
     private String nama_ayah;
     private String nama_ibu;
@@ -40,7 +40,6 @@ public class WargaResponseDTO {
     private String jenis_kb;
     private String kesesuaian_tempat;
     private String sumber_air;
-    private Long wilayah_rt_id;
 
     public Long getId() {
         return id;
@@ -146,13 +145,13 @@ public class WargaResponseDTO {
         this.berat_lahir = berat_lahir;
     }
 
-    public WargaNegaraType getWarga_negara() {
-        return warga_negara;
-    }
-
-    public void setWarga_negara(WargaNegaraType warga_negara) {
-        this.warga_negara = warga_negara;
-    }
+//    public WargaNegaraType getWarga_negara() {
+//        return warga_negara;
+//    }
+//
+//    public void setWarga_negara(WargaNegaraType warga_negara) {
+//        this.warga_negara = warga_negara;
+//    }
 
     public Long getNo_passport() {
         return no_passport;
@@ -290,11 +289,4 @@ public class WargaResponseDTO {
         this.sumber_air = sumber_air;
     }
 
-    public Long getWilayah_rt_id() {
-        return wilayah_rt_id;
-    }
-
-    public void setWilayah_rt_id(Long wilayah_rt_id) {
-        this.wilayah_rt_id = wilayah_rt_id;
-    }
 }

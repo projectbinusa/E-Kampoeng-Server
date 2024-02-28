@@ -43,8 +43,8 @@ public class WargaModel extends DateConfig {
     private Double panjang_lahir;
     @Column
     private Double berat_lahir;
-    @Column
-    private WargaNegaraType warga_negara;
+//    @Column
+//    private WargaNegaraType warga_negara;
     @Column
     private Long no_passport;
     @Column
@@ -83,7 +83,7 @@ public class WargaModel extends DateConfig {
 
     @ManyToOne
     @JoinColumn(name = "wilayah_rt_id")
-//    @JsonIgnore
+    @JsonIgnore
     private WilayahRTModel wilayah_rt;
 
     @Column(name = "wilayah_rt_id", insertable = false, updatable = false)
@@ -195,13 +195,13 @@ public class WargaModel extends DateConfig {
         this.berat_lahir = berat_lahir;
     }
 
-    public WargaNegaraType getWarga_negara() {
-        return warga_negara;
-    }
-
-    public void setWarga_negara(WargaNegaraType warga_negara) {
-        this.warga_negara = warga_negara;
-    }
+//    public WargaNegaraType getWarga_negara() {
+//        return warga_negara;
+//    }
+//
+//    public void setWarga_negara(WargaNegaraType warga_negara) {
+//        this.warga_negara = warga_negara;
+//    }
 
     public Long getNo_passport() {
         return no_passport;

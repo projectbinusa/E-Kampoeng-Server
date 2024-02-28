@@ -19,7 +19,7 @@ public class WargaRequestDTO {
     private Double panjang_lahir;
     private Double berat_lahir;
 
-    private WargaNegaraType warga_negara; // Diganti menjadi String sesuai dengan nama enum
+//    private WargaNegaraType warga_negara; // Diganti menjadi String sesuai dengan nama enum
     private Long no_passport;
     private String nama_ayah;
     private String nama_ibu;
@@ -136,13 +136,13 @@ public class WargaRequestDTO {
         this.berat_lahir = berat_lahir;
     }
 
-    public WargaNegaraType getWarga_negara() {
-        return warga_negara;
-    }
-
-    public void setWarga_negara(WargaNegaraType warga_negara) {
-        this.warga_negara = warga_negara;
-    }
+//    public WargaNegaraType getWarga_negara() {
+//        return warga_negara;
+//    }
+//
+//    public void setWarga_negara(WargaNegaraType warga_negara) {
+//        this.warga_negara = warga_negara;
+//    }
 
     public Long getNo_passport() {
         return no_passport;

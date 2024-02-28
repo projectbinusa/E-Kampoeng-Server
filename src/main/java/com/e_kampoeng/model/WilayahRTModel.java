@@ -23,9 +23,6 @@ public class WilayahRTModel extends DateConfig {
     @JsonIgnore
     private WilayahRWModel wilRW;
 
-    @OneToMany(mappedBy = "wilayah_rt")
-    private List<WargaModel> wargaList;
-
 
     public Long getId() {
         return id;
@@ -51,11 +48,4 @@ public class WilayahRTModel extends DateConfig {
         this.wilRW = wilRW;
     }
 
-    public List<WargaModel> getWargaList() {
-        return wargaList;
-    }
-
-    public void setWargaList(List<WargaModel> wargaList) {
-        this.wargaList = wargaList;
-    }
-}
+   }
