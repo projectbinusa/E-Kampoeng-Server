@@ -73,4 +73,13 @@ public class WargaImpl implements WargaService {
         BeanUtils.copyProperties(wargaModel, responseDTO);
         return responseDTO;
     }
+
+    @Override
+    public WilayahRTModel findWilayahRTByWargaId(Long wargaId) {
+        WargaModel warga = wargaRepository.findById(wargaId).orElse(null);
+        if (warga != null) {
+            return warga.getWilayah_rt();
+        }
+        return null;
+    }
 }
