@@ -1,5 +1,6 @@
 package com.e_kampoeng.impl;
 
+import com.e_kampoeng.model.RWModel;
 import com.e_kampoeng.model.WilayahRTModel;
 import com.e_kampoeng.model.WilayahRWModel;
 import com.e_kampoeng.repository.WilayahRWRepository;
@@ -10,6 +11,8 @@ import com.e_kampoeng.response.WilayahRWResponseDTO;
 import com.e_kampoeng.service.WilayahRWService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -70,4 +73,8 @@ public class WilRWImpl implements WilayahRWService {
         return rtResponseDTOs;
     }
 
+    @Override
+    public Page<WilayahRWModel> getAllWilayahRW(Pageable pageable) {
+        return wilayahRWRepository.findAll(pageable);
+    }
 }
