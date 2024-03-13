@@ -1,5 +1,6 @@
 package com.e_kampoeng.model;
 
+import com.e_kampoeng.config.DateConfig;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name="wilayah_rt")
-public class WilayahRTModel {
+public class WilayahRTModel extends DateConfig {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,11 +20,7 @@ public class WilayahRTModel {
 
     @ManyToOne
     @JoinColumn(name = "wil_rw_id")
-    @JsonIgnore
     private WilayahRWModel wilRW;
-
-    @OneToMany(mappedBy = "wilayah_rt")
-    private List<WargaModel> wargaList;
 
 
     public Long getId() {
@@ -50,11 +47,4 @@ public class WilayahRTModel {
         this.wilRW = wilRW;
     }
 
-    public List<WargaModel> getWargaList() {
-        return wargaList;
-    }
-
-    public void setWargaList(List<WargaModel> wargaList) {
-        this.wargaList = wargaList;
-    }
-}
+   }

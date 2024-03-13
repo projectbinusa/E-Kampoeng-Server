@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface WilayahRTRepository extends JpaRepository<WilayahRTModel, Long> {
-//    List<WargaModel> findByWilayahRt_Id(Long rtId);
+
 }
