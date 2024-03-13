@@ -40,6 +40,15 @@ public class WargaResponseDTO {
     private String jenis_kb;
     private String kesesuaian_tempat;
     private String sumber_air;
+    private WilayahRTResponseDTO wilayah_rt;
+
+    public WilayahRTResponseDTO getWilayah_rt() {
+        return wilayah_rt;
+    }
+
+    public void setWilayah_rt(WilayahRTResponseDTO wilayah_rt) {
+        this.wilayah_rt = wilayah_rt;
+    }
 
     public Long getId() {
         return id;

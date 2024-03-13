@@ -89,7 +89,17 @@ public class WargaModel extends DateConfig {
     @Column(name = "wilayah_rt_id", insertable = false, updatable = false)
     private Long wilayahRTId;
 
+    @ManyToOne
+    @JoinColumn(name = "wilayah_rw_id")
+    private WilayahRWModel wilayah_rw;
 
+    public WilayahRWModel getWilayah_rw() {
+        return wilayah_rw;
+    }
+
+    public void setWilayah_rw(WilayahRWModel wilayah_rw) {
+        this.wilayah_rw = wilayah_rw;
+    }
 
     public Long getId() {
         return id;
@@ -345,8 +355,12 @@ public class WargaModel extends DateConfig {
 
     public void setWilayah_rt(WilayahRTModel wilayah_rt) {
         this.wilayah_rt = wilayah_rt;
-    }
 
+        // Jika wilayah_rt tidak null, ambil wilayah_rw yang terkait
+        if (wilayah_rt != null) {
+            this.wilayah_rw = wilayah_rt.getWilRW();
+        }
+    }
     public Long getWilayahRTId() {
         return wilayahRTId;
     }

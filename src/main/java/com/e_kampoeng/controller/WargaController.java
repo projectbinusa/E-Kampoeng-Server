@@ -1,6 +1,5 @@
 package com.e_kampoeng.controller;
 
-import com.e_kampoeng.model.WargaModel;
 import com.e_kampoeng.model.WilayahRTModel;
 import com.e_kampoeng.request.WargaRequestDTO;
 import com.e_kampoeng.response.CustomResponse;
@@ -14,8 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/e-kampoeng/api/warga")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -24,11 +21,12 @@ public class WargaController {
     @Autowired
     private WargaService wargaService;
 
+
     @GetMapping
-    public ResponseEntity<CustomResponse<Page<WargaModel>>> getAllWarga(@RequestParam(name = "page", defaultValue = "0", required = false) int page, @RequestParam(name = "size", defaultValue = "10", required = false) int size) {
+    public ResponseEntity<CustomResponse<Page<WargaResponseDTO>>> getAllWarga(@RequestParam(name = "page", defaultValue = "0", required = false) int page, @RequestParam(name = "size", defaultValue = "10", required = false) int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<WargaModel> responseDTOs = wargaService.getAllWarga(pageable);
-        CustomResponse<Page<WargaModel>> response = new CustomResponse<>();
+        Page<WargaResponseDTO> responseDTOs = wargaService.getAllWarga(pageable);
+        CustomResponse<Page<WargaResponseDTO>> response = new CustomResponse<>();
         response.setStatus("success");
         response.setCode(HttpStatus.OK.value());
         response.setData(responseDTOs);
@@ -77,9 +75,5 @@ public class WargaController {
         response.setCode(HttpStatus.NO_CONTENT.value());
         response.setMessage("Warga deleted successfully");
         return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
-    }
-    @GetMapping("/{wargaId}/wilayah-rt")
-    public WilayahRTModel getWilayahRTByWargaId(@PathVariable Long wargaId) {
-        return wargaService.findWilayahRTByWargaId(wargaId);
     }
 }

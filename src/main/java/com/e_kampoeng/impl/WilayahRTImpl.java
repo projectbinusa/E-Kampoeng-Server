@@ -9,6 +9,7 @@ import com.e_kampoeng.model.WilayahRTModel;
 import com.e_kampoeng.model.WilayahRWModel;
 import com.e_kampoeng.repository.WilayahRTRepository;
 import com.e_kampoeng.repository.WilayahRWRepository;
+import com.e_kampoeng.response.WilayahRWResponseDTO;
 import com.e_kampoeng.service.WilayahRTService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +32,18 @@ public class WilayahRTImpl implements WilayahRTService {
     private WargaRepository wargaRepository;
 
     @Override
-    public List<WilayahRTModel> getAllWilayahRT() {
-        return wilayahRTRepository.findAll();
+    public List<WilayahRTResponseDTO> getAllWilayahRT() {
+        List<WilayahRTModel> wilayahRTModels = wilayahRTRepository.findAll();
+        return wilayahRTModels.stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public WilayahRTModel getWilayahRTById(Long id) {
-        return wilayahRTRepository.findById(id).orElse(null);
+    public WilayahRTResponseDTO getWilayahRTById(Long id) {
+        WilayahRTModel wilayahRTModel = wilayahRTRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Wilayah RT not found with id: " + id));
+        return mapToDto(wilayahRTModel);
     }
 
 
@@ -45,7 +51,14 @@ public class WilayahRTImpl implements WilayahRTService {
         WilayahRTResponseDTO dto = new WilayahRTResponseDTO();
         dto.setId(rt.getId());
         dto.setNomor_rt(rt.getNomor_rt());
-        // Map other attributes as needed
+        if (rt.getWilRW() != null) {
+            WilayahRWModel wilRW = rt.getWilRW();
+            WilayahRWResponseDTO wilayahRWResponseDTO = new WilayahRWResponseDTO();
+            wilayahRWResponseDTO.setId(wilRW.getId());
+            wilayahRWResponseDTO.setNomor_rw(wilRW.getNomor_rw());
+            wilayahRWResponseDTO.setNama_dusun(wilRW.getNama_dusun());
+            dto.setWilayah_rw(wilayahRWResponseDTO);
+        }
         return dto;
     }
 
@@ -56,11 +69,11 @@ public class WilayahRTImpl implements WilayahRTService {
         BeanUtils.copyProperties(requestDTO, wilayahRTModel);
         WilayahRWModel wilRW = wilayahRWRepository.findById(requestDTO.getWilayah_rw_id())
                 .orElseThrow(() -> new RuntimeException("Wilayah RW not found with id: " + requestDTO.getWilayah_rw_id()));
-        wilayahRTModel.setWilRW(wilRW); // Menetapkan Wilayah RW ke Wilayah RT
+        wilayahRTModel.setWilRW(wilRW);
         WilayahRTModel savedModel = wilayahRTRepository.save(wilayahRTModel);
         WilayahRTResponseDTO responseDTO = new WilayahRTResponseDTO();
         BeanUtils.copyProperties(savedModel, responseDTO);
-        responseDTO.setWilayah_rw_id(wilRW.getId()); // Set ID Wilayah RW di respons
+        responseDTO.setWilayah_rw(mapToDto(wilRW)); // Mengonversi entitas ke DTO
         return responseDTO;
     }
 
@@ -71,12 +84,20 @@ public class WilayahRTImpl implements WilayahRTService {
         BeanUtils.copyProperties(requestDTO, wilayahRTModel);
         WilayahRWModel wilRW = wilayahRWRepository.findById(requestDTO.getWilayah_rw_id())
                 .orElseThrow(() -> new RuntimeException("Wilayah RW not found with id: " + requestDTO.getWilayah_rw_id()));
-        wilayahRTModel.setWilRW(wilRW); // Menetapkan Wilayah RW ke Wilayah RT
+        wilayahRTModel.setWilRW(wilRW);
         WilayahRTModel updatedModel = wilayahRTRepository.save(wilayahRTModel);
         WilayahRTResponseDTO responseDTO = new WilayahRTResponseDTO();
         BeanUtils.copyProperties(updatedModel, responseDTO);
-        responseDTO.setWilayah_rw_id(wilRW.getId()); // Set ID Wilayah RW di respons
+        responseDTO.setWilayah_rw(mapToDto(wilRW)); // Mengonversi entitas ke DTO
         return responseDTO;
+    }
+
+  private WilayahRWResponseDTO mapToDto(WilayahRWModel rw) {
+        WilayahRWResponseDTO dto = new WilayahRWResponseDTO();
+        dto.setId(rw.getId());
+        dto.setNomor_rw(rw.getNomor_rw());
+        dto.setNama_dusun(rw.getNama_dusun());
+        return dto;
     }
 
     @Override

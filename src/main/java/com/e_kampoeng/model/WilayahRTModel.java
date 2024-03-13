@@ -20,7 +20,6 @@ public class WilayahRTModel extends DateConfig {
 
     @ManyToOne
     @JoinColumn(name = "wil_rw_id")
-    @JsonIgnore
     private WilayahRWModel wilRW;
 
 

@@ -25,14 +25,14 @@ public class WilayahRTController {
    private WilayahRTService wilayahRTService;
 
    @GetMapping
-   public ResponseEntity<List<WilayahRTModel>> getAllWilayahRT() {
-      List<WilayahRTModel> wilayahRTList = wilayahRTService.getAllWilayahRT();
+   public ResponseEntity<List<WilayahRTResponseDTO>> getAllWilayahRT() {
+      List<WilayahRTResponseDTO> wilayahRTList = wilayahRTService.getAllWilayahRT();
       return new ResponseEntity<>(wilayahRTList, HttpStatus.OK);
    }
 
    @GetMapping("/{id}")
-   public ResponseEntity<WilayahRTModel> getWilayahRTById(@PathVariable Long id) {
-      WilayahRTModel wilayahRT = wilayahRTService.getWilayahRTById(id);
+   public ResponseEntity<WilayahRTResponseDTO> getWilayahRTById(@PathVariable Long id) {
+      WilayahRTResponseDTO wilayahRT = wilayahRTService.getWilayahRTById(id);
       return new ResponseEntity<>(wilayahRT, HttpStatus.OK);
    }
    @PostMapping
