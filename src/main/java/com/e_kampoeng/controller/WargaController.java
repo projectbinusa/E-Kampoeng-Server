@@ -1,7 +1,6 @@
 package com.e_kampoeng.controller;
 
 import com.e_kampoeng.model.WargaModel;
-import com.e_kampoeng.model.WilayahRTModel;
 import com.e_kampoeng.request.WargaRequestDTO;
 import com.e_kampoeng.response.CustomResponse;
 import com.e_kampoeng.response.WargaResponseDTO;
@@ -77,9 +76,5 @@ public class WargaController {
         response.setCode(HttpStatus.NO_CONTENT.value());
         response.setMessage("Warga deleted successfully");
         return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
-    }
-    @GetMapping("/{wargaId}/wilayah-rt")
-    public WilayahRTModel getWilayahRTByWargaId(@PathVariable Long wargaId) {
-        return wargaService.findWilayahRTByWargaId(wargaId);
     }
 }

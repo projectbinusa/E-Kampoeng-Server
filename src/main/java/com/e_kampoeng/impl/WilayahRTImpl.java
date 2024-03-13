@@ -94,39 +94,8 @@ public class WilayahRTImpl implements WilayahRTService {
 
     private WargaByRTResponseDTO convertModelToDTO(WargaModel wargaModel) {
         WargaByRTResponseDTO responseDTO = new WargaByRTResponseDTO();
-
-        // Mengisi data pada DTO dengan data dari model
         responseDTO.setId(wargaModel.getId());
         responseDTO.setNama(wargaModel.getNama());
-        responseDTO.setTempat_lahir(wargaModel.getTempat_lahir());
-        responseDTO.setTanggal_lahir(wargaModel.getTanggal_lahir());
-        responseDTO.setJenis_kelamin(wargaModel.getJenis_kelamin());
-        responseDTO.setAgama(wargaModel.getAgama());
-        responseDTO.setNik(wargaModel.getNik());
-        responseDTO.setNo_kk(wargaModel.getNo_kk());
-        responseDTO.setStatus_dalam_keluarga(wargaModel.getStatus_dalam_keluarga());
-        responseDTO.setStatus_kependudukan(wargaModel.getStatus_kependudukan());
-        responseDTO.setNo_anak(wargaModel.getNo_anak());
-        responseDTO.setPanjang_lahir(wargaModel.getPanjang_lahir());
-        responseDTO.setBerat_lahir(wargaModel.getBerat_lahir());
-        responseDTO.setNo_passport(wargaModel.getNo_passport());
-        responseDTO.setNama_ayah(wargaModel.getNama_ayah());
-        responseDTO.setNama_ibu(wargaModel.getNama_ibu());
-        responseDTO.setNo_telp(wargaModel.getNo_telp());
-        responseDTO.setEmail(wargaModel.getEmail());
-        responseDTO.setAlamat(wargaModel.getAlamat());
-        responseDTO.setAlamat_sebelumnya(wargaModel.getAlamat_sebelumnya());
-        responseDTO.setTanggal_perkawinan(wargaModel.getTanggal_perkawinan());
-        responseDTO.setNo_bpjs(wargaModel.getNo_bpjs());
-        responseDTO.setPendidikan_tempuh(wargaModel.getPendidikan_tempuh());
-        responseDTO.setPendidikan_terakhir(wargaModel.getPendidikan_terakhir());
-        responseDTO.setStatus_perkawinan(wargaModel.getStatus_perkawinan());
-        responseDTO.setGolongan_darah(wargaModel.getGolongan_darah());
-        responseDTO.setJenis_asuransi(wargaModel.getJenis_asuransi());
-        responseDTO.setJenis_kb(wargaModel.getJenis_kb());
-        responseDTO.setKesesuaian_tempat(wargaModel.getKesesuaian_tempat());
-        responseDTO.setSumber_air(wargaModel.getSumber_air());
-
         return responseDTO;
     }
 

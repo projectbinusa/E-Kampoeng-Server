@@ -17,5 +17,4 @@ public interface WargaService {
     WargaResponseDTO createWarga(WargaRequestDTO requestDTO);
     WargaResponseDTO updateWarga(Long id, WargaRequestDTO requestDTO);
     void deleteWarga(Long id);
-    WilayahRTModel findWilayahRTByWargaId(Long wargaId);
 }

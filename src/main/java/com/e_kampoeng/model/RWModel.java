@@ -1,13 +1,11 @@
 package com.e_kampoeng.model;
 
-import com.e_kampoeng.config.DateConfig;
-
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "rw")
-public class RWModel extends DateConfig {
+public class RWModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
