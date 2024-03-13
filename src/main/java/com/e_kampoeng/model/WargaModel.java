@@ -1,7 +1,5 @@
 package com.e_kampoeng.model;
 
-import com.e_kampoeng.config.DateConfig;
-import com.e_kampoeng.enumed.WargaNegaraType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -12,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "warga")
-public class WargaModel extends DateConfig {
+public class WargaModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,36 +36,9 @@ public class WargaModel extends DateConfig {
     @Column
     private String status_kependudukan;
     @Column
-    private Long no_anak;
+    private String pendidikan;
     @Column
-    private Double panjang_lahir;
-    @Column
-    private Double berat_lahir;
-//    @Column
-//    private WargaNegaraType warga_negara;
-    @Column
-    private Long no_passport;
-    @Column
-    private String nama_ayah;
-    @Column
-    private String nama_ibu;
-    @Column
-    private Long no_telp;
-    @Column
-    private String email;
-    @Column
-    private String alamat;
-    @Column
-    private String alamat_sebelumnya;
-    @Column
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-    private Date tanggal_perkawinan;
-    @Column
-    private Long no_bpjs;
-    @Column
-    private String pendidikan_tempuh;
-    @Column
-    private String pendidikan_terakhir;
+    private String pekerjaan;
     @Column
     private String status_perkawinan;
     @Column
@@ -89,17 +60,7 @@ public class WargaModel extends DateConfig {
     @Column(name = "wilayah_rt_id", insertable = false, updatable = false)
     private Long wilayahRTId;
 
-    @ManyToOne
-    @JoinColumn(name = "wilayah_rw_id")
-    private WilayahRWModel wilayah_rw;
 
-    public WilayahRWModel getWilayah_rw() {
-        return wilayah_rw;
-    }
-
-    public void setWilayah_rw(WilayahRWModel wilayah_rw) {
-        this.wilayah_rw = wilayah_rw;
-    }
 
     public Long getId() {
         return id;
@@ -181,124 +142,20 @@ public class WargaModel extends DateConfig {
         this.status_kependudukan = status_kependudukan;
     }
 
-    public Long getNo_anak() {
-        return no_anak;
+    public String getPendidikan() {
+        return pendidikan;
     }
 
-    public void setNo_anak(Long no_anak) {
-        this.no_anak = no_anak;
+    public void setPendidikan(String pendidikan) {
+        this.pendidikan = pendidikan;
     }
 
-    public Double getPanjang_lahir() {
-        return panjang_lahir;
+    public String getPekerjaan() {
+        return pekerjaan;
     }
 
-    public void setPanjang_lahir(Double panjang_lahir) {
-        this.panjang_lahir = panjang_lahir;
-    }
-
-    public Double getBerat_lahir() {
-        return berat_lahir;
-    }
-
-    public void setBerat_lahir(Double berat_lahir) {
-        this.berat_lahir = berat_lahir;
-    }
-
-//    public WargaNegaraType getWarga_negara() {
-//        return warga_negara;
-//    }
-//
-//    public void setWarga_negara(WargaNegaraType warga_negara) {
-//        this.warga_negara = warga_negara;
-//    }
-
-    public Long getNo_passport() {
-        return no_passport;
-    }
-
-    public void setNo_passport(Long no_passport) {
-        this.no_passport = no_passport;
-    }
-
-    public String getNama_ayah() {
-        return nama_ayah;
-    }
-
-    public void setNama_ayah(String nama_ayah) {
-        this.nama_ayah = nama_ayah;
-    }
-
-    public String getNama_ibu() {
-        return nama_ibu;
-    }
-
-    public void setNama_ibu(String nama_ibu) {
-        this.nama_ibu = nama_ibu;
-    }
-
-    public Long getNo_telp() {
-        return no_telp;
-    }
-
-    public void setNo_telp(Long no_telp) {
-        this.no_telp = no_telp;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAlamat() {
-        return alamat;
-    }
-
-    public void setAlamat(String alamat) {
-        this.alamat = alamat;
-    }
-
-    public String getAlamat_sebelumnya() {
-        return alamat_sebelumnya;
-    }
-
-    public void setAlamat_sebelumnya(String alamat_sebelumnya) {
-        this.alamat_sebelumnya = alamat_sebelumnya;
-    }
-
-    public Date getTanggal_perkawinan() {
-        return tanggal_perkawinan;
-    }
-
-    public void setTanggal_perkawinan(Date tanggal_perkawinan) {
-        this.tanggal_perkawinan = tanggal_perkawinan;
-    }
-
-    public Long getNo_bpjs() {
-        return no_bpjs;
-    }
-
-    public void setNo_bpjs(Long no_bpjs) {
-        this.no_bpjs = no_bpjs;
-    }
-
-    public String getPendidikan_tempuh() {
-        return pendidikan_tempuh;
-    }
-
-    public void setPendidikan_tempuh(String pendidikan_tempuh) {
-        this.pendidikan_tempuh = pendidikan_tempuh;
-    }
-
-    public String getPendidikan_terakhir() {
-        return pendidikan_terakhir;
-    }
-
-    public void setPendidikan_terakhir(String pendidikan_terakhir) {
-        this.pendidikan_terakhir = pendidikan_terakhir;
+    public void setPekerjaan(String pekerjaan) {
+        this.pekerjaan = pekerjaan;
     }
 
     public String getStatus_perkawinan() {
@@ -355,12 +212,8 @@ public class WargaModel extends DateConfig {
 
     public void setWilayah_rt(WilayahRTModel wilayah_rt) {
         this.wilayah_rt = wilayah_rt;
-
-        // Jika wilayah_rt tidak null, ambil wilayah_rw yang terkait
-        if (wilayah_rt != null) {
-            this.wilayah_rw = wilayah_rt.getWilRW();
-        }
     }
+
     public Long getWilayahRTId() {
         return wilayahRTId;
     }

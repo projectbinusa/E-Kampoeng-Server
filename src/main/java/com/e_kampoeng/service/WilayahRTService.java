@@ -8,9 +8,9 @@ import com.e_kampoeng.response.WilayahRTResponseDTO;
 import java.util.List;
 
 public interface WilayahRTService {
-    List<WilayahRTResponseDTO> getAllWilayahRT();
+    List<WilayahRTModel> getAllWilayahRT();
 
-    WilayahRTResponseDTO getWilayahRTById(Long id);
+    WilayahRTModel getWilayahRTById(Long id);
     WilayahRTResponseDTO createWilayahRT(WilayahRTRequestDTO requestDTO);
     WilayahRTResponseDTO updateWilayahRT(Long id, WilayahRTRequestDTO requestDTO);
     void deleteWilayahRT(Long id);

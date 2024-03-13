@@ -1,7 +1,10 @@
 package com.e_kampoeng.controller;
 
 import com.e_kampoeng.request.WilayahRWRequestDTO;
-import com.e_kampoeng.response.*;
+import com.e_kampoeng.response.CustomResponse;
+import com.e_kampoeng.response.WilayahRTResponseDTO;
+import com.e_kampoeng.response.WilayahRTWithRwDTO;
+import com.e_kampoeng.response.WilayahRWResponseDTO;
 import com.e_kampoeng.service.WilayahRWService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,17 +20,6 @@ public class WilayahRWController {
 
     @Autowired
     private WilayahRWService wilayahRWService;
-
-//    @GetMapping("/{rwId}/warga")
-//    public ResponseEntity<CustomResponse<List<WargaResponseDTO>>> getWargaByRW(@PathVariable Long rwId) {
-//        List<WargaResponseDTO> wargaList = wilayahRWService.getWargaByRW(rwId);
-//        CustomResponse<List<WargaResponseDTO>> response = new CustomResponse<>();
-//        response.setStatus("success");
-//        response.setCode(HttpStatus.OK.value());
-//        response.setData(wargaList);
-//        response.setMessage("Warga retrieved successfully for RW ID: " + rwId);
-//        return new ResponseEntity<>(response, HttpStatus.OK);
-//    }
 
     @PostMapping
     public ResponseEntity<CustomResponse<WilayahRWResponseDTO>> createWilayahRW(@RequestBody WilayahRWRequestDTO requestDTO) {

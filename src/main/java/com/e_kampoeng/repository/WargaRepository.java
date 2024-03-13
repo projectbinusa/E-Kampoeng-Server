@@ -10,5 +10,4 @@ import java.util.List;
 @Repository
 public interface WargaRepository extends JpaRepository<WargaModel, Long> {
     List<WargaModel> findByWilayahRTId(Long idWilayahRT);
-
 }

@@ -1,6 +1,5 @@
 package com.e_kampoeng.model;
 
-import com.e_kampoeng.config.DateConfig;
 import com.e_kampoeng.enumed.JenisBantuanType;
 import com.e_kampoeng.enumed.JenisSuratType;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,7 +9,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "e_soerat")
-public class ESoeratModel extends DateConfig {
+public class ESoeratModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +22,11 @@ public class ESoeratModel extends DateConfig {
     @Enumerated(EnumType.STRING)
     @Column(name = "jenis_bantuan")
     private JenisBantuanType jenis_bantuan;
+
+    @CreationTimestamp
+    @Column(name = "create_at")
+    private Date create_at;
+
 
     public ESoeratModel() {
     }
@@ -51,4 +55,11 @@ public class ESoeratModel extends DateConfig {
         this.jenis_bantuan = jenis_bantuan;
     }
 
+    public Date getCreate_at() {
+        return create_at;
+    }
+
+    public void setCreate_at(Date create_at) {
+        this.create_at = create_at;
+    }
 }
