@@ -26,9 +26,6 @@ public class UserModel {
     @JsonIgnore
     private String password;
 
-    @Column
-    private String image;
-
 
     //    getter setter
 
@@ -66,13 +63,5 @@ public class UserModel {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 }
