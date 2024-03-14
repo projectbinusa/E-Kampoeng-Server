@@ -9,6 +9,7 @@
         <module name="AppServer" />
         <module name="e-kampoeng-server" />
         <module name="Data-Penduduk" />
+        <module name="E-Kampoeng-Server" />
       </profile>
     </annotationProcessing>
   </component>
