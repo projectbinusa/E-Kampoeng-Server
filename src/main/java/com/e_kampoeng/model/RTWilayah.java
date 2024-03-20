@@ -1,27 +1,21 @@
 package com.e_kampoeng.model;
 
-import com.e_kampoeng.config.DateConfig;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.e_kampoeng.model.WargaModel;
+import com.e_kampoeng.model.WilayahRTModel;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "rt")
-public class RTModel extends DateConfig {
-
+public class RTWilayah {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nomor_rt")
-    private Long nomorRT;
-
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "wilayah_rt_id")
     private WilayahRTModel wilayahRT;
 
-    @ManyToOne
-    @JsonIgnore
+    @OneToOne
     @JoinColumn(name = "warga_id")
     private WargaModel warga;
 
@@ -31,14 +25,6 @@ public class RTModel extends DateConfig {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getNomorRT() {
-        return nomorRT;
-    }
-
-    public void setNomorRT(Long nomorRT) {
-        this.nomorRT = nomorRT;
     }
 
     public WilayahRTModel getWilayahRT() {
@@ -57,3 +43,4 @@ public class RTModel extends DateConfig {
         this.warga = warga;
     }
 }
+

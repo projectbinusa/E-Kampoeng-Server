@@ -1,12 +1,10 @@
 package com.e_kampoeng.model;
 
-import com.e_kampoeng.config.DateConfig;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "warga_organisasi")
-public class WargaOrganisasiModel extends DateConfig {
+public class WargaOrganisasiModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

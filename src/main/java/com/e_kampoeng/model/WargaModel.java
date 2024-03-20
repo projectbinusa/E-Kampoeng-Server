@@ -1,19 +1,12 @@
 package com.e_kampoeng.model;
 
-import com.e_kampoeng.config.DateConfig;
-import com.e_kampoeng.enumed.WargaNegaraType;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
-@Table(name = "warga")
-public class WargaModel extends DateConfig {
-
+public class WargaModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,7 +16,7 @@ public class WargaModel extends DateConfig {
     @Column
     private String tempat_lahir;
     @Column
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date tanggal_lahir;
     @Column
     private String jenis_kelamin;
@@ -43,8 +36,6 @@ public class WargaModel extends DateConfig {
     private Double panjang_lahir;
     @Column
     private Double berat_lahir;
-//    @Column
-//    private WargaNegaraType warga_negara;
     @Column
     private Long no_passport;
     @Column
@@ -60,7 +51,7 @@ public class WargaModel extends DateConfig {
     @Column
     private String alamat_sebelumnya;
     @Column
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date tanggal_perkawinan;
     @Column
     private Long no_bpjs;
@@ -80,26 +71,9 @@ public class WargaModel extends DateConfig {
     private String kesesuaian_tempat;
     @Column
     private String sumber_air;
-
     @ManyToOne
     @JoinColumn(name = "wilayah_rt_id")
-    @JsonIgnore
-    private WilayahRTModel wilayah_rt;
-
-    @Column(name = "wilayah_rt_id", insertable = false, updatable = false)
-    private Long wilayahRTId;
-
-    @ManyToOne
-    @JoinColumn(name = "wilayah_rw_id")
-    private WilayahRWModel wilayah_rw;
-
-    public WilayahRWModel getWilayah_rw() {
-        return wilayah_rw;
-    }
-
-    public void setWilayah_rw(WilayahRWModel wilayah_rw) {
-        this.wilayah_rw = wilayah_rw;
-    }
+    private WilayahRTModel wilayahRT;
 
     public Long getId() {
         return id;
@@ -204,14 +178,6 @@ public class WargaModel extends DateConfig {
     public void setBerat_lahir(Double berat_lahir) {
         this.berat_lahir = berat_lahir;
     }
-
-//    public WargaNegaraType getWarga_negara() {
-//        return warga_negara;
-//    }
-//
-//    public void setWarga_negara(WargaNegaraType warga_negara) {
-//        this.warga_negara = warga_negara;
-//    }
 
     public Long getNo_passport() {
         return no_passport;
@@ -349,23 +315,11 @@ public class WargaModel extends DateConfig {
         this.sumber_air = sumber_air;
     }
 
-    public WilayahRTModel getWilayah_rt() {
-        return wilayah_rt;
+    public WilayahRTModel getWilayahRT() {
+        return wilayahRT;
     }
 
-    public void setWilayah_rt(WilayahRTModel wilayah_rt) {
-        this.wilayah_rt = wilayah_rt;
-
-        // Jika wilayah_rt tidak null, ambil wilayah_rw yang terkait
-        if (wilayah_rt != null) {
-            this.wilayah_rw = wilayah_rt.getWilRW();
-        }
-    }
-    public Long getWilayahRTId() {
-        return wilayahRTId;
-    }
-
-    public void setWilayahRTId(Long wilayahRTId) {
-        this.wilayahRTId = wilayahRTId;
+    public void setWilayahRT(WilayahRTModel wilayahRT) {
+        this.wilayahRT = wilayahRT;
     }
 }

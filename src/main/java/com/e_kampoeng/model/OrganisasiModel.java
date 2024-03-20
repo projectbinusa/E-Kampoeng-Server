@@ -1,7 +1,5 @@
 package com.e_kampoeng.model;
 
-import com.e_kampoeng.config.DateConfig;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "organisasi")
-public class OrganisasiModel extends DateConfig {
+public class OrganisasiModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

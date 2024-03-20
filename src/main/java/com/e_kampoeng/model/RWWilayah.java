@@ -1,29 +1,20 @@
 package com.e_kampoeng.model;
 
-import com.e_kampoeng.config.DateConfig;
-
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name = "rw")
-public class RWModel extends DateConfig {
-
+public class RWWilayah {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nomor_rw")
-    private Long nomorRW;
-
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "wilayah_rw_id")
     private WilayahRWModel wilayahRW;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "warga_id")
     private WargaModel warga;
-
 
     public Long getId() {
         return id;
@@ -31,14 +22,6 @@ public class RWModel extends DateConfig {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getNomorRW() {
-        return nomorRW;
-    }
-
-    public void setNomorRW(Long nomorRW) {
-        this.nomorRW = nomorRW;
     }
 
     public WilayahRWModel getWilayahRW() {

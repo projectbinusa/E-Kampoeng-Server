@@ -1,27 +1,18 @@
 package com.e_kampoeng.model;
 
-import com.e_kampoeng.config.DateConfig;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.e_kampoeng.model.WilayahRWModel;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name="wilayah_rt")
-public class WilayahRTModel extends DateConfig {
-
+public class WilayahRTModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "nomor_rt")
-    private Long nomor_rt;
-
-    @ManyToOne
-    @JoinColumn(name = "wil_rw_id")
-    private WilayahRWModel wilRW;
-
+    private Long nomorRt;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "wilayah_rw_id")
+    private WilayahRWModel wilayahRW;
 
     public Long getId() {
         return id;
@@ -31,20 +22,19 @@ public class WilayahRTModel extends DateConfig {
         this.id = id;
     }
 
-    public Long getNomor_rt() {
-        return nomor_rt;
+    public Long getNomorRt() {
+        return nomorRt;
     }
 
-    public void setNomor_rt(Long nomor_rt) {
-        this.nomor_rt = nomor_rt;
+    public void setNomorRt(Long nomorRt) {
+        this.nomorRt = nomorRt;
     }
 
-    public WilayahRWModel getWilRW() {
-        return wilRW;
+    public WilayahRWModel getWilayahRW() {
+        return wilayahRW;
     }
 
-    public void setWilRW(WilayahRWModel wilRW) {
-        this.wilRW = wilRW;
+    public void setWilayahRW(WilayahRWModel wilayahRW) {
+        this.wilayahRW = wilayahRW;
     }
-
-   }
+}

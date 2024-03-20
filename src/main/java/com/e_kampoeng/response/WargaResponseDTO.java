@@ -1,15 +1,11 @@
 package com.e_kampoeng.response;
 
-import com.e_kampoeng.enumed.WargaNegaraType;
-import com.e_kampoeng.model.WilayahRTModel;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 
 public class WargaResponseDTO {
     private Long id;
     private String nama;
     private String tempat_lahir;
-    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date tanggal_lahir;
     private String jenis_kelamin;
     private String agama;
@@ -20,8 +16,6 @@ public class WargaResponseDTO {
     private Long no_anak;
     private Double panjang_lahir;
     private Double berat_lahir;
-
-//    private WargaNegaraType warga_negara;
     private Long no_passport;
     private String nama_ayah;
     private String nama_ibu;
@@ -29,7 +23,6 @@ public class WargaResponseDTO {
     private String email;
     private String alamat;
     private String alamat_sebelumnya;
-    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date tanggal_perkawinan;
     private Long no_bpjs;
     private String pendidikan_tempuh;
@@ -40,15 +33,8 @@ public class WargaResponseDTO {
     private String jenis_kb;
     private String kesesuaian_tempat;
     private String sumber_air;
-    private WilayahRTResponseDTO wilayah_rt;
-
-    public WilayahRTResponseDTO getWilayah_rt() {
-        return wilayah_rt;
-    }
-
-    public void setWilayah_rt(WilayahRTResponseDTO wilayah_rt) {
-        this.wilayah_rt = wilayah_rt;
-    }
+    private String role;
+    private String password;
 
     public Long getId() {
         return id;
@@ -153,14 +139,6 @@ public class WargaResponseDTO {
     public void setBerat_lahir(Double berat_lahir) {
         this.berat_lahir = berat_lahir;
     }
-
-//    public WargaNegaraType getWarga_negara() {
-//        return warga_negara;
-//    }
-//
-//    public void setWarga_negara(WargaNegaraType warga_negara) {
-//        this.warga_negara = warga_negara;
-//    }
 
     public Long getNo_passport() {
         return no_passport;
@@ -298,4 +276,19 @@ public class WargaResponseDTO {
         this.sumber_air = sumber_air;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

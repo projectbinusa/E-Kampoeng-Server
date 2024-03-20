@@ -56,9 +56,9 @@ public class JwtAuthenticationController {
         return ResponseEntity.ok(new JwtResponse(token, user));
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = "multipart/form-data")
-    public CommonResponse<UserModel> signUp(@ModelAttribute UserDTO user,  @RequestPart("file") MultipartFile multipartFile) throws Exception {
-        return ResponseHelper.ok(userDetailsService.save(user, multipartFile));
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public CommonResponse<UserModel> signUp(@RequestBody UserDTO user) throws Exception {
+        return ResponseHelper.ok(userDetailsService.save(user));
     }
 
     private void authenticate(String email, String password) throws Exception {
