@@ -2,9 +2,7 @@ package com.e_kampoeng.controller;
 
 import com.e_kampoeng.model.OrganisasiModel;
 import com.e_kampoeng.request.OrganisasiRequestDTO;
-import com.e_kampoeng.request.WargaRequestDTO;
 import com.e_kampoeng.response.CustomResponse;
-import com.e_kampoeng.response.WargaResponseDTO;
 import com.e_kampoeng.service.OrganisasiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
 @Repository
 public interface WargaRepository extends JpaRepository<WargaModel, Long> {
-    List<WargaModel> findByWilayahRTId(Long idWilayahRT);
+    List<WargaModel> findByWilayahRT_WilayahRW_Id(Long rwId);
+    List<WargaModel> findByWilayahRT_Id(Long rtId);
 }

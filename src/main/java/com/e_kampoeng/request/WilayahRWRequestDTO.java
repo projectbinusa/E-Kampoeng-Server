@@ -1,22 +1,22 @@
 package com.e_kampoeng.request;
 
 public class WilayahRWRequestDTO {
-    private Long nomor_rw;
-    private String nama_dusun;
+    private String namaDusun;
+    private Long nomerRw;
 
-    public Long getNomor_rw() {
-        return nomor_rw;
+    public String getNamaDusun() {
+        return namaDusun;
     }
 
-    public void setNomor_rw(Long nomor_rw) {
-        this.nomor_rw = nomor_rw;
+    public void setNamaDusun(String namaDusun) {
+        this.namaDusun = namaDusun;
     }
 
-    public String getNama_dusun() {
-        return nama_dusun;
+    public Long getNomerRw() {
+        return nomerRw;
     }
 
-    public void setNama_dusun(String nama_dusun) {
-        this.nama_dusun = nama_dusun;
+    public void setNomerRw(Long nomerRw) {
+        this.nomerRw = nomerRw;
     }
 }

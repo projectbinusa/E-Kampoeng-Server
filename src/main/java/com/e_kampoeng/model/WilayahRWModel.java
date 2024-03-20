@@ -1,27 +1,14 @@
 package com.e_kampoeng.model;
 
-
-
-import javax.persistence.*;;
-import java.util.List;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "wilayah_rw")
 public class WilayahRWModel {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "nomor_rw")
-    private Long nomor_rw;
-
-    @Column(name = "nama_dusun")
-    private String nama_dusun;
-
-    @OneToMany(mappedBy = "wilRW", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<WilayahRTModel> rtModels;
-
+    private String namaDusun;
+    private Long nomorRw;
 
 
 
@@ -33,27 +20,19 @@ public class WilayahRWModel {
         this.id = id;
     }
 
-    public Long getNomor_rw() {
-        return nomor_rw;
+    public String getNamaDusun() {
+        return namaDusun;
     }
 
-    public void setNomor_rw(Long nomor_rw) {
-        this.nomor_rw = nomor_rw;
+    public void setNamaDusun(String namaDusun) {
+        this.namaDusun = namaDusun;
     }
 
-    public String getNama_dusun() {
-        return nama_dusun;
+    public Long getNomorRw() {
+        return nomorRw;
     }
 
-    public void setNama_dusun(String nama_dusun) {
-        this.nama_dusun = nama_dusun;
-    }
-
-    public List<WilayahRTModel> getRtModels() {
-        return rtModels;
-    }
-
-    public void setRtModels(List<WilayahRTModel> rtModels) {
-        this.rtModels = rtModels;
+    public void setNomorRw(Long nomorRw) {
+        this.nomorRw = nomorRw;
     }
 }
