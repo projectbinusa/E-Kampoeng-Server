@@ -15,8 +15,8 @@ public interface CategoryBeritaRepository extends CrudRepository<CategoryBerita,
 
     CategoryBerita getById(Long id);
 
-    @Query(value = "SELECT * FROM category_berita LIMIT 7", nativeQuery = true)
-    List<CategoryBerita> limit7();
+//    @Query(value = "SELECT * FROM category_berita LIMIT 7", nativeQuery = true)
+//    List<CategoryBerita> limit7();
 
     Page<CategoryBerita> findAll(Pageable pageable);
     Page<CategoryBerita> findAllByOrderByUpdatedDateDesc(Pageable pageable);

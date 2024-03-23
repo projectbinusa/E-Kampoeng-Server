@@ -1,6 +1,7 @@
 package com.e_kampoeng.service;
 
 import com.e_kampoeng.dto.BeritaDTO;
+import com.e_kampoeng.exception.NotFoundException;
 import com.e_kampoeng.model.Berita;
 import com.e_kampoeng.model.Tags;
 import com.e_kampoeng.repository.BeritaRepository;
@@ -114,8 +115,11 @@ public class BeritaService {
     public Berita tagsInBerita(Long beritaId, Long tagsId) {
         Set<Tags> tagsSet = null;
         Berita berita = beritaDao.findById(beritaId);
-        Tags tags = tagsRepository.findById(tagsId);
-        tagsSet = berita.getTagsBerita();
+        Tags tags = tagsRepository.findById(tagsId).orElse(null);
+        if (tags == null) {
+            throw new NotFoundException("ID Tag Not Found");
+        }
+         tagsSet = berita.getTagsBerita();
         tagsSet.add(tags);
         berita.setTagsBerita(tagsSet);
         return beritaDao.save(berita);

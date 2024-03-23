@@ -26,7 +26,7 @@ public class BeritaController {
     @Autowired
     private BeritaService beritaService;
 
-    @PostMapping(path = "/add", consumes = "multipart/form-data")
+    @PostMapping(path = "", consumes = "multipart/form-data")
     public ResponseEntity<CommonResponse<Berita>> createberita2(BeritaDTO berita, @RequestPart("file")MultipartFile multipartFile) throws SQLException, ClassNotFoundException {
         CommonResponse<Berita> response = new CommonResponse<>();
         try {
@@ -45,7 +45,7 @@ public class BeritaController {
         }
     }
 
-    @GetMapping(path = "/all")
+    @GetMapping
     public ResponseEntity<CommonResponse<Page<Berita>>> listAllBerita(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -76,7 +76,7 @@ public class BeritaController {
         }
     }
 
-    @PutMapping(path = "/put/{id}", consumes = "multipart/form-data")
+    @PutMapping(path = "/{id}", consumes = "multipart/form-data")
     public ResponseEntity<CommonResponse<Berita>> updateBerita(@PathVariable("id") Long id, BeritaDTO berita, @RequestPart("file") MultipartFile multipartFile) throws SQLException, ClassNotFoundException {
         CommonResponse<Berita> response = new CommonResponse<>();
         try {
@@ -107,7 +107,7 @@ public class BeritaController {
         }
     }
 
-    @DeleteMapping(path = "/delete/{id}")
+    @DeleteMapping(path = "/{id}")
     public ResponseEntity<CommonResponse<String>> deleteberita(@PathVariable("id") Long id) throws SQLException, ClassNotFoundException {
         CommonResponse<String> response = new CommonResponse<>();
         try {

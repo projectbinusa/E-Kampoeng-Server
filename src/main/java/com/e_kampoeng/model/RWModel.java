@@ -1,20 +1,23 @@
 package com.e_kampoeng.model;
 
 import com.e_kampoeng.config.DateConfig;
-import com.e_kampoeng.model.WilayahRWModel;
 
 import javax.persistence.*;
 
-@Table(name = "wilayah_rt")
+@Table(name = "rw")
 @Entity
-public class WilayahRTModel extends DateConfig {
+public class RWModel extends DateConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long nomorRt;
-    @ManyToOne(fetch = FetchType.EAGER)
+
+    @OneToOne
     @JoinColumn(name = "wilayah_rw_id")
     private WilayahRWModel wilayahRW;
+
+    @OneToOne
+    @JoinColumn(name = "warga_id")
+    private WargaModel warga;
 
     public Long getId() {
         return id;
@@ -24,19 +27,19 @@ public class WilayahRTModel extends DateConfig {
         this.id = id;
     }
 
-    public Long getNomorRt() {
-        return nomorRt;
-    }
-
-    public void setNomorRt(Long nomorRt) {
-        this.nomorRt = nomorRt;
-    }
-
     public WilayahRWModel getWilayahRW() {
         return wilayahRW;
     }
 
     public void setWilayahRW(WilayahRWModel wilayahRW) {
         this.wilayahRW = wilayahRW;
+    }
+
+    public WargaModel getWarga() {
+        return warga;
+    }
+
+    public void setWarga(WargaModel warga) {
+        this.warga = warga;
     }
 }
