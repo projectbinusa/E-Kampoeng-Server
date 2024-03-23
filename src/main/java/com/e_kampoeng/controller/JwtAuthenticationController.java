@@ -18,7 +18,6 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api")
@@ -42,7 +41,7 @@ public class JwtAuthenticationController {
     private UserRepository userDao;
 
     //	Login
-    @PostMapping("/login") // untuk user masuk/mengakses akun atau login/sign-in
+    @PostMapping("/login") // untuk user masuk/mengakses akun atau   login/sign-in
     public ResponseEntity<?> signIn(@RequestBody JwtRequest authenticationRequest) throws Exception {
         // Menggunakan email sebagai pengganti username
         authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());

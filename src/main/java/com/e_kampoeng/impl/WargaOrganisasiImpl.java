@@ -44,22 +44,31 @@ public class WargaOrganisasiImpl implements WargaOrganisasiService {
     }
 
     @Override
-    public void removeWargaFromOrganisasi(Long wargaOrganisasiId) {
-        wargaOrganisasiRepository.deleteById(wargaOrganisasiId);
+    public Map<String, Boolean> removeWargaOrganisasi(Long wargaOrganisasiId) {
+        try {
+            wargaOrganisasiRepository.deleteById(wargaOrganisasiId);
+            Map<String, Boolean> res = new HashMap<>();
+            res.put("Deleted", Boolean.TRUE);
+            return res;
+        } catch (IllegalArgumentException e) {
+            Map<String, Boolean> res = new HashMap<>();
+            res.put("Deleted", Boolean.FALSE);
+            return res;
+        }
     }
 
     @Override
-    public List<WargaOrganisasiModel> getAllWargaInOrganisasi(Long organisasiId) {
+    public Page<WargaOrganisasiModel> getAllWargaInOrganisasi(Pageable pageable, Long organisasiId) {
         OrganisasiModel organisasi = organisasiRepository.findById(organisasiId)
                 .orElseThrow(() -> new IllegalArgumentException("Organisasi dengan ID " + organisasiId + " tidak ditemukan."));
-        return wargaOrganisasiRepository.findAllByOrganisasi(organisasi);
+        return wargaOrganisasiRepository.findAllByOrganisasi(pageable, organisasi);
     }
 
     @Override
-    public List<WargaOrganisasiModel> getAllOrganisasiByWarga(Long wargaId) {
+    public Page<WargaOrganisasiModel> getAllOrganisasiByWarga(Pageable pageable, Long wargaId) {
         WargaModel warga = wargaRepository.findById(wargaId)
                 .orElseThrow(() -> new IllegalArgumentException("Warga dengan ID " + wargaId + " tidak ditemukan."));
-        return wargaOrganisasiRepository.findAllByWarga(warga);
+        return wargaOrganisasiRepository.findAllByWarga(pageable, warga);
     }
 
 }
