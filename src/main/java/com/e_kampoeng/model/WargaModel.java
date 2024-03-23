@@ -1,12 +1,14 @@
 package com.e_kampoeng.model;
 
+import com.e_kampoeng.config.DateConfig;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import java.util.Date;
 
+@Table(name = "warga")
 @Entity
-public class WargaModel {
+public class WargaModel extends DateConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

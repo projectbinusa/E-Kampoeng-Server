@@ -1,5 +1,6 @@
 package com.e_kampoeng.model;
 
+import com.e_kampoeng.config.DateConfig;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -8,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "tags")
-public class Tags {
+public class Tags extends DateConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

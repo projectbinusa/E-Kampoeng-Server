@@ -40,11 +40,11 @@ public class CategoryBeritaService {
     public Page<CategoryBerita> findAll(Pageable pageable) {
         return categoryBeritaRepository.findAllByOrderByUpdatedDateDesc(pageable);
     }
-    public List<CategoryBerita> findAllByLimit7() {
-        List<CategoryBerita> category = new ArrayList<>();
-        categoryBeritaRepository.limit7().forEach(category::add);
-        return category;
-    }
+//    public List<CategoryBerita> findAllByLimit7() {
+//        List<CategoryBerita> category = new ArrayList<>();
+//        categoryBeritaRepository.limit7().forEach(category::add);
+//        return category;
+//    }
 
     @Transactional
     public void delete(Long id) {

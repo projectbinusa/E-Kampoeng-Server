@@ -93,7 +93,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
-          <mainClass>com.e-kampoeng.Main</mainClass>
+          <mainClass>com.e-kampoeng.Main</mainClass> <!-- Sesuaikan dengan nama kelas main Anda -->
         </configuration>
       </plugin>
       <plugin>
@@ -102,7 +102,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>com.e-kampoeng.Main</mainClass>
+              <mainClass>com.e-kampoeng.Main</mainClass> <!-- Sesuaikan dengan nama kelas main Anda -->
             </manifest>
           </archive>
         </configuration>

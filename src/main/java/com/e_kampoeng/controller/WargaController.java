@@ -5,6 +5,9 @@ import com.e_kampoeng.request.WargaRequestDTO;
 import com.e_kampoeng.response.WargaResponseDTO;
 import com.e_kampoeng.service.WargaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,12 +32,14 @@ public class WargaController {
     }
 
     @GetMapping("/by-rw/{rwId}")
-    public List<WargaModel> getWargaByRW(@PathVariable Long rwId) {
-        return wargaService.getWargaByRW(rwId);
+    public Page<WargaModel> getWargaByRW(@PathVariable Long rwId, @RequestParam(name = "page", defaultValue = "0", required = false) int page, @RequestParam(name = "size", defaultValue = "10", required = false) int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return wargaService.getWargaByRW(rwId, pageable);
     }
 
     @GetMapping("/by-rt/{rtId}")
-    public List<WargaModel> getWargaByRT(@PathVariable Long rtId) {
-        return wargaService.getWargaByRT(rtId);
+    public Page<WargaModel> getWargaByRT(@PathVariable Long rtId, @RequestParam(name = "page", defaultValue = "0", required = false) int page, @RequestParam(name = "size", defaultValue = "10", required = false) int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return wargaService.getWargaByRT(rtId, pageable);
     }
 }

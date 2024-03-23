@@ -2,7 +2,7 @@ package com.e_kampoeng.request;
 
 public class WilayahRWRequestDTO {
     private String namaDusun;
-    private Long nomerRw;
+    private Long nomorRw;
 
     public String getNamaDusun() {
         return namaDusun;
@@ -12,11 +12,11 @@ public class WilayahRWRequestDTO {
         this.namaDusun = namaDusun;
     }
 
-    public Long getNomerRw() {
-        return nomerRw;
+    public Long getNomorRw() {
+        return nomorRw;
     }
 
-    public void setNomerRw(Long nomerRw) {
-        this.nomerRw = nomerRw;
+    public void setNomorRw(Long nomorRw) {
+        this.nomorRw = nomorRw;
     }
 }
