@@ -6,6 +6,8 @@ import com.e_kampoeng.repository.WargaRepository;
 import com.e_kampoeng.repository.WilayahRTRepository;
 import com.e_kampoeng.request.WargaRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -60,11 +62,11 @@ public class WargaService {
 
         return wargaRepository.save(warga);
     }
-    public List<WargaModel> getWargaByRW(Long rwId) {
-        return wargaRepository.findByWilayahRT_WilayahRW_Id(rwId);
+    public Page<WargaModel> getWargaByRW(Long rwId, Pageable pageable) {
+        return wargaRepository.findByWilayahRT_WilayahRW_Id(rwId, pageable);
     }
 
-    public List<WargaModel> getWargaByRT(Long rtId) {
-        return wargaRepository.findByWilayahRT_Id(rtId);
+    public Page<WargaModel> getWargaByRT(Long rtId, Pageable pageable) {
+        return wargaRepository.findByWilayahRT_Id(rtId, pageable);
     }
 }

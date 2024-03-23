@@ -4,9 +4,13 @@ import com.e_kampoeng.model.OrganisasiModel;
 import com.e_kampoeng.repository.OrganisasiRepository;
 import com.e_kampoeng.service.OrganisasiService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -16,8 +20,8 @@ public class OrganisasiImpl implements OrganisasiService {
     private OrganisasiRepository organisasiRepository;
 
     @Override
-    public List<OrganisasiModel> getAllOrganisasi() {
-        return organisasiRepository.findAll();
+    public Page<OrganisasiModel> getAllOrganisasi(Pageable pageable) {
+        return organisasiRepository.findAll(pageable);
     }
 
     @Override
@@ -37,7 +41,16 @@ public class OrganisasiImpl implements OrganisasiService {
     }
 
     @Override
-    public void deleteOrganisasi(Long id) {
-        organisasiRepository.deleteById(id);
+    public Map<String, Boolean> deleteOrganisasi(Long id) {
+        try {
+            organisasiRepository.deleteById(id);
+            Map<String, Boolean> res = new HashMap<>();
+            res.put("Deleted", Boolean.TRUE);
+            return res;
+        } catch (IllegalArgumentException e) {
+            Map<String, Boolean> res = new HashMap<>();
+            res.put("Deleted", Boolean.FALSE);
+            return res;
+        }
     }
 }

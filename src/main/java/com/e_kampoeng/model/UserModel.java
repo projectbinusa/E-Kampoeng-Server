@@ -1,12 +1,13 @@
 package com.e_kampoeng.model;
 
+import com.e_kampoeng.config.DateConfig;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
-public class UserModel {
+public class UserModel extends DateConfig {
 
     //  MAKE TABLE USER
     @Id

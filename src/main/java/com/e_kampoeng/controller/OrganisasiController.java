@@ -2,14 +2,20 @@ package com.e_kampoeng.controller;
 
 import com.e_kampoeng.model.OrganisasiModel;
 import com.e_kampoeng.request.OrganisasiRequestDTO;
+import com.e_kampoeng.request.WargaRequestDTO;
 import com.e_kampoeng.response.CustomResponse;
+import com.e_kampoeng.response.WargaResponseDTO;
 import com.e_kampoeng.service.OrganisasiService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -19,10 +25,11 @@ public class OrganisasiController {
   @Autowired
   private OrganisasiService organisasiService;
 
-  @GetMapping("/all")
-  public ResponseEntity<CustomResponse<List<OrganisasiModel>>> getAllOrganisasi() {
-    List<OrganisasiModel> organisasiList = organisasiService.getAllOrganisasi();
-    CustomResponse<List<OrganisasiModel>> response = new CustomResponse<>();
+  @GetMapping
+  public ResponseEntity<CustomResponse<Page<OrganisasiModel>>> getAllWithPagination(@RequestParam(name = "page", defaultValue = "0", required = false) int page, @RequestParam(name = "size", defaultValue = "10", required = false) int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    Page<OrganisasiModel> organisasiList = organisasiService.getAllOrganisasi(pageable);
+    CustomResponse<Page<OrganisasiModel>> response = new CustomResponse<>();
     response.setStatus("success");
     response.setCode(HttpStatus.OK.value());
     response.setData(organisasiList);
@@ -48,7 +55,7 @@ public class OrganisasiController {
     }
   }
 
-  @PostMapping("/add")
+  @PostMapping
   public ResponseEntity<CustomResponse<OrganisasiModel>> createOrganisasi(@RequestBody OrganisasiRequestDTO requestDTO) {
     OrganisasiModel organisasiModel = new OrganisasiModel();
     organisasiModel.setNama_organisasi(requestDTO.getNama_organisasi());
@@ -76,9 +83,9 @@ public class OrganisasiController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<CustomResponse<Void>> deleteOrganisasi(@PathVariable Long id) {
+  public ResponseEntity<CustomResponse<Map<String, Boolean>>> deleteOrganisasi(@PathVariable Long id) {
     organisasiService.deleteOrganisasi(id);
-    CustomResponse<Void> response = new CustomResponse<>();
+    CustomResponse<Map<String, Boolean>> response = new CustomResponse<>();
     response.setStatus("success");
     response.setCode(HttpStatus.OK.value());
     response.setMessage("Organisasi dengan ID " + id + " berhasil dihapus.");
