@@ -93,18 +93,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
-          <mainClass>com.e-kampoeng.Main</mainClass> <!-- Sesuaikan dengan nama kelas main Anda -->
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
-          <archive>
-            <manifest>
-              <mainClass>com.e-kampoeng.Main</mainClass> <!-- Sesuaikan dengan nama kelas main Anda -->
-            </manifest>
-          </archive>
+          <mainClass>com.e_kampoeng.EKampoengApplication</mainClass>
         </configuration>
       </plugin>
     </plugins>
