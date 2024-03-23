@@ -16,7 +16,7 @@ public class EKampoengApplication {
     public static void main(String[] args) {
 
         SpringApplication.run(EKampoengApplication.class, args);
-        System.out.println("Run Successfully");
+        System.out.println("Run Successfully!!");
 
     }
 }
