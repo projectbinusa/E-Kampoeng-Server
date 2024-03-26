@@ -1,62 +1,88 @@
 package com.e_kampoeng.controller;
 
-import com.e_kampoeng.exception.CommonResponse;
-import com.e_kampoeng.exception.ResponseHelper;
-import com.e_kampoeng.impl.ESoeratImpl;
+import com.e_kampoeng.exception.NotFoundException;
 import com.e_kampoeng.model.ESoeratModel;
-import com.e_kampoeng.model.WilayahRTModel;
-import com.e_kampoeng.model.WilayahRWModel;
-import com.e_kampoeng.response.PaginationResponse;
+import com.e_kampoeng.response.CustomResponse;
 import com.e_kampoeng.service.ESoeratService;
-import com.e_kampoeng.util.Pagination;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 
 @RestController
 @RequestMapping("/e-kampoeng/api/e-soerat")
 @CrossOrigin(origins = "*")
 public class ESoeratController {
-
     @Autowired
-    private ESoeratImpl eSoerat;
+    private ESoeratService eSoeratService;
 
-    @Autowired
-    ModelMapper modelMapper;
+    @GetMapping
+    public ResponseEntity<CustomResponse<Page<ESoeratModel>>> getAllSoerat(Pageable pageable) {
+        Page<ESoeratModel> allSoerat = eSoeratService.getAllSoerat(pageable);
 
-    @GetMapping // mengambil semua data E-Soerat dengan pagination
-    public CommonResponse<Page<ESoeratModel>> getAllWithPagination(@RequestParam(name = "page", defaultValue = "0", required = false) int page, @RequestParam(name = "size", defaultValue = "10", required = false) int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return ResponseHelper.ok(eSoerat.getAllSoerat(pageable));
+        CustomResponse<Page<ESoeratModel>> response = new CustomResponse<>();
+        response.setStatus("success");
+        response.setCode(HttpStatus.OK.value());
+        response.setMessage("Data retrieved successfully");
+        response.setData(allSoerat);
+
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{id}") // mengambil data E-Soerat berdasarkan id
-    public CommonResponse<ESoeratModel> getById(@PathVariable("id")Long id) {
-        return ResponseHelper.ok(eSoerat.getIdSoerat(id)) ;
+    @GetMapping("/{id}")
+    public ResponseEntity<CustomResponse<ESoeratModel>> getSoeratById(@PathVariable Long id) {
+        ESoeratModel soerat = eSoeratService.getIdSoerat(id);
+
+        CustomResponse<ESoeratModel> response = new CustomResponse<>();
+        response.setStatus("success");
+        response.setCode(HttpStatus.OK.value());
+        response.setMessage("Data retrieved successfully");
+        response.setData(soerat);
+
+        return ResponseEntity.ok(response);
     }
 
-    @PostMapping // menambahkan data E-Soerat
-    public CommonResponse<ESoeratModel> create(ESoeratModel eSoeratModel){
-        return ResponseHelper.ok(eSoerat.addSoerat(modelMapper.map(eSoeratModel, ESoeratModel.class)));
+    @PostMapping
+    public ResponseEntity<CustomResponse<ESoeratModel>> addSoerat(@RequestBody ESoeratModel eSoeratModel) {
+        ESoeratModel addedSoerat = eSoeratService.addSoerat(eSoeratModel);
+
+        CustomResponse<ESoeratModel> response = new CustomResponse<>();
+        response.setStatus("success");
+        response.setCode(HttpStatus.CREATED.value());
+        response.setMessage("Soerat added successfully");
+        response.setData(addedSoerat);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomResponse<ESoeratModel>> editSoerat(@PathVariable Long id, @RequestBody ESoeratModel eSoeratModel) {
+        ESoeratModel editedSoerat = eSoeratService.editSoerat(id, eSoeratModel);
 
-    @PutMapping("/{id}") // mengedit data E-Soerat berdasarkan id
-    public CommonResponse<ESoeratModel> update(@PathVariable("id") Long id, @RequestBody ESoeratModel eSoeratModel) {
-        return ResponseHelper.ok(eSoerat.editSoerat(id, eSoeratModel));
+        CustomResponse<ESoeratModel> response = new CustomResponse<>();
+        response.setStatus("success");
+        response.setCode(HttpStatus.OK.value());
+        response.setMessage("Soerat edited successfully");
+        response.setData(editedSoerat);
+
+        return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{id}") // menghapus data E-Soerat berdasarkan id
-    public CommonResponse<?> delete(@PathVariable("id") Long id) {
-        return ResponseHelper.ok(eSoerat.deleteSoerat(id));}
+    @DeleteMapping("/{id}")
+    public ResponseEntity<CustomResponse<Map<String, Boolean>>> deleteSoerat(@PathVariable Long id) {
+        Map<String, Boolean> deleteResult = eSoeratService.deleteSoerat(id);
 
+        CustomResponse<Map<String, Boolean>> response = new CustomResponse<>();
+        response.setStatus("success");
+        response.setCode(HttpStatus.OK.value());
+        response.setMessage("Soerat deleted successfully");
+        response.setData(deleteResult);
+
+        return ResponseEntity.ok(response);
+    }
 }
