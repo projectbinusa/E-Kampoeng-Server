@@ -87,9 +87,4 @@ public class WilayahRTImpl implements WilayahRTService {
             return res;
         }
     }
-
-//    @Override
-//    public Page<WargaModel> getWargaByRT(Long idWilayahRT, Pageable pageable) {
-//        return wargaRepository.findByWilayahRT_Id(idWilayahRT, pageable);
-//    }
 }
