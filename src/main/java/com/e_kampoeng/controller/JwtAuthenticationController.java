@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class JwtAuthenticationController {
 
     public static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationController.class);
