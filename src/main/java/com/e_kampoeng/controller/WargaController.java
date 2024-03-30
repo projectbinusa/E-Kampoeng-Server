@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -32,6 +33,20 @@ public class WargaController {
         response.setData(allWarga);
 
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/export-excel")
+    public ResponseEntity<byte[]> exportAllWargaToExcel() {
+        try {
+            byte[] excelContent = wargaService.exportToExcel();
+            return ResponseEntity
+                    .ok()
+                    .header("Content-Disposition", "attachment; filename=warga_data.xlsx")
+                    .body(excelContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @PostMapping
@@ -61,6 +76,20 @@ public class WargaController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/by-rw/{rwId}/export-excel")
+    public ResponseEntity<byte[]> exportWargaByRWToExcel(@PathVariable Long rwId) {
+        try {
+            byte[] excelContent = wargaService.exportToExcelByRWId(rwId);
+            return ResponseEntity
+                    .ok()
+                    .header("Content-Disposition", "attachment; filename=warga_data_by_rw.xlsx")
+                    .body(excelContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
     @GetMapping("/by-rt/{rtId}")
     public ResponseEntity<CustomResponse<Page<WargaModel>>> getWargaByRT(@PathVariable Long rtId, @RequestParam(name = "page", defaultValue = "0", required = false) int page, @RequestParam(name = "size", defaultValue = "10", required = false) int size) {
         Pageable pageable = PageRequest.of(page, size);
@@ -73,6 +102,20 @@ public class WargaController {
         response.setData(wargaByRT);
 
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/by-rt/{rtId}/export-excel")
+    public ResponseEntity<byte[]> exportWargaByRTToExcel(@PathVariable Long rtId) {
+        try {
+            byte[] excelContent = wargaService.exportToExcelByRTId(rtId);
+            return ResponseEntity
+                    .ok()
+                    .header("Content-Disposition", "attachment; filename=warga_data_by_rt.xlsx")
+                    .body(excelContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @PutMapping("/{id}")
