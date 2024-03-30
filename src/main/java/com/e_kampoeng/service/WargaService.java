@@ -5,6 +5,11 @@ import com.e_kampoeng.model.WilayahRTModel;
 import com.e_kampoeng.repository.WargaRepository;
 import com.e_kampoeng.repository.WilayahRTRepository;
 import com.e_kampoeng.request.WargaRequestDTO;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -127,4 +134,75 @@ public class WargaService {
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Warga with id " + wargaId + " has been deleted successfully");
     }
+
+    public byte[] exportToExcel() throws IOException {
+        List<WargaModel> allWarga = wargaRepository.findAll();
+        return generateExcel(allWarga);
+    }
+
+    public byte[] exportToExcelByRWId(Long rwId) throws IOException {
+        Page<WargaModel> wargaByRW = wargaRepository.findByWilayahRT_WilayahRW_Id(rwId, Pageable.unpaged());
+        return generateExcel(wargaByRW.getContent());
+    }
+
+    public byte[] exportToExcelByRTId(Long rtId) throws IOException {
+        Page<WargaModel> wargaByRT = wargaRepository.findByWilayahRT_Id(rtId, Pageable.unpaged());
+        return generateExcel(wargaByRT.getContent());
+    }
+
+
+    private byte[] generateExcel(List<WargaModel> wargaList) throws IOException {
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Warga Data");
+
+            // Header Row
+            Row headerRow = sheet.createRow(0);
+            String[] headers = {"Nama", "Tempat Lahir", "Tanggal Lahir", "Jenis Kelamin", "Agama", "NIK", "No KK", "Status dalam Keluarga", "Status Kependudukan", "No Anak", "Panjang Lahir", "Berat Lahir", "No Passport", "Nama Ayah", "Nama Ibu", "No Telp", "Email", "Alamat", "Tanggal Perkawinan", "Alamat Sebelumnya", "No BPJS", "Pendidikan Tempuh", "Pendidikan Terakhir", "Status Perkawinan", "Golongan Darah", "Jenis Asuransi", "Jenis KB", "Kesesuaian Tempat", "Sumber Air"};
+            for (int i = 0; i < headers.length; i++) {
+                Cell cell = headerRow.createCell(i);
+                cell.setCellValue(headers[i]);
+            }
+
+            // Data Rows
+            int rowNum = 1;
+            for (WargaModel warga : wargaList) {
+                Row row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(warga.getNama());
+                row.createCell(1).setCellValue(warga.getTempat_lahir());
+                row.createCell(2).setCellValue(warga.getTanggal_lahir().toString()); // Assuming tanggal_lahir is of type java.util.Date
+                row.createCell(3).setCellValue(warga.getJenis_kelamin());
+                row.createCell(4).setCellValue(warga.getAgama());
+                row.createCell(5).setCellValue(warga.getNik());
+                row.createCell(6).setCellValue(warga.getNo_kk());
+                row.createCell(7).setCellValue(warga.getStatus_dalam_keluarga());
+                row.createCell(8).setCellValue(warga.getStatus_kependudukan());
+                row.createCell(9).setCellValue(warga.getNo_anak());
+                row.createCell(10).setCellValue(warga.getPanjang_lahir());
+                row.createCell(11).setCellValue(warga.getBerat_lahir());
+                row.createCell(12).setCellValue(warga.getNo_passport());
+                row.createCell(13).setCellValue(warga.getNama_ayah());
+                row.createCell(14).setCellValue(warga.getNama_ibu());
+                row.createCell(15).setCellValue(warga.getNo_telp());
+                row.createCell(16).setCellValue(warga.getEmail());
+                row.createCell(17).setCellValue(warga.getAlamat());
+                row.createCell(18).setCellValue(warga.getTanggal_perkawinan().toString()); // Assuming tanggal_perkawinan is of type java.util.Date
+                row.createCell(19).setCellValue(warga.getAlamat_sebelumnya());
+                row.createCell(20).setCellValue(warga.getNo_bpjs());
+                row.createCell(21).setCellValue(warga.getPendidikan_tempuh());
+                row.createCell(22).setCellValue(warga.getPendidikan_terakhir());
+                row.createCell(23).setCellValue(warga.getStatus_perkawinan());
+                row.createCell(24).setCellValue(warga.getGolongan_darah());
+                row.createCell(25).setCellValue(warga.getJenis_asuransi());
+                row.createCell(26).setCellValue(warga.getJenis_kb());
+                row.createCell(27).setCellValue(warga.getKesesuaian_tempat());
+                row.createCell(28).setCellValue(warga.getSumber_air());
+            }
+
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            workbook.write(outputStream);
+            return outputStream.toByteArray();
+        }
+    }
+
+
 }

@@ -8,11 +8,12 @@
         <outputRelativeToContentRoot value="true" />
         <module name="AppServer" />
         <module name="Data-Penduduk" />
-        <module name="e-kampoeng" />
         <module name="E-Kampoeng-Server" />
+        <module name="e_kampoeng" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="e-kampoeng" target="11" />
       <module name="e-kampoeng-server" target="11" />
     </bytecodeTargetLevel>
   </component>
@@ -23,6 +24,7 @@
       <module name="E-Kampoeng-Server" options="-parameters" />
       <module name="e-kampoeng" options="-parameters" />
       <module name="e-kampoeng-server" options="-parameters" />
+      <module name="e_kampoeng" options="-parameters" />
     </option>
   </component>
 </project>
