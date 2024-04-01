@@ -101,6 +101,10 @@ public class JwtUserDetailsService implements UserDetailsService {
 		return userDao.save(user);
 	}
 
+	public List<UserModel> getAllUsers() {
+		return userDao.findAll();
+	}
+
 //	private String imageConverter(MultipartFile multipartFile) throws Exception {
 //		try {
 //			String fileName = getExtension(multipartFile.getOriginalFilename());
