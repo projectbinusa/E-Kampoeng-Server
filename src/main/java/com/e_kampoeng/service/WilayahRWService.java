@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ public interface WilayahRWService {
     WilayahRWModel createWilayahRW(WilayahRWRequestDTO requestDTO);
     WilayahRWModel updateWilayahRW(Long id, WilayahRWRequestDTO requestDTO);
     WilayahRWModel getWilayahRWById(Long id);
-//    List<WilayahRTWithRwDTO> getRTsByRW(Long rwId);
+    byte[] exportToExcel() throws IOException;
     Page<WilayahRWModel> getAllWilayahRW(Pageable pageable);
     Map<String, Boolean> deleteWilayahRW(Long id);
 

@@ -7,10 +7,13 @@ import com.e_kampoeng.service.WilayahRTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -97,5 +100,42 @@ public class WilayahRTController {
         response.setData(deleteResult);
 
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/export-excel")
+    public ResponseEntity<byte[]> exportToExcel() {
+        try {
+            byte[] excelBytes = wilayahRTService.exportToExcel();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentDispositionFormData("attachment", "wilayah_rt_data.xlsx");
+
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(excelBytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+
+    @PostMapping("/export-excel/{wilayahRWId}")
+    public ResponseEntity<byte[]> exportToExcelByWilayahRWId(@PathVariable Long wilayahRWId) {
+        try {
+            byte[] excelBytes = wilayahRTService.exportToExcelByWilayahRWId(wilayahRWId);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentDispositionFormData("attachment", "wilayah_rt_data.xlsx");
+
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(excelBytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }
