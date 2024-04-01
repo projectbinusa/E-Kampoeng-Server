@@ -5,8 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class EKampoengApplication {
-
-
     public static void main(String[] args) {
 
         SpringApplication.run(EKampoengApplication.class, args);

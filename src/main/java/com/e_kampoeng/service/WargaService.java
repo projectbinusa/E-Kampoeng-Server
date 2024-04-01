@@ -5,10 +5,7 @@ import com.e_kampoeng.model.WilayahRTModel;
 import com.e_kampoeng.repository.WargaRepository;
 import com.e_kampoeng.repository.WilayahRTRepository;
 import com.e_kampoeng.request.WargaRequestDTO;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,11 +13,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.List;
-import java.util.Objects;
+import java.io.InputStream;
+import java.util.*;
 
 @Service
 public class WargaService {
@@ -204,5 +203,134 @@ public class WargaService {
         }
     }
 
-
+    // Import Excell
+//    public ResponseEntity<?> importFromExcel(MultipartFile file) {
+//        try {
+//            List<WargaRequestDTO> importedWarga = readExcel(file);
+//            saveImportedData(importedWarga);
+//            return ResponseEntity.ok("Import berhasil");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Gagal mengimpor data: " + e.getMessage());
+//        }
+//    }
+//
+//    private List<WargaRequestDTO> readExcel(MultipartFile file) throws IOException {
+//        List<WargaRequestDTO> importedWarga = new ArrayList<>();
+//        try (InputStream inputStream = file.getInputStream();
+//             Workbook workbook = new XSSFWorkbook(inputStream)) {
+//            Sheet sheet = workbook.getSheetAt(0);
+//            Iterator<Row> iterator = sheet.iterator();
+//            // Skip header row
+//            if (iterator.hasNext()) {
+//                iterator.next();
+//            }
+//            while (iterator.hasNext()) {
+//                Row currentRow = iterator.next();
+//                WargaRequestDTO warga = new WargaRequestDTO();
+//                warga.setNama(getStringValueFromCell(currentRow.getCell(0)));
+//                warga.setTempat_lahir(getStringValueFromCell(currentRow.getCell(1)));
+//                warga.setTanggal_lahir(getDateValueFromCell(currentRow.getCell(2)));
+//                warga.setJenis_kelamin(getStringValueFromCell(currentRow.getCell(3)));
+//                warga.setAgama(getStringValueFromCell(currentRow.getCell(4)));
+//                warga.setNik(getLongValueFromCell(currentRow.getCell(5)));
+//                warga.setNo_kk(getStringValueFromCell(currentRow.getCell(6)));
+//                warga.setStatus_dalam_keluarga(getStringValueFromCell(currentRow.getCell(7)));
+//                warga.setStatus_kependudukan(getStringValueFromCell(currentRow.getCell(8)));
+//                warga.setNo_anak(getLongValueFromCell(currentRow.getCell(9)));
+//                warga.setPanjang_lahir(getDoubleValueFromCell(currentRow.getCell(10)));
+//                warga.setBerat_lahir(getDoubleValueFromCell(currentRow.getCell(11)));
+//                warga.setNo_passport(getLongValueFromCell(currentRow.getCell(12)));
+//                warga.setNama_ayah(getStringValueFromCell(currentRow.getCell(13)));
+//                warga.setNama_ibu(getStringValueFromCell(currentRow.getCell(14)));
+//                warga.setNo_telp(getLongValueFromCell(currentRow.getCell(15)));
+//                warga.setEmail(getStringValueFromCell(currentRow.getCell(16)));
+//                warga.setAlamat(getStringValueFromCell(currentRow.getCell(17)));
+//                warga.setTanggal_perkawinan(getDateValueFromCell(currentRow.getCell(18)));
+//                warga.setAlamat_sebelumnya(getStringValueFromCell(currentRow.getCell(19)));
+//                warga.setNo_bpjs(getLongValueFromCell(currentRow.getCell(20)));
+//                warga.setPendidikan_tempuh(getStringValueFromCell(currentRow.getCell(21)));
+//                warga.setPendidikan_terakhir(getStringValueFromCell(currentRow.getCell(22)));
+//                warga.setStatus_perkawinan(getStringValueFromCell(currentRow.getCell(23)));
+//                warga.setGolongan_darah(getStringValueFromCell(currentRow.getCell(24)));
+//                warga.setJenis_asuransi(getStringValueFromCell(currentRow.getCell(25)));
+//                warga.setJenis_kb(getStringValueFromCell(currentRow.getCell(26)));
+//                warga.setKesesuaian_tempat(getStringValueFromCell(currentRow.getCell(27)));
+//                warga.setSumber_air(getStringValueFromCell(currentRow.getCell(28)));
+//                warga.setWilayahRTId(getLongValueFromCell(currentRow.getCell(29)));
+//                importedWarga.add(warga);
+//            }
+//        }
+//        return importedWarga;
+//    }
+//
+//    private String getStringValueFromCell(Cell cell) {
+//        if (cell == null) {
+//            return null;
+//        }
+//        cell.setCellType(CellType.STRING);
+//        return cell.getStringCellValue();
+//    }
+//
+//    private Date getDateValueFromCell(Cell cell) {
+//        if (cell == null) {
+//            return null;
+//        }
+//        return cell.getDateCellValue();
+//    }
+//
+//    private Long getLongValueFromCell(Cell cell) {
+//        if (cell == null) {
+//            return null;
+//        }
+//        cell.setCellType(CellType.STRING);
+//        return Long.valueOf(cell.getStringCellValue());
+//    }
+//
+//    private Double getDoubleValueFromCell(Cell cell) {
+//        if (cell == null) {
+//            return null;
+//        }
+//        return cell.getNumericCellValue();
+//    }
+//
+//    private void saveImportedData(List<WargaRequestDTO> importedWarga) {
+//        for (WargaRequestDTO wargaDTO : importedWarga) {
+//            WargaModel warga = new WargaModel();
+//            warga.setNama(wargaDTO.getNama());
+//            warga.setTempat_lahir(wargaDTO.getTempat_lahir());
+//            warga.setTanggal_lahir(wargaDTO.getTanggal_lahir());
+//            warga.setJenis_kelamin(wargaDTO.getJenis_kelamin());
+//            warga.setAgama(wargaDTO.getAgama());
+//            warga.setNik(wargaDTO.getNik());
+//            warga.setNo_kk(wargaDTO.getNo_kk());
+//            warga.setStatus_dalam_keluarga(wargaDTO.getStatus_dalam_keluarga());
+//            warga.setStatus_kependudukan(wargaDTO.getStatus_kependudukan());
+//            warga.setNo_anak(wargaDTO.getNo_anak());
+//            warga.setPanjang_lahir(wargaDTO.getPanjang_lahir());
+//            warga.setBerat_lahir(wargaDTO.getBerat_lahir());
+//            warga.setNo_passport(wargaDTO.getNo_passport());
+//            warga.setNama_ayah(wargaDTO.getNama_ayah());
+//            warga.setNama_ibu(wargaDTO.getNama_ibu());
+//            warga.setNo_telp(wargaDTO.getNo_telp());
+//            warga.setEmail(wargaDTO.getEmail());
+//            warga.setAlamat(wargaDTO.getAlamat());
+//            warga.setTanggal_perkawinan(wargaDTO.getTanggal_perkawinan());
+//            warga.setAlamat_sebelumnya(wargaDTO.getAlamat_sebelumnya());
+//            warga.setNo_bpjs(wargaDTO.getNo_bpjs());
+//            warga.setPendidikan_tempuh(wargaDTO.getPendidikan_tempuh());
+//            warga.setPendidikan_terakhir(wargaDTO.getPendidikan_terakhir());
+//            warga.setStatus_perkawinan(wargaDTO.getStatus_perkawinan());
+//            warga.setGolongan_darah(wargaDTO.getGolongan_darah());
+//            warga.setJenis_asuransi(wargaDTO.getJenis_asuransi());
+//            warga.setJenis_kb(wargaDTO.getJenis_kb());
+//            warga.setKesesuaian_tempat(wargaDTO.getKesesuaian_tempat());
+//            warga.setSumber_air(wargaDTO.getSumber_air());
+//
+//            WilayahRTModel wilayahRT = wilayahRTRepository.findById(wargaDTO.getWilayahRTId()).orElse(null);
+//            warga.setWilayahRT(wilayahRT);
+//
+//            wargaRepository.save(warga);
+//        }
+//    }
 }
