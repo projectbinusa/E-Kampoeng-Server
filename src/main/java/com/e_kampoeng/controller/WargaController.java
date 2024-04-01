@@ -143,4 +143,23 @@ public class WargaController {
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
     }
+
+    @PostMapping("/import-excel")
+    public ResponseEntity<String> importExcel(@RequestPart("file") MultipartFile file) {
+        if (file.isEmpty()) {
+            return ResponseEntity.badRequest().body("File is empty");
+        }
+
+        if (!file.getOriginalFilename().endsWith(".xlsx")) {
+            return ResponseEntity.badRequest().body("File format not supported. Please provide an Excel file with .xlsx extension");
+        }
+
+        try {
+            ResponseEntity<?> response = wargaService.importFromExcel(file);
+            return ResponseEntity.ok().body((String) response.getBody());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to import data: " + e.getMessage());
+        }
+    }
 }

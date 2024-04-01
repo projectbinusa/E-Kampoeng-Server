@@ -9,9 +9,7 @@ import com.e_kampoeng.repository.WilayahRTRepository;
 import com.e_kampoeng.repository.WilayahRWRepository;
 import com.e_kampoeng.request.WilayahRTRequestDTO;
 import com.e_kampoeng.service.WilayahRTService;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +23,16 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.persistence.EntityNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class WilayahRTImpl implements WilayahRTService {
@@ -155,5 +163,91 @@ public class WilayahRTImpl implements WilayahRTService {
             }
         }
     }
+
+    // Import Excell Wilayah RT
+    @Override
+    @Transactional
+    public List<WilayahRTRequestDTO> importFromExcel(MultipartFile file) throws IOException {
+        List<WilayahRTRequestDTO> importedWilayahRT = new ArrayList<>();
+        try (InputStream inputStream = file.getInputStream();
+             Workbook workbook = new XSSFWorkbook(inputStream)) {
+            Sheet sheet = workbook.getSheetAt(0);
+            Iterator<Row> iterator = sheet.iterator();
+            // Skip header row
+            if (iterator.hasNext()) {
+                iterator.next();
+            }
+            while (iterator.hasNext()) {
+                Row currentRow = iterator.next();
+                WilayahRTRequestDTO wilayahRT = createWilayahRTFromRow(currentRow);
+                // Save to database
+                WilayahRTModel savedWilayahRT = saveWilayahRT(wilayahRT);
+                importedWilayahRT.add(convertToDTO(savedWilayahRT));
+            }
+        }
+        return importedWilayahRT;
+    }
+
+    private WilayahRTRequestDTO convertToDTO(WilayahRTModel wilayahRT) {
+        WilayahRTRequestDTO dto = new WilayahRTRequestDTO();
+        dto.setNomorRt(wilayahRT.getNomorRt());
+        dto.setWilayahRWId(wilayahRT.getWilayahRW().getId()); // Menggunakan ID dari WilayahRWModel
+        return dto;
+    }
+
+
+    private WilayahRTRequestDTO createWilayahRTFromRow(Row row) {
+        WilayahRTRequestDTO wilayahRT = new WilayahRTRequestDTO();
+        wilayahRT.setNomorRt(getLongValueFromCell(row.getCell(0)));
+        wilayahRT.setWilayahRWId(getLongValueFromCell(row.getCell(1)));
+        return wilayahRT;
+    }
+
+    private Long getLongValueFromCell(Cell cell) {
+        if (cell == null || cell.getCellType() == CellType.BLANK) {
+            return null;
+        }
+        if (cell.getCellType() == CellType.NUMERIC) {
+            double numericValue = cell.getNumericCellValue();
+            // Check if the numeric value has a fractional part
+            if (numericValue == (long) numericValue) {
+                return (long) numericValue; // Return as Long if it's an integer
+            } else {
+                // Handle decimal values here, such as rounding or throwing an exception
+                // For example, rounding to the nearest whole number:
+                return Math.round(numericValue);
+            }
+        } else if (cell.getCellType() == CellType.STRING) {
+            String cellValue = cell.getStringCellValue();
+            try {
+                return Long.valueOf(cellValue);
+            } catch (NumberFormatException e) {
+                // Handle the parse exception
+                e.printStackTrace();
+                return null;
+            }
+        } else {
+            // Handle other cell types if needed
+            return null;
+        }
+    }
+
+    private WilayahRTModel saveWilayahRT(WilayahRTRequestDTO wilayahRTRequestDTO) {
+        WilayahRTModel wilayahRT = new WilayahRTModel();
+        wilayahRT.setNomorRt(wilayahRTRequestDTO.getNomorRt());
+
+        // Dapatkan objek WilayahRWModel dari ID
+        WilayahRWModel wilayahRW = wilayahRWRepository.findById(wilayahRTRequestDTO.getWilayahRWId())
+                .orElseThrow(() -> new EntityNotFoundException("WilayahRW with ID " + wilayahRTRequestDTO.getWilayahRWId() + " not found"));
+
+        // Set WilayahRWModel ke dalam properti wilayahRW
+        wilayahRT.setWilayahRW(wilayahRW);
+
+        // Simpan ke database
+        return wilayahRTRepository.save(wilayahRT);
+    }
+
+
+
 
 }

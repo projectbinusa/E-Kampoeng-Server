@@ -11,13 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.InputStream;
+import java.util.*;
 
 @Service
 public class WilayahRWImpl implements WilayahRWService {
@@ -103,6 +104,82 @@ public class WilayahRWImpl implements WilayahRWService {
                 workbook.write(outputStream);
                 return outputStream.toByteArray();
             }
+        }
+    }
+    @Override
+    @Transactional
+    public List<WilayahRWRequestDTO> importFromExcel(MultipartFile file) throws IOException {
+        List<WilayahRWRequestDTO> importedWilayahRW = new ArrayList<>();
+        try (InputStream inputStream = file.getInputStream();
+             Workbook workbook = new XSSFWorkbook(inputStream)) {
+            Sheet sheet = workbook.getSheetAt(0);
+            Iterator<Row> iterator = sheet.iterator();
+            // Skip header row
+            if (iterator.hasNext()) {
+                iterator.next();
+            }
+            while (iterator.hasNext()) {
+                Row currentRow = iterator.next();
+                WilayahRWRequestDTO wilayahRW = createWilayahRWFromRow(currentRow);
+                // Save to database
+                WilayahRWModel savedWilayahRW = saveWilayahRW(wilayahRW);
+                importedWilayahRW.add(convertToDTO(savedWilayahRW));
+            }
+        }
+        return importedWilayahRW;
+    }
+
+    private WilayahRWModel saveWilayahRW(WilayahRWRequestDTO wilayahRWRequestDTO) {
+        WilayahRWModel wilayahRW = new WilayahRWModel();
+        wilayahRW.setNamaDusun(wilayahRWRequestDTO.getNamaDusun());
+        wilayahRW.setNomorRw(wilayahRWRequestDTO.getNomorRw());
+        // Save to database
+        return wilayahRWRepository.save(wilayahRW);
+    }
+
+    private WilayahRWRequestDTO convertToDTO(WilayahRWModel wilayahRW) {
+        WilayahRWRequestDTO dto = new WilayahRWRequestDTO();
+        dto.setNamaDusun(wilayahRW.getNamaDusun());
+        dto.setNomorRw(wilayahRW.getNomorRw());
+        return dto;
+    }
+
+    private WilayahRWRequestDTO createWilayahRWFromRow(Row row) {
+        WilayahRWRequestDTO wilayahRW = new WilayahRWRequestDTO();
+        wilayahRW.setNamaDusun(getStringValueFromCell(row.getCell(0)));
+        wilayahRW.setNomorRw(getLongValueFromCell(row.getCell(1)));
+        return wilayahRW;
+    }
+
+    private String getStringValueFromCell(Cell cell) {
+        if (cell == null || cell.getCellType() == CellType.BLANK) {
+            return null;
+        }
+        if (cell.getCellType() == CellType.STRING) {
+            return cell.getStringCellValue();
+        } else {
+            // Handle other cell types if needed
+            return null;
+        }
+    }
+
+    private Long getLongValueFromCell(Cell cell) {
+        if (cell == null || cell.getCellType() == CellType.BLANK) {
+            return null;
+        }
+        if (cell.getCellType() == CellType.NUMERIC) {
+            double numericValue = cell.getNumericCellValue();
+            // Check if the numeric value has a fractional part
+            if (numericValue == (long) numericValue) {
+                return (long) numericValue; // Return as Long if it's an integer
+            } else {
+                // Handle decimal values here, such as rounding or throwing an exception
+                // For example, rounding to the nearest whole number:
+                return Math.round(numericValue);
+            }
+        } else {
+            // Handle other cell types if needed
+            return null;
         }
     }
 }
