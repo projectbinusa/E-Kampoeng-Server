@@ -12,9 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -136,6 +138,17 @@ public class WilayahRTController {
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @PostMapping("/import-excel")
+    public ResponseEntity<?> importWilayahRT(@RequestPart("file") MultipartFile file) {
+        try {
+            List<WilayahRTRequestDTO> importedWilayahRT = wilayahRTService.importFromExcel(file);
+            return ResponseEntity.ok(importedWilayahRT);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to import data: " + e.getMessage());
         }
     }
 }

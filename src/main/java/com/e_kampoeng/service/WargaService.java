@@ -15,11 +15,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+
 
 @Service
 public class WargaService {
@@ -284,20 +289,35 @@ public class WargaService {
         return getIntValueFromCell(cell);
     }
 
-    private Date getDateValueFromCell(Cell cell) {
-        if (cell == null) {
+    private Long getLongValueFromCell(Cell cell) {
+        if (cell == null || cell.getCellType() == CellType.BLANK) {
             return null;
         }
-        return cell.getDateCellValue();
+        if (cell.getCellType() == CellType.NUMERIC) {
+            double numericValue = cell.getNumericCellValue();
+            // Check if the numeric value has a fractional part
+            if (numericValue == (long) numericValue) {
+                return (long) numericValue; // Return as Long if it's an integer
+            } else {
+                // Handle decimal values here, such as rounding or throwing an exception
+                // For example, rounding to the nearest whole number:
+                return Math.round(numericValue);
+            }
+        } else if (cell.getCellType() == CellType.STRING) {
+            String cellValue = cell.getStringCellValue();
+            try {
+                return Long.valueOf(cellValue);
+            } catch (NumberFormatException e) {
+                // Handle the parse exception
+                e.printStackTrace();
+                return null;
+            }
+        } else {
+            // Handle other cell types if needed
+            return null;
+        }
     }
 
-    private Long getLongValueFromCell(Cell cell) {
-        if (cell == null) {
-            return null;
-        }
-        cell.setCellType(CellType.STRING);
-        return Long.valueOf(cell.getStringCellValue());
-    }
 
     private Double getDoubleValueFromCell(Cell cell) {
         if (cell == null) {
@@ -306,8 +326,36 @@ public class WargaService {
         return cell.getNumericCellValue();
     }
 
+    private Date getDateValueFromCell(Cell cell) {
+        if (cell == null || cell.getCellType() == CellType.BLANK) {
+            return null;
+        }
+        if (cell.getCellType() == CellType.NUMERIC) {
+            return cell.getDateCellValue();
+        } else if (cell.getCellType() == CellType.STRING) {
+            String dateString = cell.getStringCellValue();
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                return sdf.parse(dateString);
+            } catch (ParseException e) {
+                // Handle the parse exception
+                e.printStackTrace();
+                return null;
+            }
+        } else {
+            // Handle other cell types if needed
+            return null;
+        }
+    }
+
+
     private void saveImportedData(List<WargaRequestDTO> importedWarga) {
         for (WargaRequestDTO wargaDTO : importedWarga) {
+            if (wargaDTO.getWilayahRTId() == null) {
+                System.out.println("Warning: wilayahRTId is null for warga with nama: " + wargaDTO.getNama());
+                continue; // Lanjutkan ke wargaDTO berikutnya jika wilayahRTId kosong
+            }
+
             WargaModel warga = new WargaModel();
             warga.setNama(wargaDTO.getNama());
             warga.setTempat_lahir(wargaDTO.getTempat_lahir());
@@ -339,10 +387,19 @@ public class WargaService {
             warga.setKesesuaian_tempat(wargaDTO.getKesesuaian_tempat());
             warga.setSumber_air(wargaDTO.getSumber_air());
 
-            WilayahRTModel wilayahRT = wilayahRTRepository.findById(wargaDTO.getWilayahRTId()).orElse(null);
-            warga.setWilayahRT(wilayahRT);
+            // Mengatur WilayahRT jika wilayahRTId tidak null
+            if (wargaDTO.getWilayahRTId() != null) {
+                Optional<WilayahRTModel> optionalWilayahRT = wilayahRTRepository.findById(wargaDTO.getWilayahRTId());
+                if (optionalWilayahRT.isPresent()) {
+                    warga.setWilayahRT(optionalWilayahRT.get());
+                } else {
+                    throw new EntityNotFoundException("WilayahRTModel not found for id: " + wargaDTO.getWilayahRTId());
+                }
+            }
 
+            // Menyimpan warga ke database
             wargaRepository.save(warga);
         }
     }
+
 }
