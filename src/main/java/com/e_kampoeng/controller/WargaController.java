@@ -25,7 +25,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/e-kampoeng/api")
+@RequestMapping("/e-kampoeng/api/warga")
 @CrossOrigin(origins = "*")
 public class WargaController {
     @Autowired
