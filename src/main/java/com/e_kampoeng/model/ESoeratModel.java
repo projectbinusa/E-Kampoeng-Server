@@ -24,6 +24,13 @@ public class ESoeratModel extends DateConfig {
     @Column(name = "jenis_bantuan")
     private JenisBantuanType jenis_bantuan;
 
+    @Column(name = "creator_email")
+    private String creatorEmail;
+
+    @ManyToOne
+    @JoinColumn(name = "wilayah_rt_id")
+    private WilayahRTModel wilayahRT;
+
     public ESoeratModel() {
     }
 
@@ -49,5 +56,21 @@ public class ESoeratModel extends DateConfig {
 
     public void setJenis_bantuan(JenisBantuanType jenis_bantuan) {
         this.jenis_bantuan = jenis_bantuan;
+    }
+
+    public WilayahRTModel getWilayahRT() {
+        return wilayahRT;
+    }
+
+    public void setWilayahRT(WilayahRTModel wilayahRT) {
+        this.wilayahRT = wilayahRT;
+    }
+
+    public String getCreatorEmail() {
+        return creatorEmail;
+    }
+
+    public void setCreatorEmail(String creatorEmail) {
+        this.creatorEmail = creatorEmail;
     }
 }

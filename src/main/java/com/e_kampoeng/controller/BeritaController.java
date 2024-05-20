@@ -26,7 +26,7 @@ public class BeritaController {
     @Autowired
     private BeritaService beritaService;
 
-    @PostMapping(path = "", consumes = "multipart/form-data")
+    @PostMapping(path = "/add", consumes = "multipart/form-data")
     public ResponseEntity<CommonResponse<Berita>> createberita2(BeritaDTO berita, @RequestPart("file")MultipartFile multipartFile) throws SQLException, ClassNotFoundException {
         CommonResponse<Berita> response = new CommonResponse<>();
         try {
@@ -45,7 +45,7 @@ public class BeritaController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<CommonResponse<Page<Berita>>> listAllBerita(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,

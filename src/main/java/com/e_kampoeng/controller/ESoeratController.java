@@ -21,7 +21,7 @@ public class ESoeratController {
     @Autowired
     private ESoeratService eSoeratService;
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<CustomResponse<Page<ESoeratModel>>> getAllSoerat(Pageable pageable) {
         Page<ESoeratModel> allSoerat = eSoeratService.getAllSoerat(pageable);
 
@@ -47,7 +47,7 @@ public class ESoeratController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<CustomResponse<ESoeratModel>> addSoerat(@RequestBody ESoeratModel eSoeratModel) {
         ESoeratModel addedSoerat = eSoeratService.addSoerat(eSoeratModel);
 

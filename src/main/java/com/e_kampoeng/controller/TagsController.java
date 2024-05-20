@@ -24,7 +24,7 @@ public class TagsController {
     @Autowired
     private TagsImpl tagsService;
 
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<CommonResponse<Tags>> createTags(@RequestBody TagsDTO tags) {
         CommonResponse<Tags> response = new CommonResponse<>();
         try {
@@ -62,7 +62,7 @@ public class TagsController {
 //        }
 //    }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<CommonResponse<Page<Tags>>> findAllWithPagination(@RequestParam(name = "page", defaultValue = "0", required = false) int page, @RequestParam(name = "size", defaultValue = "10", required = false) int size) {
         CommonResponse<Page<Tags>> response = new CommonResponse<>();
         Pageable pageable = PageRequest.of(page, size);

@@ -12,6 +12,10 @@ public class CategoryBerita extends DateConfig {
     private Long id;
     private String category;
 
+    @ManyToOne
+    @JoinColumn(name = "wilayah_rt_id")
+    private WilayahRTModel wilayahRT;
+
     public Long getId() {
         return id;
     }
@@ -26,5 +30,13 @@ public class CategoryBerita extends DateConfig {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public WilayahRTModel getWilayahRT() {
+        return wilayahRT;
+    }
+
+    public void setWilayahRT(WilayahRTModel wilayahRT) {
+        this.wilayahRT = wilayahRT;
     }
 }

@@ -9,7 +9,7 @@ public class WargaResponseDTO {
     private Date tanggal_lahir;
     private String jenis_kelamin;
     private String agama;
-    private Integer nik;
+    private String nik;
     private String no_kk;
     private String status_dalam_keluarga;
     private String status_kependudukan;
@@ -33,9 +33,6 @@ public class WargaResponseDTO {
     private String jenis_kb;
     private String kesesuaian_tempat;
     private String sumber_air;
-    private String role;
-    private String password;
-
     public Long getId() {
         return id;
     }
@@ -83,12 +80,7 @@ public class WargaResponseDTO {
     public void setAgama(String agama) {
         this.agama = agama;
     }
-
-    public Integer getNik() {
-        return nik;
-    }
-
-    public void setNik(Integer nik) {
+    public void setNik(String nik) {
         this.nik = nik;
     }
 
@@ -276,19 +268,4 @@ public class WargaResponseDTO {
         this.sumber_air = sumber_air;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }
