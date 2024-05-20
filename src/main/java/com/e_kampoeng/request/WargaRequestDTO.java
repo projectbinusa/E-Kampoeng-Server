@@ -12,7 +12,7 @@ public class WargaRequestDTO {
     private Date tanggal_lahir;
     private String jenis_kelamin;
     private String agama;
-    private Integer nik;
+    private String nik;
     private String no_kk;
     private String status_dalam_keluarga;
     private String status_kependudukan;
@@ -22,7 +22,7 @@ public class WargaRequestDTO {
     private Long no_passport;
     private String nama_ayah;
     private String nama_ibu;
-    private Long no_telp;
+    private String no_telp;
     private String email;
     private String alamat;
     @JsonFormat(pattern = "dd-MM-yyyy")
@@ -38,6 +38,7 @@ public class WargaRequestDTO {
     private String jenis_kb;
     private String kesesuaian_tempat;
     private String sumber_air;
+    private String role;
     private Long wilayahRTId;
 
     public String getNama() {
@@ -80,13 +81,6 @@ public class WargaRequestDTO {
         this.agama = agama;
     }
 
-    public Integer getNik() {
-        return nik;
-    }
-
-    public void setNik(Integer nik) {
-        this.nik = nik;
-    }
 
     public String getNo_kk() {
         return no_kk;
@@ -102,6 +96,14 @@ public class WargaRequestDTO {
 
     public void setStatus_dalam_keluarga(String status_dalam_keluarga) {
         this.status_dalam_keluarga = status_dalam_keluarga;
+    }
+
+    public String getNik() {
+        return nik;
+    }
+
+    public void setNik(String nik) {
+        this.nik = nik;
     }
 
     public String getStatus_kependudukan() {
@@ -160,11 +162,11 @@ public class WargaRequestDTO {
         this.nama_ibu = nama_ibu;
     }
 
-    public Long getNo_telp() {
+    public String getNo_telp() {
         return no_telp;
     }
 
-    public void setNo_telp(Long no_telp) {
+    public void setNo_telp(String no_telp) {
         this.no_telp = no_telp;
     }
 
@@ -270,6 +272,14 @@ public class WargaRequestDTO {
 
     public void setSumber_air(String sumber_air) {
         this.sumber_air = sumber_air;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public Long getWilayahRTId() {

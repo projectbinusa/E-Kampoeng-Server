@@ -24,7 +24,7 @@ public class CategoryBeritaContoller {
     @Autowired
     private CategoryBeritaService categoryBeritaService;
 
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<CommonResponse<CategoryBerita>> createCategoryBerita(@RequestBody CategoryBeritaDTO categoryBerita) throws SQLException, ClassNotFoundException {
         CommonResponse<CategoryBerita> response = new CommonResponse<>();
         try {
@@ -43,7 +43,7 @@ public class CategoryBeritaContoller {
         }
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<CommonResponse<Page<CategoryBerita>>> listAlCategoryBerita(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -141,7 +141,7 @@ public class CategoryBeritaContoller {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/ById/{id}")
     public ResponseEntity<CommonResponse<CategoryBerita>> get(@PathVariable("id") long id) throws SQLException, ClassNotFoundException {
         CommonResponse<CategoryBerita> response = new CommonResponse<>();
         try {

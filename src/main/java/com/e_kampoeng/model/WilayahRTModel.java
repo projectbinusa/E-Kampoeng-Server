@@ -1,7 +1,7 @@
 package com.e_kampoeng.model;
 
 import com.e_kampoeng.config.DateConfig;
-import com.e_kampoeng.model.WilayahRWModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -12,10 +12,9 @@ public class WilayahRTModel extends DateConfig {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long nomorRt;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "wilayah_rw_id")
-    private WilayahRWModel wilayahRW;
-
+    @OneToOne
+    @JoinColumn(name = "kepala_rt_id")
+    private WargaModel kepalaRt;
     public Long getId() {
         return id;
     }
@@ -32,11 +31,11 @@ public class WilayahRTModel extends DateConfig {
         this.nomorRt = nomorRt;
     }
 
-    public WilayahRWModel getWilayahRW() {
-        return wilayahRW;
+    public WargaModel getKepalaRt() {
+        return kepalaRt;
     }
 
-    public void setWilayahRW(WilayahRWModel wilayahRW) {
-        this.wilayahRW = wilayahRW;
+    public void setKepalaRt(WargaModel kepalaRt) {
+        this.kepalaRt = kepalaRt;
     }
 }

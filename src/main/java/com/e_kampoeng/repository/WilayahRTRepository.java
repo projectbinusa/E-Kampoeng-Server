@@ -8,11 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface WilayahRTRepository extends JpaRepository<WilayahRTModel, Long> {
-    Page<WilayahRTModel> findByWilayahRW_Id(Long rtId, Pageable pageable);
-
-//    @Query(value = "SELECT * FROM wilayah_rt where wilayah_rw_id = ?1 and nomor_rt = ?2", nativeQuery = true)
-//    WilayahRTModel wilRTExistInWilRW(Long wilayahRWId, Long nomorRT);
+    Optional<WilayahRTModel> findByKepalaRt_Email(String email);
 }

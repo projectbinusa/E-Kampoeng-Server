@@ -22,7 +22,7 @@ public class WargaOrganisasiController {
     @Autowired
     private WargaOrganisasiService wargaOrganisasiService;
 
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<CustomResponse<WargaOrganisasiModel>> addWargaToOrganisasi(
             @RequestBody WargaOrganisasiRequestDTO requestDTO) {
         CustomResponse<WargaOrganisasiModel> response = new CustomResponse<>();

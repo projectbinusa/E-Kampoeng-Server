@@ -25,7 +25,7 @@ public class OrganisasiController {
   @Autowired
   private OrganisasiService organisasiService;
 
-  @GetMapping
+  @GetMapping("/all")
   public ResponseEntity<CustomResponse<Page<OrganisasiModel>>> getAllWithPagination(@RequestParam(name = "page", defaultValue = "0", required = false) int page, @RequestParam(name = "size", defaultValue = "10", required = false) int size) {
     Pageable pageable = PageRequest.of(page, size);
     Page<OrganisasiModel> organisasiList = organisasiService.getAllOrganisasi(pageable);
@@ -53,42 +53,5 @@ public class OrganisasiController {
       response.setMessage("Organisasi dengan ID " + id + " tidak ditemukan.");
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
-  }
-
-  @PostMapping
-  public ResponseEntity<CustomResponse<OrganisasiModel>> createOrganisasi(@RequestBody OrganisasiRequestDTO requestDTO) {
-    OrganisasiModel organisasiModel = new OrganisasiModel();
-    organisasiModel.setNama_organisasi(requestDTO.getNama_organisasi());
-
-    OrganisasiModel savedOrganisasi = organisasiService.createOrganisasi(organisasiModel);
-
-    CustomResponse<OrganisasiModel> response = new CustomResponse<>();
-    response.setStatus("success");
-    response.setCode(HttpStatus.CREATED.value());
-    response.setData(savedOrganisasi);
-    response.setMessage("Organisasi berhasil dibuat.");
-
-    return ResponseEntity.status(HttpStatus.CREATED).body(response);
-  }
-
-  @PutMapping("/{id}")
-  public ResponseEntity<CustomResponse<OrganisasiModel>> updateWarga(@PathVariable Long id, @RequestBody OrganisasiModel organisasiModel) {
-    OrganisasiModel responseDTO = organisasiService.updateOrganisasi(id, organisasiModel);
-    CustomResponse<OrganisasiModel> response = new CustomResponse<>();
-    response.setStatus("success");
-    response.setCode(HttpStatus.OK.value());
-    response.setData(responseDTO);
-    response.setMessage("Organisasi Berhasil Di Update");
-    return new ResponseEntity<>(response, HttpStatus.OK);
-  }
-
-  @DeleteMapping("/{id}")
-  public ResponseEntity<CustomResponse<Map<String, Boolean>>> deleteOrganisasi(@PathVariable Long id) {
-    organisasiService.deleteOrganisasi(id);
-    CustomResponse<Map<String, Boolean>> response = new CustomResponse<>();
-    response.setStatus("success");
-    response.setCode(HttpStatus.OK.value());
-    response.setMessage("Organisasi dengan ID " + id + " berhasil dihapus.");
-    return ResponseEntity.ok(response);
   }
 }

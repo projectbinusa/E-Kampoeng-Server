@@ -15,6 +15,11 @@ public class Tags extends DateConfig {
     private Long id;
     private String tags;
 
+    @ManyToOne
+    @JoinColumn(name = "wilayah_rt_id")
+    private WilayahRTModel wilayahRT;
+
+
     @JsonIgnore
     @ManyToMany(mappedBy = "tagsBerita", fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, targetEntity = Berita.class)
     private Set<Berita> beritas = new HashSet<>();
@@ -44,5 +49,13 @@ public class Tags extends DateConfig {
 
     public void setBeritas(Set<Berita> beritas) {
         this.beritas = beritas;
+    }
+
+    public WilayahRTModel getWilayahRT() {
+        return wilayahRT;
+    }
+
+    public void setWilayahRT(WilayahRTModel wilayahRT) {
+        this.wilayahRT = wilayahRT;
     }
 }

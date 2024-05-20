@@ -12,19 +12,17 @@ public class WargaDTO {
     private Date tanggal_lahir;
     private String jenis_kelamin;
     private String agama;
-    private Integer nik;
+    private String nik;
     private String no_kk;
     private String status_dalam_keluarga;
     private String status_kependudukan;
     private Long no_anak;
     private Double panjang_lahir;
     private Double berat_lahir;
-
-    //    private WargaNegaraType warga_negara;
     private Long no_passport;
     private String nama_ayah;
     private String nama_ibu;
-    private Long no_telp;
+    private String no_telp;
     private String email;
     private String alamat;
     private String alamat_sebelumnya;
@@ -39,6 +37,8 @@ public class WargaDTO {
     private String jenis_kb;
     private String kesesuaian_tempat;
     private String sumber_air;
+    private String password;
+
 
 
     public Long getId() {
@@ -89,11 +89,11 @@ public class WargaDTO {
         this.agama = agama;
     }
 
-    public Integer getNik() {
+    public String getNik() {
         return nik;
     }
 
-    public void setNik(Integer nik) {
+    public void setNik(String nik) {
         this.nik = nik;
     }
 
@@ -177,11 +177,11 @@ public class WargaDTO {
         this.nama_ibu = nama_ibu;
     }
 
-    public Long getNo_telp() {
+    public String getNo_telp() {
         return no_telp;
     }
 
-    public void setNo_telp(Long no_telp) {
+    public void setNo_telp(String no_telp) {
         this.no_telp = no_telp;
     }
 
@@ -289,4 +289,11 @@ public class WargaDTO {
         this.sumber_air = sumber_air;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

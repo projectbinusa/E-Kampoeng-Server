@@ -2,6 +2,7 @@ package com.e_kampoeng.model;
 
 import com.e_kampoeng.config.DateConfig;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -25,7 +26,7 @@ public class WargaModel extends DateConfig {
     @Column
     private String agama;
     @Column
-    private Integer nik;
+    private String password;
     @Column
     private String no_kk;
     @Column
@@ -45,7 +46,7 @@ public class WargaModel extends DateConfig {
     @Column
     private String nama_ibu;
     @Column
-    private Long no_telp;
+    private String no_telp;
     @Column
     private String email;
     @Column
@@ -73,7 +74,10 @@ public class WargaModel extends DateConfig {
     private String kesesuaian_tempat;
     @Column
     private String sumber_air;
+    @Column
+    private String role;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "wilayah_rt_id")
     private WilayahRTModel wilayahRT;
 
@@ -125,13 +129,7 @@ public class WargaModel extends DateConfig {
         this.agama = agama;
     }
 
-    public Integer getNik() {
-        return nik;
-    }
 
-    public void setNik(Integer nik) {
-        this.nik = nik;
-    }
 
     public String getNo_kk() {
         return no_kk;
@@ -205,11 +203,11 @@ public class WargaModel extends DateConfig {
         this.nama_ibu = nama_ibu;
     }
 
-    public Long getNo_telp() {
+    public String getNo_telp() {
         return no_telp;
     }
 
-    public void setNo_telp(Long no_telp) {
+    public void setNo_telp(String no_telp) {
         this.no_telp = no_telp;
     }
 
@@ -323,5 +321,21 @@ public class WargaModel extends DateConfig {
 
     public void setWilayahRT(WilayahRTModel wilayahRT) {
         this.wilayahRT = wilayahRT;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

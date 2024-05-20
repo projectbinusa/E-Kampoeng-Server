@@ -19,6 +19,10 @@ public class Berita extends DateConfig {
     @Lob
     private String image;
 
+    @ManyToOne
+    @JoinColumn(name = "wilayah_rt_id")
+    private WilayahRTModel wilayahRT;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, targetEntity = Tags.class)
     @JoinTable(name = "tags_berita",
             joinColumns = @JoinColumn(name = "tags_id", nullable = false, updatable = false),
@@ -89,5 +93,13 @@ public class Berita extends DateConfig {
 
     public void setCategoryBerita(CategoryBerita categoryBerita) {
         this.categoryBerita = categoryBerita;
+    }
+
+    public WilayahRTModel getWilayahRT() {
+        return wilayahRT;
+    }
+
+    public void setWilayahRT(WilayahRTModel wilayahRT) {
+        this.wilayahRT = wilayahRT;
     }
 }

@@ -1,8 +1,10 @@
 package com.e_kampoeng.controller;
 
+import com.e_kampoeng.exception.NotFoundException;
 import com.e_kampoeng.model.WilayahRTModel;
 import com.e_kampoeng.request.WilayahRTRequestDTO;
 import com.e_kampoeng.response.CustomResponse;
+import com.e_kampoeng.response.WilayahRTResponseDTO;
 import com.e_kampoeng.service.WilayahRTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,11 +28,13 @@ public class WilayahRTController {
     @Autowired
     private WilayahRTService wilayahRTService;
 
-    @GetMapping
-    public ResponseEntity<CustomResponse<Page<WilayahRTModel>>> getAllWilayahRT(Pageable pageable) {
-        Page<WilayahRTModel> allWilayahRT = wilayahRTService.getAllWilayahRT(pageable);
+    // Di dalam WilayahRTController.java
 
-        CustomResponse<Page<WilayahRTModel>> response = new CustomResponse<>();
+    @GetMapping
+    public ResponseEntity<CustomResponse<Page<WilayahRTResponseDTO>>> getAllWilayahRT(Pageable pageable) {
+        Page<WilayahRTResponseDTO> allWilayahRT = wilayahRTService.getAllWilayahRT(pageable);
+
+        CustomResponse<Page<WilayahRTResponseDTO>> response = new CustomResponse<>();
         response.setStatus("success");
         response.setCode(HttpStatus.OK.value());
         response.setMessage("Data retrieved successfully");
@@ -39,7 +43,20 @@ public class WilayahRTController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping
+    @GetMapping("/{id}")
+    public ResponseEntity<CustomResponse<WilayahRTResponseDTO>> getWilayahRTById(@PathVariable Long id) {
+        WilayahRTResponseDTO wilayahRT = wilayahRTService.getWilayahRTById(id);
+
+        CustomResponse<WilayahRTResponseDTO> response = new CustomResponse<>();
+        response.setStatus("success");
+        response.setCode(HttpStatus.OK.value());
+        response.setMessage("Data retrieved successfully");
+        response.setData(wilayahRT);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/add")
     public ResponseEntity<CustomResponse<WilayahRTModel>> createWilayahRT(@RequestBody WilayahRTRequestDTO requestDTO) {
         WilayahRTModel createdWilayahRT = wilayahRTService.createWilayahRT(requestDTO);
 
@@ -51,33 +68,6 @@ public class WilayahRTController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
-
-    @GetMapping("/by-wilrw/{wilayahRWId}")
-    public ResponseEntity<CustomResponse<Page<WilayahRTModel>>> getWilayahRTByWilayahRWId(@PathVariable Long wilayahRWId, Pageable pageable) {
-        Page<WilayahRTModel> wilayahRTByWilayahRWId = wilayahRTService.getWilayahRTByWilayahRWId(wilayahRWId, pageable);
-
-        CustomResponse<Page<WilayahRTModel>> response = new CustomResponse<>();
-        response.setStatus("success");
-        response.setCode(HttpStatus.OK.value());
-        response.setMessage("Data retrieved successfully");
-        response.setData(wilayahRTByWilayahRWId);
-
-        return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<CustomResponse<WilayahRTModel>> getWilayahRTById(@PathVariable Long id) {
-        WilayahRTModel wilayahRTById = wilayahRTService.getWilayahRTById(id);
-
-        CustomResponse<WilayahRTModel> response = new CustomResponse<>();
-        response.setStatus("success");
-        response.setCode(HttpStatus.OK.value());
-        response.setMessage("Data retrieved successfully");
-        response.setData(wilayahRTById);
-
-        return ResponseEntity.ok(response);
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<CustomResponse<WilayahRTRequestDTO>> updateWilayahRT(@PathVariable Long id, @RequestBody WilayahRTRequestDTO requestDTO) {
         WilayahRTRequestDTO updatedWilayahRT = wilayahRTService.updateWilayahRT(id, requestDTO);
@@ -122,25 +112,6 @@ public class WilayahRTController {
         }
     }
 
-
-    @PostMapping("/export-excel/{wilayahRWId}")
-    public ResponseEntity<byte[]> exportToExcelByWilayahRWId(@PathVariable Long wilayahRWId) {
-        try {
-            byte[] excelBytes = wilayahRTService.exportToExcelByWilayahRWId(wilayahRWId);
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-            headers.setContentDispositionFormData("attachment", "wilayah_rt_data.xlsx");
-
-            return ResponseEntity.ok()
-                    .headers(headers)
-                    .body(excelBytes);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
     @PostMapping("/import-excel")
     public ResponseEntity<?> importWilayahRT(@RequestPart("file") MultipartFile file) {
         try {
@@ -151,4 +122,47 @@ public class WilayahRTController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to import data: " + e.getMessage());
         }
     }
+
+    @PostMapping("/{wilayahRTId}/add-kepala-rt/{wargaId}")
+    public ResponseEntity<CustomResponse<WilayahRTResponseDTO>> addKepalaRTToWilayahRT(@PathVariable Long wilayahRTId, @PathVariable Long wargaId) {
+        try {
+            WilayahRTModel wilayahRT = wilayahRTService.addKepalaRT(wilayahRTId, wargaId);
+
+            // Konversi WilayahRTModel ke WilayahRTResponseDTO
+            WilayahRTResponseDTO responseDTO = convertToDTO(wilayahRT);
+
+            CustomResponse<WilayahRTResponseDTO> response = new CustomResponse<>();
+            response.setStatus("success");
+            response.setCode(HttpStatus.OK.value());
+            response.setMessage("Kepala RT added to Wilayah RT successfully");
+            response.setData(responseDTO);
+
+            return ResponseEntity.ok(response);
+        } catch (NotFoundException e) {
+            CustomResponse<WilayahRTResponseDTO> response = new CustomResponse<>();
+            response.setStatus("error");
+            response.setCode(HttpStatus.NOT_FOUND.value());
+            response.setMessage(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        } catch (Exception e) {
+            CustomResponse<WilayahRTResponseDTO> response = new CustomResponse<>();
+            response.setStatus("error");
+            response.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            response.setMessage("Failed to add Kepala RT to Wilayah RT: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    // Method untuk mengonversi WilayahRTModel menjadi WilayahRTResponseDTO
+    private WilayahRTResponseDTO convertToDTO(WilayahRTModel wilayahRT) {
+        WilayahRTResponseDTO dto = new WilayahRTResponseDTO();
+        dto.setId(wilayahRT.getId());
+        dto.setNomorRt(wilayahRT.getNomorRt());
+        if (wilayahRT.getKepalaRt() != null) {
+            dto.setKepalaRtId(wilayahRT.getKepalaRt().getId());
+            dto.setKepalaRtNama(wilayahRT.getKepalaRt().getNama());
+        }
+        return dto;
+    }
+
 }
