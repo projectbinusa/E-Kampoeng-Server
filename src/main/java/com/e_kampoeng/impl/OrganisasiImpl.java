@@ -1,7 +1,9 @@
 package com.e_kampoeng.impl;
 
+import com.e_kampoeng.exception.NotFoundException;
 import com.e_kampoeng.model.OrganisasiModel;
 import com.e_kampoeng.repository.OrganisasiRepository;
+import com.e_kampoeng.request.OrganisasiRequestDTO;
 import com.e_kampoeng.service.OrganisasiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,9 +37,15 @@ public class OrganisasiImpl implements OrganisasiService {
     }
 
     @Override
-    public OrganisasiModel updateOrganisasi(Long id, OrganisasiModel organisasi) {
-        organisasi.setId(id);
-        return organisasiRepository.save(organisasi);
+    public OrganisasiModel updateOrganisasiRT(Long id, OrganisasiRequestDTO organisasiRequestDTO) {
+        OrganisasiModel existingOrganisasi = organisasiRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Organisasi not found for the creator"));
+
+        // Set proper attributes from the DTO to the existingOrganisasi
+        existingOrganisasi.setNama_organisasi(organisasiRequestDTO.getNama_organisasi());
+        // Set other attributes if available
+
+        return organisasiRepository.save(existingOrganisasi);
     }
 
     @Override

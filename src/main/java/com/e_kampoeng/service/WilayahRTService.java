@@ -1,15 +1,10 @@
 package com.e_kampoeng.service;
 
-import com.e_kampoeng.model.WargaModel;
 import com.e_kampoeng.model.WilayahRTModel;
-import com.e_kampoeng.model.WilayahRWModel;
-import com.e_kampoeng.repository.WilayahRTRepository;
-import com.e_kampoeng.repository.WilayahRWRepository;
 import com.e_kampoeng.request.WilayahRTRequestDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.e_kampoeng.response.WilayahRTResponseDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -18,13 +13,12 @@ import java.util.Map;
 
 public interface WilayahRTService {
     WilayahRTModel createWilayahRT(WilayahRTRequestDTO requestDTO);
-    Page<WilayahRTModel> getAllWilayahRT(Pageable pageable);
-    Page<WilayahRTModel> getWilayahRTByWilayahRWId(Long wilayahRWId, Pageable pageable);
-    WilayahRTModel getWilayahRTById(Long id);
+    Page<WilayahRTResponseDTO> getAllWilayahRT(Pageable pageable);
+    WilayahRTResponseDTO getWilayahRTById(Long id);
     WilayahRTRequestDTO updateWilayahRT(Long id, WilayahRTRequestDTO requestDTO);
     byte[] exportToExcel() throws IOException;
-    byte[] exportToExcelByWilayahRWId(Long wilayahRWId) throws IOException;
     Map<String, Boolean> deleteWilayahRT(Long id);
     List<WilayahRTRequestDTO> importFromExcel(MultipartFile file) throws IOException;
+    WilayahRTModel addKepalaRT(Long wilayahRTId, Long wargaId);
 }
 

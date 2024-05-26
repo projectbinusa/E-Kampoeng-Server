@@ -17,7 +17,12 @@ public class OrganisasiModel extends DateConfig {
 
     @Column
     private String nama_organisasi;
+    @Column(name = "creator_email")
+    private String creatorEmail;
 
+    @ManyToOne
+    @JoinColumn(name = "wilayah_rt_id")
+    private WilayahRTModel wilayahRT;
 
     public Long getId() {
         return id;
@@ -35,4 +40,19 @@ public class OrganisasiModel extends DateConfig {
         this.nama_organisasi = nama_organisasi;
     }
 
+    public String getCreatorEmail() {
+        return creatorEmail;
+    }
+
+    public void setCreatorEmail(String creatorEmail) {
+        this.creatorEmail = creatorEmail;
+    }
+
+    public WilayahRTModel getWilayahRT() {
+        return wilayahRT;
+    }
+
+    public void setWilayahRT(WilayahRTModel wilayahRT) {
+        this.wilayahRT = wilayahRT;
+    }
 }
