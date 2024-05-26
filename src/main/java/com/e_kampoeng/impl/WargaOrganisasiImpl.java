@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class WargaOrganisasiImpl implements WargaOrganisasiService {
+public class  WargaOrganisasiImpl implements WargaOrganisasiService {
     @Autowired
     private WargaOrganisasiRepository wargaOrganisasiRepository;
 

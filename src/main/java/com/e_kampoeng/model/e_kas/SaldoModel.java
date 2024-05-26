@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "saldo")
-public class SaldoModel extends DateConfig {
+public class SaldoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -80,7 +80,7 @@ public class OrganisasiRTImpl implements OrganisasiRTService {
 
         Optional<OrganisasiModel> existingOrganisasi = organisasiRepository.findByIdAndCreatorEmail(id, creatorEmail);
         if (existingOrganisasi.isPresent()) {
-            organisasiRepository.deleteByIdAndCreatorEmail(id, creatorEmail);
+            organisasiRepository.deleteById(id);
         } else {
             throw new NotFoundException("Organisasi not found or you do not have permission to delete it.");
         }

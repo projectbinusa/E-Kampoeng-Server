@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/e-kas")
+@CrossOrigin(origins = "*")
 public class EKasController {
 
     @Autowired

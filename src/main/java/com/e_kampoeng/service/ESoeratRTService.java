@@ -1,17 +1,30 @@
 package com.e_kampoeng.service;
 
 import com.e_kampoeng.model.ESoeratModel;
+import com.e_kampoeng.request.ESoeratApprovalRequestDTO;
+import com.e_kampoeng.request.ESoeratRequestDTO;
+import com.e_kampoeng.request.ESoeratUpdateRequestDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.Map;
-import java.util.Optional;
 
 public interface ESoeratRTService {
-    Page<ESoeratModel> getAllSoerat(Pageable pageable);
-    ESoeratModel getIdSoerat(Long id);
-    ESoeratModel addSoerat(ESoeratModel eSoeratModel);
-    ESoeratModel editSoerat(Long id, ESoeratModel eSoeratModel);
-    Map<String ,Boolean> deleteSoerat(Long id);
-    Optional<ESoeratModel> getSoeratByIdAndCreator(Long id);
+
+    Page<ESoeratModel> getAllSuratByWilayahRT(Pageable pageable);
+
+    ESoeratModel approveSurat(Long id, ESoeratApprovalRequestDTO approvalRequestDTO);
+
+    ESoeratModel ajukanSurat(ESoeratRequestDTO suratRequestDTO);
+
+    ESoeratModel editPengajuanSurat(Long id, ESoeratRequestDTO suratRequestDTO);
+
+    void batalkanPengajuanSurat(Long id);
+
+    ESoeratModel getSuratByIdForWarga(Long id, String creatorEmail);
+
+    Page<ESoeratModel> getAllSuratByCreator(Pageable pageable);
+
+    Page<ESoeratModel> getApprovedSuratByWilayahRT(Pageable pageable);
+    Page<ESoeratModel> getUnapprovedSuratByWilayahRT(Pageable pageable);
+    Page<ESoeratModel> getRejectedSuratByWilayahRT(Pageable pageable);
 }

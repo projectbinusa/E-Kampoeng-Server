@@ -15,5 +15,9 @@ public interface ESoeratDao extends JpaRepository<ESoeratModel, Long> {
 
     Optional<ESoeratModel> findByIdAndWilayahRTId(Long id, Long wilayahRTId);
 
-    void deleteByIdAndWilayahRTId(Long id, Long wilayahRTId);
+    Optional<ESoeratModel> findByIdAndCreatorEmail(Long id, String creatorEmail);
+
+    Page<ESoeratModel> findAllByCreatorEmail(String creatorEmail, Pageable pageable);
+
+    Page<ESoeratModel> findAllByWilayahRTIdAndStatus(Long wilayahRTId, String status, Pageable pageable);
 }

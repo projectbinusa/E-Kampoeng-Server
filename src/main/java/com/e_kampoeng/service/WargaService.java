@@ -761,4 +761,10 @@ public class WargaService {
 
         return wargaRepository.save(existingWarga);
     }
+
+    public WargaModel getWargaById(Long wargaId) {
+        return wargaRepository.findById(wargaId)
+                .orElse(null);
+    }
+
 }

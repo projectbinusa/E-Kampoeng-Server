@@ -216,4 +216,14 @@ public class WargaController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to change password: " + e.getMessage());
         }
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getWargaById(@PathVariable("id") Long id) {
+        WargaModel warga = wargaService.getWargaById(id);
+        if (warga != null) {
+            return ResponseEntity.ok(warga);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

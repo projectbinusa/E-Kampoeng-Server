@@ -64,12 +64,10 @@ public class OrganisasiRTController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<CustomResponse<Map<String, Boolean>>> deleteOrganisasi(@PathVariable Long id) {
+    public ResponseEntity<?> deleteOrganisasiRT(@PathVariable Long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String creatorEmail = authentication.getName();
         organisasiRTService.deleteOrganisasiRT(id);
-        CustomResponse<Map<String, Boolean>> response = new CustomResponse<>();
-        response.setStatus("success");
-        response.setCode(HttpStatus.OK.value());
-        response.setMessage("Organisasi dengan ID " + id + " berhasil dihapus.");
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok().build();
     }
 }
