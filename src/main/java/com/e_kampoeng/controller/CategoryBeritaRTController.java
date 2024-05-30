@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/category-berita-rt")
+@RequestMapping("/e-kampoeng/api/category-berita-rt")
+@CrossOrigin(origins = "*")
 public class CategoryBeritaRTController {
 
     @Autowired
     private CategoryBeritaRTService categoryBeritaRTService;
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<Page<CategoryBerita>> getAllCategoryBerita(Pageable pageable) {
         Page<CategoryBerita> categories = categoryBeritaRTService.findAll(pageable);
         return ResponseEntity.ok(categories);

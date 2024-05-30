@@ -40,19 +40,14 @@ public class AuthService  implements UserDetailsService {
         // Cari pengguna dalam tabel WargaModel
         WargaModel wargaModel = wargaRepository.findByEmail(email);
         if (wargaModel != null) {
-            // Cek jika pengguna memiliki peran rw
-            if (wargaModel.getRole().equals("rw")) {
-                List<SimpleGrantedAuthority> roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_RW"));
-                return new User(wargaModel.getEmail(), wargaModel.getPassword(), roles);
-            }
             // Cek jika pengguna memiliki peran rt
-            else if (wargaModel.getRole().equals("rt")) {
+            if (wargaModel.getRole().equals("rt")) {
                 List<SimpleGrantedAuthority> roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_RT"));
                 return new User(wargaModel.getEmail(), wargaModel.getPassword(), roles);
             }
             // Cek jika pengguna memiliki peran warga
             else if (wargaModel.getRole().equals("warga")) {
-                List<SimpleGrantedAuthority> roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+                List<SimpleGrantedAuthority> roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_WARGA"));
                 return new User(wargaModel.getEmail(), wargaModel.getPassword(), roles);
             }
         }

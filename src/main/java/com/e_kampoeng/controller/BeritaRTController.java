@@ -216,40 +216,6 @@ public class BeritaRTController {
         }
     }
 
-    @PutMapping("/berita/{tags}/in/{berita}")
-    public Berita addTags(
-            @PathVariable Long tags,
-            @PathVariable Long berita
-    ) {
-        return beritaRTService.tagsInBerita(berita, tags);
-    }
-
-    @GetMapping(path = "/by-tags")
-    public ResponseEntity<CommonResponse<List<Berita>>> searchTags(@RequestParam("tags") Long tagsId) {
-        CommonResponse<List<Berita>> response = new CommonResponse<>();
-        try {
-            List<Berita> beritas = beritaRTService.getByTags(tagsId);
-            if(beritas.isEmpty()) {
-                response.setStatus("not found");
-                response.setCode(HttpStatus.NOT_FOUND.value());
-                response.setData(null);
-                response.setMessage("Berita list not found");
-                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-            }
-            response.setStatus("success");
-            response.setCode(HttpStatus.OK.value());
-            response.setData(beritas);
-            response.setMessage("Berita list retrieved successfully.");
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (Exception e) {
-            response.setStatus("error");
-            response.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-            response.setData(null);
-            response.setMessage("Failed to retrieve berita list: " + e.getMessage());
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @GetMapping("/by-category")
     public ResponseEntity<CommonResponse<Page<Berita>>> allByCategory(
             @RequestParam("categoryId") Long categoryId,

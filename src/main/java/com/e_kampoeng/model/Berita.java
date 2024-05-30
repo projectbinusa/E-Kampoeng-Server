@@ -23,15 +23,6 @@ public class Berita extends DateConfig {
     @JoinColumn(name = "wilayah_rt_id")
     private WilayahRTModel wilayahRT;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, targetEntity = Tags.class)
-    @JoinTable(name = "tags_berita",
-            joinColumns = @JoinColumn(name = "tags_id", nullable = false, updatable = false),
-            inverseJoinColumns = @JoinColumn(name = "berita_id", nullable = false, updatable = false),
-            foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
-            inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT)
-    )
-    private Set<Tags> tagsBerita = new HashSet<>();
-
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private CategoryBerita categoryBerita;
@@ -77,14 +68,6 @@ public class Berita extends DateConfig {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public Set<Tags> getTagsBerita() {
-        return tagsBerita;
-    }
-
-    public void setTagsBerita(Set<Tags> tagsBerita) {
-        this.tagsBerita = tagsBerita;
     }
 
     public CategoryBerita getCategoryBerita() {
