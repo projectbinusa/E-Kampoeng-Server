@@ -1,12 +1,9 @@
 package com.e_kampoeng.service;
 
 import com.e_kampoeng.dto.BeritaDTO;
-import com.e_kampoeng.exception.NotFoundException;
 import com.e_kampoeng.model.Berita;
-import com.e_kampoeng.model.Tags;
 import com.e_kampoeng.repository.BeritaRepository;
 import com.e_kampoeng.repository.CategoryBeritaRepository;
-import com.e_kampoeng.repository.TagsRepository;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.BlobId;
@@ -26,7 +23,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 
 @Service
@@ -34,9 +30,6 @@ public class BeritaService {
 
     @Autowired
     private BeritaRepository beritaDao;
-
-    @Autowired
-    private TagsRepository tagsRepository;
 
     @Autowired
     private CategoryBeritaRepository categoryBeritaRepository;
@@ -73,7 +66,6 @@ public class BeritaService {
         Berita berita = beritaDao.findById(id);
 
         if (berita != null) {
-            berita.getTagsBerita().clear();
             berita.setCategoryBerita(null);
 
             beritaDao.delete(berita);
@@ -112,18 +104,6 @@ public class BeritaService {
         return beritaDao.find(bulan);
     }
 
-    public Berita tagsInBerita(Long beritaId, Long tagsId) {
-        Set<Tags> tagsSet = null;
-        Berita berita = beritaDao.findById(beritaId);
-        Tags tags = tagsRepository.findById(tagsId).orElse(null);
-        if (tags == null) {
-            throw new NotFoundException("ID Tag Not Found");
-        }
-         tagsSet = berita.getTagsBerita();
-        tagsSet.add(tags);
-        berita.setTagsBerita(tagsSet);
-        return beritaDao.save(berita);
-    }
 
     public List<Berita> getByTags(Long tagsId) {
         return beritaDao.getAllByTags(tagsId);

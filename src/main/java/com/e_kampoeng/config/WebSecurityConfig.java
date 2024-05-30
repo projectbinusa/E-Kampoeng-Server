@@ -68,8 +68,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     };
 
     private static final String[] AUTH_RT = {
-            "/api/e-kas/{id}",
-            "/api/e-kas/add",
+//            "/api/e-kas/{id}",
+//            "/api/e-kas/add",
             "/api/e-soerat/all",
 
 
@@ -108,8 +108,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/api/category-berita/ById/{id}",
             "/api/category-berita/all",
             // E-Kas
-            "/api/e-kas/ById/{id}",
-            "/api/e-kas/all"
+//            "/api/e-kas/ById/{id}",
+//            "/api/e-kas/all"
 
 
     };

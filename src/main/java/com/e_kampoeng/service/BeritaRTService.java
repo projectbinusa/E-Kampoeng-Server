@@ -3,11 +3,9 @@ package com.e_kampoeng.service;
 import com.e_kampoeng.dto.BeritaDTO;
 import com.e_kampoeng.exception.NotFoundException;
 import com.e_kampoeng.model.Berita;
-import com.e_kampoeng.model.Tags;
 import com.e_kampoeng.model.WargaModel;
 import com.e_kampoeng.repository.BeritaRepository;
 import com.e_kampoeng.repository.CategoryBeritaRepository;
-import com.e_kampoeng.repository.TagsRepository;
 import com.e_kampoeng.repository.WargaRepository;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -33,16 +31,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class BeritaRTService {
 
     @Autowired
     private BeritaRepository beritaRepository;
-
-    @Autowired
-    private TagsRepository tagsRepository;
 
     @Autowired
     private CategoryBeritaRepository categoryBeritaRepository;
@@ -100,7 +94,6 @@ public class BeritaRTService {
         Berita berita = beritaRepository.findByIdAndWilayahRTId(id, wilayahRTId).orElseThrow(() -> new NotFoundException("Berita not found"));
 
         if (berita != null) {
-            berita.getTagsBerita().clear();
             berita.setCategoryBerita(null);
 
             beritaRepository.delete(berita);
@@ -143,17 +136,7 @@ public class BeritaRTService {
         return beritaRepository.find(bulan);
     }
 
-    public Berita tagsInBerita(Long beritaId, Long tagsId) {
-        String email = getAuthenticatedUserEmail();
-        Long wilayahRTId = getWilayahRTIdByEmail(email);
-        Berita berita = beritaRepository.findByIdAndWilayahRTId(beritaId, wilayahRTId).orElseThrow(() -> new NotFoundException("Berita not found"));
-        Tags tags = tagsRepository.findById(tagsId).orElseThrow(() -> new NotFoundException("ID Tag Not Found"));
 
-        Set<Tags> tagsSet = berita.getTagsBerita();
-        tagsSet.add(tags);
-        berita.setTagsBerita(tagsSet);
-        return beritaRepository.save(berita);
-    }
 
     public List<Berita> getByTags(Long tagsId) {
         String email = getAuthenticatedUserEmail();
