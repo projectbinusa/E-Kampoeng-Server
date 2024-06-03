@@ -1,7 +1,9 @@
 package com.e_kampoeng.repository;
 
+import com.e_kampoeng.model.Berita;
 import com.e_kampoeng.model.WargaModel;
 import com.e_kampoeng.model.WilayahRTModel;
+import com.e_kampoeng.model.e_kas.PemasukanModel;
 import com.e_kampoeng.request.WilayahRTRequestDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +15,9 @@ import java.util.List;
 
 @Repository
 public interface WargaRepository extends JpaRepository<WargaModel, Long> {
+    WargaModel findById(long id);
+
+    Page<WargaModel> findAllByWilayahRTId(Long wilayahRTId, Pageable pageable);
     Page<WargaModel> findByWilayahRT_Id(Long rtId, Pageable pageable);
     WargaModel findByEmail(String email);
 
