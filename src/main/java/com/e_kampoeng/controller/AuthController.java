@@ -2,6 +2,7 @@ package com.e_kampoeng.controller;
 
 
 import com.e_kampoeng.config.JwtTokenUtil;
+import com.e_kampoeng.dto.BeritaDTO;
 import com.e_kampoeng.dto.WargaDTO;
 import com.e_kampoeng.exception.CommonResponse;
 import com.e_kampoeng.exception.NotFoundException;
@@ -9,6 +10,7 @@ import com.e_kampoeng.exception.ResponseHelper;
 import com.e_kampoeng.model.*;
 import com.e_kampoeng.dto.UserDTO;
 import com.e_kampoeng.repository.WargaRepository;
+import com.e_kampoeng.request.UpdateProfileDTO;
 import com.e_kampoeng.request.WargaUpdateRequestDTO;
 import com.e_kampoeng.service.AuthService;
 import com.e_kampoeng.service.WargaService;
@@ -30,8 +32,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/e-kampoeng/api")
@@ -109,6 +114,25 @@ public class AuthController {
             return ResponseEntity.ok(updatedWarga);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @PutMapping(path = "/foto-profile", consumes = "multipart/form-data")
+    public ResponseEntity<CommonResponse<WargaModel>> updateFoto(UpdateProfileDTO fotoProfile, @RequestPart("file") MultipartFile multipartFile) {
+        CommonResponse<WargaModel> response = new CommonResponse<>();
+        try {
+            WargaModel updatedWarga = userDetailsService.updateFotoProfile(fotoProfile, multipartFile);
+            response.setStatus("success");
+            response.setCode(HttpStatus.OK.value());
+            response.setData(updatedWarga);
+            response.setMessage("Photo updated successfully.");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            response.setStatus("error");
+            response.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            response.setData(null);
+            response.setMessage("Failed to update Photo: " + e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

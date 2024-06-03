@@ -76,6 +76,8 @@ public class WargaModel extends DateConfig {
     private String sumber_air;
     @Column
     private String role;
+    @Column
+    private String image;
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "wilayah_rt_id")
@@ -329,6 +331,14 @@ public class WargaModel extends DateConfig {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getPassword() {

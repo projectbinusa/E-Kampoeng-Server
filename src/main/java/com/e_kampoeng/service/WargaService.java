@@ -1,24 +1,31 @@
 package com.e_kampoeng.service;
 
+import com.e_kampoeng.dto.BeritaDTO;
 import com.e_kampoeng.dto.UserDTO;
 import com.e_kampoeng.dto.WargaDTO;
 import com.e_kampoeng.exception.InternalErrorException;
 import com.e_kampoeng.exception.NotFoundException;
+import com.e_kampoeng.model.Berita;
 import com.e_kampoeng.model.UserModel;
 import com.e_kampoeng.model.WargaModel;
 import com.e_kampoeng.model.WilayahRTModel;
+import com.e_kampoeng.model.e_kas.PemasukanModel;
 import com.e_kampoeng.repository.UserRepository;
 import com.e_kampoeng.repository.WargaRepository;
 import com.e_kampoeng.repository.WilayahRTRepository;
-import com.e_kampoeng.request.ChangePasswordRequestDTO;
-import com.e_kampoeng.request.WargaRequestDTO;
-import com.e_kampoeng.request.WargaRequestRoleWargaDTO;
-import com.e_kampoeng.request.WargaUpdateRequestDTO;
+import com.e_kampoeng.request.*;
 import com.google.api.pathtemplate.ValidationException;
+import com.google.auth.Credentials;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.storage.BlobId;
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,10 +45,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.text.SimpleDateFormat;
@@ -49,7 +56,10 @@ import java.text.ParseException;
 
 
 @Service
-public class WargaService {
+public class    WargaService {
+
+    private static final String DOWNLOAD_URL = "https://firebasestorage.googleapis.com/v0/b/bawaslu-a6bd2.appspot.com/o/%s?alt=media";
+
     @Autowired
     private WargaRepository wargaRepository;
 
@@ -66,97 +76,73 @@ public class WargaService {
         return wargaRepository.findAll();
     }
 
-//    public WargaModel createWarga(WargaRequestDTO requestDTO) {
-//        WargaModel warga = new WargaModel();
-//        warga.setNama(requestDTO.getNama());
-//        warga.setTempat_lahir(requestDTO.getTempat_lahir());
-//        warga.setTanggal_lahir(requestDTO.getTanggal_lahir());
-//        warga.setJenis_kelamin(requestDTO.getJenis_kelamin());
-//        warga.setAgama(requestDTO.getAgama());
-//        warga.setNik(requestDTO.getNik());
-//        warga.setNo_kk(requestDTO.getNo_kk());
-//        warga.setStatus_dalam_keluarga(requestDTO.getStatus_dalam_keluarga());
-//        warga.setStatus_kependudukan(requestDTO.getStatus_kependudukan());
-//        warga.setNo_anak(requestDTO.getNo_anak());
-//        warga.setPanjang_lahir(requestDTO.getPanjang_lahir());
-//        warga.setBerat_lahir(requestDTO.getBerat_lahir());
-//        warga.setNo_passport(requestDTO.getNo_passport());
-//        warga.setNama_ayah(requestDTO.getNama_ayah());
-//        warga.setNama_ibu(requestDTO.getNama_ibu());
-//        warga.setNo_telp(requestDTO.getNo_telp());
-//        warga.setEmail(requestDTO.getEmail());
-//        warga.setAlamat(requestDTO.getAlamat());
-//        warga.setTanggal_perkawinan(requestDTO.getTanggal_perkawinan());
-//        warga.setAlamat_sebelumnya(requestDTO.getAlamat_sebelumnya());
-//        warga.setNo_bpjs(requestDTO.getNo_bpjs());
-//        warga.setPendidikan_tempuh(requestDTO.getPendidikan_tempuh());
-//        warga.setPendidikan_terakhir(requestDTO.getPendidikan_terakhir());
-//        warga.setStatus_perkawinan(requestDTO.getStatus_perkawinan());
-//        warga.setGolongan_darah(requestDTO.getGolongan_darah());
-//        warga.setJenis_asuransi(requestDTO.getJenis_asuransi());
-//        warga.setJenis_kb(requestDTO.getJenis_kb());
-//        warga.setKesesuaian_tempat(requestDTO.getKesesuaian_tempat());
-//        warga.setSumber_air(requestDTO.getSumber_air());
-//
-//        // Mengambil data Wilayah_RT dari repositori
-//        WilayahRTModel wilayahRT = wilayahRTRepository.findById(requestDTO.getWilayahRTId()).orElse(null);
-//        warga.setWilayahRT(wilayahRT);
-//
-//        return wargaRepository.save(warga);
-//    }
-
-    public List<WargaModel> getAllWargaByRole(String role) {
-        return wargaRepository.findByRole(role);
+    private Long getWilayahRTIdByEmail(String email) {
+        WargaModel warga = wargaRepository.findByEmail(email);
+        if (warga == null || warga.getWilayahRT() == null) {
+            throw new NotFoundException("User not found or does not belong to any WilayahRT");
+        }
+        return warga.getWilayahRT().getId();
     }
 
-    public Page<WargaModel> getWargaByRT(Long rtId, Pageable pageable) {
-        return wargaRepository.findByWilayahRT_Id(rtId, pageable);
+    public Page<WargaModel> getWargaByRT(int page, int size) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        Long wilayahRTId = getWilayahRTIdByEmail(email);
+
+        Pageable pageable = PageRequest.of(page, size);
+        return wargaRepository.findAllByWilayahRTId(wilayahRTId, pageable);
     }
 
-    public WargaModel updateWarga(Long wargaId, WargaRequestDTO requestDTO) {
-        WargaModel warga = wargaRepository.findById(wargaId)
-                .orElseThrow(() -> new RuntimeException("Warga not found with id: " + wargaId));
+    public WargaModel updateWarga(Long id, WargaEditRequestDTO wargaRequestDTO) {
+        // Get the logged-in user's email
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String loggedInUserEmail = authentication.getName();
 
-        // Set new values from the request DTO
-        warga.setNama(requestDTO.getNama());
-        warga.setTempat_lahir(requestDTO.getTempat_lahir());
-        warga.setTanggal_lahir(requestDTO.getTanggal_lahir());
-        warga.setJenis_kelamin(requestDTO.getJenis_kelamin());
-        warga.setAgama(requestDTO.getAgama());
-        warga.setPassword(requestDTO.getNik());
-        warga.setNo_kk(requestDTO.getNo_kk());
-        warga.setStatus_dalam_keluarga(requestDTO.getStatus_dalam_keluarga());
-        warga.setStatus_kependudukan(requestDTO.getStatus_kependudukan());
-        warga.setNo_anak(requestDTO.getNo_anak());
-        warga.setPanjang_lahir(requestDTO.getPanjang_lahir());
-        warga.setBerat_lahir(requestDTO.getBerat_lahir());
-        warga.setNo_passport(requestDTO.getNo_passport());
-        warga.setNama_ayah(requestDTO.getNama_ayah());
-        warga.setNama_ibu(requestDTO.getNama_ibu());
-        warga.setNo_telp(requestDTO.getNo_telp());
-        warga.setEmail(requestDTO.getEmail());
-        warga.setAlamat(requestDTO.getAlamat());
-        warga.setTanggal_perkawinan(requestDTO.getTanggal_perkawinan());
-        warga.setAlamat_sebelumnya(requestDTO.getAlamat_sebelumnya());
-        warga.setNo_bpjs(requestDTO.getNo_bpjs());
-        warga.setPendidikan_tempuh(requestDTO.getPendidikan_tempuh());
-        warga.setPendidikan_terakhir(requestDTO.getPendidikan_terakhir());
-        warga.setStatus_perkawinan(requestDTO.getStatus_perkawinan());
-        warga.setGolongan_darah(requestDTO.getGolongan_darah());
-        warga.setJenis_asuransi(requestDTO.getJenis_asuransi());
-        warga.setJenis_kb(requestDTO.getJenis_kb());
-        warga.setKesesuaian_tempat(requestDTO.getKesesuaian_tempat());
-        warga.setSumber_air(requestDTO.getSumber_air());
-
-        // Update WilayahRT only if the ID in the request DTO is different
-        if (!Objects.equals(warga.getWilayahRT().getId(), requestDTO.getWilayahRTId())) {
-            WilayahRTModel wilayahRT = wilayahRTRepository.findById(requestDTO.getWilayahRTId())
-                    .orElseThrow(() -> new RuntimeException("Wilayah RT not found with id: " + requestDTO.getWilayahRTId()));
-            warga.setWilayahRT(wilayahRT);
+        // Find the logged-in user
+        WargaModel loggedInWarga = wargaRepository.findByEmail(loggedInUserEmail);
+        if (loggedInWarga == null) {
+            throw new NotFoundException("Logged-in user not found");
         }
 
-        return wargaRepository.save(warga);
+        // Find the warga to be updated
+        WargaModel existingWarga = wargaRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Warga not found"));
+
+        // Ensure the logged-in user's RT matches the RT of the warga to be updated
+        if (!loggedInWarga.getWilayahRT().getId().equals(existingWarga.getWilayahRT().getId())) {
+            throw new NotFoundException("You are not authorized to update this warga");
+        }
+
+        // Update the warga's information
+        existingWarga.setTempat_lahir(wargaRequestDTO.getTempatLahir());
+        existingWarga.setTanggal_lahir(wargaRequestDTO.getTanggalLahir());
+        existingWarga.setJenis_kelamin(wargaRequestDTO.getJenisKelamin());
+        existingWarga.setAgama(wargaRequestDTO.getAgama());
+        existingWarga.setNo_kk(wargaRequestDTO.getNoKk());
+        existingWarga.setStatus_dalam_keluarga(wargaRequestDTO.getStatusDalamKeluarga());
+        existingWarga.setStatus_kependudukan(wargaRequestDTO.getStatusKependudukan());
+        existingWarga.setNo_anak(wargaRequestDTO.getNoAnak());
+        existingWarga.setPanjang_lahir(wargaRequestDTO.getPanjangLahir());
+        existingWarga.setBerat_lahir(wargaRequestDTO.getBeratLahir());
+        existingWarga.setNo_passport(wargaRequestDTO.getNoPassport());
+        existingWarga.setNama_ayah(wargaRequestDTO.getNamaAyah());
+        existingWarga.setNama_ibu(wargaRequestDTO.getNamaIbu());
+        existingWarga.setTanggal_perkawinan(wargaRequestDTO.getTanggalPerkawinan());
+        existingWarga.setAlamat_sebelumnya(wargaRequestDTO.getAlamatSebelumnya());
+        existingWarga.setNo_bpjs(wargaRequestDTO.getNoBpjs());
+        existingWarga.setPendidikan_tempuh(wargaRequestDTO.getPendidikanTempuh());
+        existingWarga.setPendidikan_terakhir(wargaRequestDTO.getPendidikanTerakhir());
+        existingWarga.setStatus_perkawinan(wargaRequestDTO.getStatusPerkawinan());
+        existingWarga.setGolongan_darah(wargaRequestDTO.getGolonganDarah());
+        existingWarga.setJenis_asuransi(wargaRequestDTO.getJenisAsuransi());
+        existingWarga.setJenis_kb(wargaRequestDTO.getJenisKb());
+        existingWarga.setKesesuaian_tempat(wargaRequestDTO.getKesesuaianTempat());
+        existingWarga.setSumber_air(wargaRequestDTO.getSumberAir());
+
+        return wargaRepository.save(existingWarga);
     }
+
+
 
     public ResponseEntity<?> deleteWarga(Long wargaId) {
         WargaModel warga = wargaRepository.findById(wargaId)
@@ -765,6 +751,64 @@ public class WargaService {
     public WargaModel getWargaById(Long wargaId) {
         return wargaRepository.findById(wargaId)
                 .orElse(null);
+    }
+
+    public Optional<WargaModel> findById(Long id) {
+        return wargaRepository.findById(id);
+    }
+
+    public WargaModel updateFotoProfile(UpdateProfileDTO updateProfileDTO, MultipartFile multipartFile) throws Exception {
+        // Mendapatkan informasi pengguna yang sedang login
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String loggedInUserEmail = authentication.getName(); // Mengambil email dari Authentication
+
+        WargaModel wargaModel = wargaRepository.findByEmail(loggedInUserEmail);
+        if (wargaModel == null) {
+            throw new NotFoundException("User not found with email: " + loggedInUserEmail);
+        }
+
+        // Mengonversi gambar dan memperbarui profil pengguna
+        String image = imageConverter(multipartFile);
+        wargaModel.setImage(image);
+
+        return wargaRepository.save(wargaModel);
+    }
+
+    private String imageConverter(MultipartFile multipartFile) throws Exception {
+        try {
+            String fileName = getExtension(multipartFile.getOriginalFilename());
+            File file = convertFile(multipartFile, fileName);
+            var RESPONSE_URL = uploadFile(file, fileName);
+            file.delete();
+            return RESPONSE_URL;
+        } catch (Exception e) {
+            e.getStackTrace();
+            throw new Exception("Error upload file: " + e.getMessage());
+        }
+    }
+
+    private String getExtension(String fileName) {
+        return  fileName.split("\\.")[0];
+    }
+
+    private File convertFile(MultipartFile multipartFile, String fileName) throws IOException {
+        File file = new File(fileName);
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            fos.write(multipartFile.getBytes());
+            fos.close();
+        }
+        System.out.println("File size: " + file.length());
+        return file;
+    }
+
+    private String uploadFile(File file, String fileName) throws IOException {
+        BlobId blobId = BlobId.of("storage-e-kampoeng.appspot.com", fileName);
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("media").build();
+        InputStream serviceAccount = getClass().getClassLoader().getResourceAsStream("e-kampoeng-firebase.json");
+        Credentials credentials = GoogleCredentials.fromStream(serviceAccount);
+        Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
+        storage.create(blobInfo, Files.readAllBytes(file.toPath()));
+        return String.format(DOWNLOAD_URL, URLEncoder.encode(fileName, StandardCharsets.UTF_8));
     }
 
 }
